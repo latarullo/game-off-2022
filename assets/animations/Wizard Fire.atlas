@@ -1,0 +1,251 @@
+
+Wizard Fire.png
+size: 4096, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+1_IDLE
+  rotate: false
+  xy: 2944, 162
+  size: 377, 410
+  orig: 377, 410
+  offset: 0, 0
+  index: 0
+1_IDLE
+  rotate: false
+  xy: 3323, 162
+  size: 377, 410
+  orig: 377, 410
+  offset: 0, 0
+  index: 2
+1_IDLE
+  rotate: false
+  xy: 3338, 648
+  size: 377, 410
+  orig: 377, 410
+  offset: 0, 0
+  index: 4
+1_IDLE
+  rotate: false
+  xy: 3702, 236
+  size: 377, 410
+  orig: 377, 410
+  offset: 0, 0
+  index: 1
+1_IDLE
+  rotate: false
+  xy: 3717, 648
+  size: 377, 410
+  orig: 377, 410
+  offset: 0, 0
+  index: 3
+2_WALK
+  rotate: false
+  xy: 1820, 1481
+  size: 410, 431
+  orig: 410, 431
+  offset: 0, 0
+  index: 0
+2_WALK
+  rotate: false
+  xy: 2232, 1481
+  size: 410, 431
+  orig: 410, 431
+  offset: 0, 0
+  index: 2
+2_WALK
+  rotate: false
+  xy: 2644, 1481
+  size: 410, 431
+  orig: 410, 431
+  offset: 0, 0
+  index: 4
+2_WALK
+  rotate: false
+  xy: 2532, 100
+  size: 410, 431
+  orig: 410, 431
+  offset: 0, 0
+  index: 1
+2_WALK
+  rotate: false
+  xy: 2926, 574
+  size: 410, 431
+  orig: 410, 431
+  offset: 0, 0
+  index: 3
+3_RUN
+  rotate: false
+  xy: 1166, 506
+  size: 484, 471
+  orig: 484, 471
+  offset: 0, 0
+  index: 4
+3_RUN
+  rotate: false
+  xy: 1166, 33
+  size: 484, 471
+  orig: 484, 471
+  offset: 0, 0
+  index: 1
+3_RUN
+  rotate: false
+  xy: 1652, 506
+  size: 484, 471
+  orig: 484, 471
+  offset: 0, 0
+  index: 3
+3_RUN
+  rotate: false
+  xy: 1676, 984
+  size: 484, 471
+  orig: 484, 471
+  offset: 0, 0
+  index: 0
+3_RUN
+  rotate: false
+  xy: 1652, 33
+  size: 484, 471
+  orig: 484, 471
+  offset: 0, 0
+  index: 2
+4_JUMP
+  rotate: false
+  xy: 2138, 510
+  size: 392, 472
+  orig: 392, 472
+  offset: 0, 0
+  index: 1
+4_JUMP
+  rotate: false
+  xy: 2162, 1007
+  size: 392, 472
+  orig: 392, 472
+  offset: 0, 0
+  index: 3
+4_JUMP
+  rotate: false
+  xy: 2138, 36
+  size: 392, 472
+  orig: 392, 472
+  offset: 0, 0
+  index: 0
+4_JUMP
+  rotate: false
+  xy: 2532, 533
+  size: 392, 472
+  orig: 392, 472
+  offset: 0, 0
+  index: 2
+4_JUMP
+  rotate: false
+  xy: 2556, 1007
+  size: 392, 472
+  orig: 392, 472
+  offset: 0, 0
+  index: 4
+5_ATTACK
+  rotate: false
+  xy: 2, 1436
+  size: 652, 476
+  orig: 652, 476
+  offset: 0, 0
+  index: 2
+5_ATTACK
+  rotate: false
+  xy: 2, 958
+  size: 652, 476
+  orig: 652, 476
+  offset: 0, 0
+  index: 4
+5_ATTACK
+  rotate: false
+  xy: 2, 480
+  size: 652, 476
+  orig: 652, 476
+  offset: 0, 0
+  index: 6
+5_ATTACK
+  rotate: false
+  xy: 2, 2
+  size: 652, 476
+  orig: 652, 476
+  offset: 0, 0
+  index: 0
+5_ATTACK
+  rotate: false
+  xy: 656, 1436
+  size: 652, 476
+  orig: 652, 476
+  offset: 0, 0
+  index: 5
+6_HURT
+  rotate: false
+  xy: 656, 979
+  size: 508, 455
+  orig: 508, 455
+  offset: 0, 0
+  index: 2
+6_HURT
+  rotate: false
+  xy: 656, 522
+  size: 508, 455
+  orig: 508, 455
+  offset: 0, 0
+  index: 4
+6_HURT
+  rotate: false
+  xy: 656, 65
+  size: 508, 455
+  orig: 508, 455
+  offset: 0, 0
+  index: 1
+6_HURT
+  rotate: false
+  xy: 1166, 979
+  size: 508, 455
+  orig: 508, 455
+  offset: 0, 0
+  index: 3
+6_HURT
+  rotate: false
+  xy: 1310, 1457
+  size: 508, 455
+  orig: 508, 455
+  offset: 0, 0
+  index: 0
+7_DIE
+  rotate: false
+  xy: 2950, 1054
+  size: 380, 425
+  orig: 380, 425
+  offset: 0, 0
+  index: 0
+7_DIE
+  rotate: false
+  xy: 3056, 1487
+  size: 380, 425
+  orig: 380, 425
+  offset: 0, 0
+  index: 7
+7_DIE
+  rotate: false
+  xy: 3332, 1060
+  size: 380, 425
+  orig: 380, 425
+  offset: 0, 0
+  index: 9
+7_DIE
+  rotate: false
+  xy: 3438, 1487
+  size: 380, 425
+  orig: 380, 425
+  offset: 0, 0
+  index: 14
+7_DIE
+  rotate: false
+  xy: 3714, 1060
+  size: 380, 425
+  orig: 380, 425
+  offset: 0, 0
+  index: 3

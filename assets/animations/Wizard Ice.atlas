@@ -1,0 +1,251 @@
+
+Wizard Ice.png
+size: 2048, 4096
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+1_IDLE
+  rotate: false
+  xy: 1250, 981
+  size: 381, 404
+  orig: 381, 404
+  offset: 0, 0
+  index: 0
+1_IDLE
+  rotate: false
+  xy: 1250, 575
+  size: 381, 404
+  orig: 381, 404
+  offset: 0, 0
+  index: 2
+1_IDLE
+  rotate: false
+  xy: 1633, 568
+  size: 381, 404
+  orig: 381, 404
+  offset: 0, 0
+  index: 4
+1_IDLE
+  rotate: false
+  xy: 1250, 169
+  size: 381, 404
+  orig: 381, 404
+  offset: 0, 0
+  index: 1
+1_IDLE
+  rotate: false
+  xy: 1633, 162
+  size: 381, 404
+  orig: 381, 404
+  offset: 0, 0
+  index: 3
+2_WALK
+  rotate: false
+  xy: 1205, 2653
+  size: 409, 420
+  orig: 409, 420
+  offset: 0, 0
+  index: 0
+2_WALK
+  rotate: false
+  xy: 1616, 2725
+  size: 409, 420
+  orig: 409, 420
+  offset: 0, 0
+  index: 2
+2_WALK
+  rotate: false
+  xy: 1378, 2231
+  size: 409, 420
+  orig: 409, 420
+  offset: 0, 0
+  index: 4
+2_WALK
+  rotate: false
+  xy: 1378, 1809
+  size: 409, 420
+  orig: 409, 420
+  offset: 0, 0
+  index: 1
+2_WALK
+  rotate: false
+  xy: 1378, 1387
+  size: 409, 420
+  orig: 409, 420
+  offset: 0, 0
+  index: 3
+3_RUN
+  rotate: false
+  xy: 2, 1224
+  size: 473, 466
+  orig: 473, 466
+  offset: 0, 0
+  index: 4
+3_RUN
+  rotate: false
+  xy: 2, 756
+  size: 473, 466
+  orig: 473, 466
+  offset: 0, 0
+  index: 1
+3_RUN
+  rotate: false
+  xy: 2, 288
+  size: 473, 466
+  orig: 473, 466
+  offset: 0, 0
+  index: 3
+3_RUN
+  rotate: false
+  xy: 505, 2122
+  size: 473, 466
+  orig: 473, 466
+  offset: 0, 0
+  index: 0
+3_RUN
+  rotate: false
+  xy: 505, 1654
+  size: 473, 466
+  orig: 473, 466
+  offset: 0, 0
+  index: 2
+4_JUMP
+  rotate: false
+  xy: 477, 1187
+  size: 396, 465
+  orig: 396, 465
+  offset: 0, 0
+  index: 1
+4_JUMP
+  rotate: false
+  xy: 477, 720
+  size: 396, 465
+  orig: 396, 465
+  offset: 0, 0
+  index: 3
+4_JUMP
+  rotate: false
+  xy: 477, 253
+  size: 396, 465
+  orig: 396, 465
+  offset: 0, 0
+  index: 0
+4_JUMP
+  rotate: false
+  xy: 980, 2159
+  size: 396, 465
+  orig: 396, 465
+  offset: 0, 0
+  index: 2
+4_JUMP
+  rotate: false
+  xy: 980, 1692
+  size: 396, 465
+  orig: 396, 465
+  offset: 0, 0
+  index: 4
+5_ATTACK
+  rotate: false
+  xy: 2, 3560
+  size: 698, 483
+  orig: 698, 483
+  offset: 0, 0
+  index: 2
+5_ATTACK
+  rotate: false
+  xy: 2, 3075
+  size: 698, 483
+  orig: 698, 483
+  offset: 0, 0
+  index: 4
+5_ATTACK
+  rotate: false
+  xy: 702, 3560
+  size: 698, 483
+  orig: 698, 483
+  offset: 0, 0
+  index: 6
+5_ATTACK
+  rotate: false
+  xy: 2, 2590
+  size: 698, 483
+  orig: 698, 483
+  offset: 0, 0
+  index: 0
+5_ATTACK
+  rotate: false
+  xy: 702, 3075
+  size: 698, 483
+  orig: 698, 483
+  offset: 0, 0
+  index: 5
+6_HURT
+  rotate: false
+  xy: 1402, 3596
+  size: 501, 447
+  orig: 501, 447
+  offset: 0, 0
+  index: 2
+6_HURT
+  rotate: false
+  xy: 2, 2141
+  size: 501, 447
+  orig: 501, 447
+  offset: 0, 0
+  index: 4
+6_HURT
+  rotate: false
+  xy: 702, 2626
+  size: 501, 447
+  orig: 501, 447
+  offset: 0, 0
+  index: 1
+6_HURT
+  rotate: false
+  xy: 1402, 3147
+  size: 501, 447
+  orig: 501, 447
+  offset: 0, 0
+  index: 3
+6_HURT
+  rotate: false
+  xy: 2, 1692
+  size: 501, 447
+  orig: 501, 447
+  offset: 0, 0
+  index: 0
+7_DIE
+  rotate: false
+  xy: 875, 1241
+  size: 373, 411
+  orig: 373, 411
+  offset: 0, 0
+  index: 8
+7_DIE
+  rotate: false
+  xy: 875, 828
+  size: 373, 411
+  orig: 373, 411
+  offset: 0, 0
+  index: 0
+7_DIE
+  rotate: false
+  xy: 875, 415
+  size: 373, 411
+  orig: 373, 411
+  offset: 0, 0
+  index: 4
+7_DIE
+  rotate: false
+  xy: 1633, 974
+  size: 373, 411
+  orig: 373, 411
+  offset: 0, 0
+  index: 6
+7_DIE
+  rotate: false
+  xy: 875, 2
+  size: 373, 411
+  orig: 373, 411
+  offset: 0, 0
+  index: 11
