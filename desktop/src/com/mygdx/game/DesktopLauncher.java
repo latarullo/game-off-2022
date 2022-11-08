@@ -7,7 +7,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setTitle("GameOff2022");
+		config.setTitle(GameData.TITLE);
 		config.setWindowedMode(GameData.WIDTH, GameData.HEIGHT);
 		config.useVsync(true);
 		config.setForegroundFPS(60);

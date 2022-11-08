@@ -7,10 +7,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.mygdx.game.screen.MainMenuScreen;
+import com.mygdx.game.screen.actor.FireWizard;
+import com.mygdx.game.screen.actor.LightningWizard;
+import com.mygdx.game.screen.actor.Wizard;
 
 public class GameOff2022 extends Game {
 	private SpriteBatch batch;
+	private BitmapFont gameFontSmall;
 	private BitmapFont gameFont;
+	private Screen previousScreen;
+	private Wizard currentWizard;
 
 	@Override
 	public void create () {
@@ -18,7 +24,11 @@ public class GameOff2022 extends Game {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/AvQest.ttf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.size = 50;
-		gameFont = generator.generateFont(parameter); // font size 12 pixels
+		gameFont = generator.generateFont(parameter);
+		FreeTypeFontGenerator.FreeTypeFontParameter parameterSmall = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameterSmall.size = 20;
+		gameFontSmall = generator.generateFont(parameterSmall);
+
 		generator.dispose();
 		this.setScreen(new MainMenuScreen(this));
 	}
@@ -50,7 +60,12 @@ public class GameOff2022 extends Game {
 	}
 
 	public void changeScreen(Screen screen){
+		this.previousScreen = getScreen();
 		this.setScreen(screen);
+	}
+
+	public void changePreviousScreen(){
+		this.changeScreen(getPreviousScreen());
 	}
 
 	public SpriteBatch getBatch() {
@@ -59,5 +74,22 @@ public class GameOff2022 extends Game {
 
 	public BitmapFont getGameFont() {
 		return gameFont;
+	}
+
+	public BitmapFont getGameFontSmall() {
+		return gameFontSmall;
+	}
+
+	private Screen getPreviousScreen() {
+		return previousScreen;
+	}
+
+	public Wizard getCurrentWizard() {
+		//if (currentWizard == null) currentWizard = new LightningWizard();
+		return currentWizard;
+	}
+
+	public void setCurrentWizard(Wizard currentWizard) {
+		this.currentWizard = currentWizard;
 	}
 }

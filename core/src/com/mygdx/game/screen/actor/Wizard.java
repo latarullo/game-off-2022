@@ -54,4 +54,9 @@ public abstract class Wizard extends Actor implements Disposable {
     public WizardState getCurrentState() {
         return currentState;
     }
+
+    public TextureRegion getIdleSprite(){
+        TextureRegion[] keyFrames = animations.get(WizardState.IDLE.getState()).getKeyFrames();
+        return keyFrames[0];
+    }
 }
