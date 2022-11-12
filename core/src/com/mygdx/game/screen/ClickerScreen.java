@@ -1,8 +1,11 @@
 package com.mygdx.game.screen;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -17,14 +20,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.BigNumberNotation;
+import com.mygdx.game.CooldownTimer;
 import com.mygdx.game.GameData;
 import com.mygdx.game.GameOff2022;
 import com.mygdx.game.domain.GreatHealthPotion;
 import com.mygdx.game.domain.GreaterHealthPotion;
+import com.mygdx.game.domain.HealthPotionEnum;
 import com.mygdx.game.domain.MinorHealthPotion;
 import com.mygdx.game.domain.SmallHealthPotion;
 import com.mygdx.game.screen.actor.Enemy;
@@ -36,6 +42,8 @@ import com.mygdx.game.screen.actor.LightningWizard;
 import com.mygdx.game.screen.actor.WizardState;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClickerScreen implements Screen {
 
@@ -44,7 +52,10 @@ public class ClickerScreen implements Screen {
     private Timer timer;
     private int autoClickers;
 
-    private BigInteger value = new BigInteger("0");
+//    private BigInteger value = new BigInteger("0");
+//    List<CooldownTimer> cooldownTimers = new ArrayList<>();
+//    private long lastUpdate = 0L;
+//    private float remainingPercentage = 1.0f;
 
     public ClickerScreen(final GameOff2022 game){
         this.game = game;
@@ -83,8 +94,7 @@ public class ClickerScreen implements Screen {
             }
         });
 
-
-        Enemy enemy = new Enemy();
+        Enemy enemy = new Enemy(game);
         enemy.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 game.getCurrentWizard().setCurrentState(WizardState.ATTACK);
@@ -92,7 +102,19 @@ public class ClickerScreen implements Screen {
         });
         enemy.setPosition(500, GameData.HEIGHT/2-70);
         enemy.setSize(50, 50);
-        enemy.setCurrentState(EnemyState.HURT);
+        enemy.setCurrentState(EnemyState.ATTACK);
+
+        Wizard wizard = game.getCurrentWizard();
+        wizard.addListener(new ClickListener() {
+            public void clicked (InputEvent event, float x, float y) {
+                Actor actor = event.getListenerActor();
+                imageClick(actor);
+            }
+        });
+        wizard.setPosition(100, GameData.HEIGHT/2-70);
+        wizard.setCurrentState(WizardState.IDLE);
+        wizard.setUserObject(enemy);
+        stage.addActor(wizard);
 
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = game.getGameFont();
@@ -103,7 +125,7 @@ public class ClickerScreen implements Screen {
             @Override
             public boolean act(float delta) {
                 Label l = (Label) this.actor;
-                l.setText(BigNumberNotation.getPrintableValue(value));
+                l.setText(BigNumberNotation.getPrintableValue(game.getMoney()));
                 return false;
             }
         });
@@ -116,20 +138,6 @@ public class ClickerScreen implements Screen {
     }
 
     private void createFooterGUI() {
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = game.getGameFont();
-
-        TextButton healthPotionButton = new TextButton("Shop", textButtonStyle);
-
-        healthPotionButton.setPosition(0, 100);
-        healthPotionButton.setSize(500,50);
-
-        healthPotionButton.addListener(new ClickListener(){
-            public void clicked (InputEvent event, float x, float y) {
-                game.changeScreen(new HealthPotionShopScreen(game));
-            }
-        });
-
         Wizard lightningWizard = new LightningWizard();
         Wizard fireWizard = new FireWizard();
         Wizard iceWizard = new IceWizard();
@@ -190,10 +198,131 @@ public class ClickerScreen implements Screen {
         Image greatHealthPotionButton = new GreatHealthPotion().getImage();
         Image greaterHealthPotionButton = new GreaterHealthPotion().getImage();
 
-        Label minorHealthPotionQuantityLabel = new Label("13", labelStyle);
-        Label smallHealthPotionQuantityLabel = new Label("44", labelStyle);
-        Label greatHealthPotionQuantityLabel = new Label("100", labelStyle);
-        Label greaterHealthPotionQuantityLabel = new Label("987", labelStyle);
+        minorHealthPotionButton.setUserObject(HealthPotionEnum.MinorHealthPotion);
+        smallHealthPotionButton.setUserObject(HealthPotionEnum.SmallHealthPotion);
+        greatHealthPotionButton.setUserObject(HealthPotionEnum.GreatHealthPotion);
+        greaterHealthPotionButton.setUserObject(HealthPotionEnum.GreaterHealthPotion);
+
+        final Label minorHealthPotionQuantityLabel = new Label("0", labelStyle);
+        Label smallHealthPotionQuantityLabel = new Label("0", labelStyle);
+        Label greatHealthPotionQuantityLabel = new Label( "0", labelStyle);
+        Label greaterHealthPotionQuantityLabel = new Label("0", labelStyle);
+
+        minorHealthPotionQuantityLabel.setUserObject(HealthPotionEnum.MinorHealthPotion);
+        smallHealthPotionQuantityLabel.setUserObject(HealthPotionEnum.SmallHealthPotion);
+        greatHealthPotionQuantityLabel.setUserObject(HealthPotionEnum.GreatHealthPotion);
+        greaterHealthPotionQuantityLabel.setUserObject(HealthPotionEnum.GreaterHealthPotion);
+
+        minorHealthPotionQuantityLabel.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                Label label = (Label) this.getActor();
+                HealthPotionEnum healthPotionEnum = (HealthPotionEnum) label.getUserObject();
+                label.setText(game.getPotions().get(healthPotionEnum).toString());
+                return false;
+            }
+        });
+
+        smallHealthPotionQuantityLabel.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                Label label = (Label) this.getActor();
+                HealthPotionEnum healthPotionEnum = (HealthPotionEnum) label.getUserObject();
+                label.setText(game.getPotions().get(healthPotionEnum).toString());
+                return false;
+            }
+        });
+
+        greatHealthPotionQuantityLabel.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                Label label = (Label) this.getActor();
+                HealthPotionEnum healthPotionEnum = (HealthPotionEnum) label.getUserObject();
+                label.setText(game.getPotions().get(healthPotionEnum).toString());
+                return false;
+            }
+        });
+
+        greaterHealthPotionQuantityLabel.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                Label label = (Label) this.getActor();
+                HealthPotionEnum healthPotionEnum = (HealthPotionEnum) label.getUserObject();
+                label.setText(game.getPotions().get(healthPotionEnum).toString());
+                return false;
+            }
+        });
+
+        minorHealthPotionButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                HealthPotionEnum healthPotionEnum = (HealthPotionEnum) event.getListenerActor().getUserObject();
+                game.useHealthPotion(healthPotionEnum);
+
+//                CooldownTimer cooldownTimerBlue = new CooldownTimer(true);
+//                cooldownTimerBlue.setSize(64, 64);
+//                cooldownTimerBlue.setPosition(500, 100);
+//                cooldownTimerBlue.setColor(Color.BLUE);
+//                minorHealthPotionQuantityLabel.getParent().addActor(cooldownTimerBlue);
+//
+//                cooldownTimers.add(cooldownTimerBlue);
+            }
+        });
+
+        smallHealthPotionButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                HealthPotionEnum healthPotionEnum = (HealthPotionEnum) event.getListenerActor().getUserObject();
+                game.useHealthPotion(healthPotionEnum);
+                System.out.println("used potion: " + healthPotionEnum);
+            }
+        });
+
+        greatHealthPotionButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                HealthPotionEnum healthPotionEnum = (HealthPotionEnum) event.getListenerActor().getUserObject();
+                game.useHealthPotion(healthPotionEnum);
+                System.out.println("used potion: " + healthPotionEnum);
+            }
+        });
+
+        greaterHealthPotionButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                HealthPotionEnum healthPotionEnum = (HealthPotionEnum) event.getListenerActor().getUserObject();
+                game.useHealthPotion(healthPotionEnum);
+                System.out.println("used potion: " + healthPotionEnum);
+            }
+        });
+
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.font = game.getGameFontSmall();
+        textButtonStyle.fontColor = Color.BLUE;
+
+        TextButton shopButton = new TextButton("Shop", textButtonStyle);
+        shopButton.addListener(new ClickListener(){
+            public void clicked (InputEvent event, float x, float y) {
+                game.changeScreen(new HealthPotionShopScreen(game));
+            }
+        });
+
+        TextButton upgradeButton = new TextButton("Upgrade", textButtonStyle);
+        upgradeButton.addListener(new ClickListener(){
+            public void clicked (InputEvent event, float x, float y) {
+                game.changeScreen(new UpgradeScreen(game));
+            }
+        });
+
+        TextButton achievmentsButton = new TextButton("Achievments", textButtonStyle);
+
+        Table tab = new Table();
+        tab.add(shopButton);
+        tab.row();
+        tab.add(upgradeButton);
+        tab.row();
+        tab.add(achievmentsButton);
+        tab.row();
 
         Table t = new Table();
         t.setBounds(0,0, Gdx.graphics.getWidth(), 300);
@@ -208,7 +337,7 @@ public class ClickerScreen implements Screen {
         t.add(smallHealthPotionButton).width(64);
         t.add(greatHealthPotionButton).width(64);
         t.add(greaterHealthPotionButton).width(64);
-        t.add(healthPotionButton);
+        t.add(tab);
         t.row().height(10);
         t.add().colspan(3);
         t.add(minorHealthPotionQuantityLabel).align(Align.right);
@@ -224,21 +353,11 @@ public class ClickerScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
 
-        Wizard wizard = game.getCurrentWizard();
-        wizard.addListener(new ClickListener() {
-            public void clicked (InputEvent event, float x, float y) {
-                Actor actor = event.getListenerActor();
-                imageClick(actor);
-            }
-        });
-        wizard.setPosition(100, GameData.HEIGHT/2-70);
-        wizard.setCurrentState(WizardState.IDLE);
-        stage.addActor(wizard);
     }
 
     private void imageClick(Actor actor) {
         Float increaseValue = 10000 * Gdx.graphics.getDeltaTime();
-        value = value.add(new BigInteger(String.valueOf(increaseValue.intValue())));
+        game.addMoney(new BigInteger(String.valueOf(increaseValue.intValue())));
         actor.setOrigin(Align.center);
         actor.rotateBy(90);
     }
@@ -248,7 +367,8 @@ public class ClickerScreen implements Screen {
 		ScreenUtils.clear(0, 0, 0, 1);
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            value = BigInteger.ZERO;
+            game.resetMoney();
+            game.resetHealthPotions();
             Array<Actor> actors = stage.getActors();
             for (Actor actor : actors) {
                 if (actor instanceof Wizard){
@@ -260,6 +380,27 @@ public class ClickerScreen implements Screen {
                 }
             }
         }
+
+//        boolean shouldRemove = false;
+//        CooldownTimer cooldownTimerToRemove = null;
+//        if (System.currentTimeMillis() - lastUpdate > 25L) {
+//            for (CooldownTimer cooldownTimer : this.cooldownTimers) {
+//                if (remainingPercentage <= 0.0f) {
+//                    shouldRemove = true;
+//                    cooldownTimerToRemove = cooldownTimer;
+//                } else {
+//                    cooldownTimer.update(remainingPercentage);
+//                }
+//            }
+//
+//            if (shouldRemove) {
+//                cooldownTimerToRemove.update(1);
+//                cooldownTimers.remove(cooldownTimerToRemove);
+//            }
+//
+//            remainingPercentage -= 0.01f;
+//            lastUpdate = System.currentTimeMillis();
+//        }
 
         stage.act();
         stage.draw();

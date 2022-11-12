@@ -1,9 +1,170 @@
 
 Enemy.png
-size: 4096, 2048
+size: 8192, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+7_enemies_1_attack
+  rotate: false
+  xy: 2, 1338
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 8
+7_enemies_1_attack
+  rotate: false
+  xy: 766, 1672
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 0
+7_enemies_1_die
+  rotate: false
+  xy: 766, 1672
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 0
+7_enemies_1_hurt
+  rotate: false
+  xy: 766, 1672
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 0
+7_enemies_1_idle
+  rotate: false
+  xy: 766, 1672
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 0
+7_enemies_1_attack
+  rotate: false
+  xy: 384, 1004
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 13
+7_enemies_1_attack
+  rotate: false
+  xy: 384, 670
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 5
+7_enemies_1_attack
+  rotate: false
+  xy: 1148, 1338
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 18
+7_enemies_1_attack
+  rotate: false
+  xy: 1148, 1004
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 10
+7_enemies_1_attack
+  rotate: false
+  xy: 1148, 670
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 2
+7_enemies_1_attack
+  rotate: false
+  xy: 1912, 1338
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 15
+7_enemies_1_attack
+  rotate: false
+  xy: 1912, 1004
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 7
+7_enemies_1_attack
+  rotate: false
+  xy: 2676, 1338
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 12
+7_enemies_1_attack
+  rotate: false
+  xy: 2294, 670
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 4
+7_enemies_1_attack
+  rotate: false
+  xy: 3058, 1338
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 17
+7_enemies_1_attack
+  rotate: false
+  xy: 3440, 1338
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 9
+7_enemies_1_attack
+  rotate: false
+  xy: 2676, 336
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 1
+7_enemies_1_attack
+  rotate: false
+  xy: 3440, 1004
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 14
+7_enemies_1_attack
+  rotate: false
+  xy: 2676, 2
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 6
+7_enemies_1_attack
+  rotate: false
+  xy: 3440, 670
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 19
+7_enemies_1_attack
+  rotate: false
+  xy: 4204, 1004
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 11
+7_enemies_1_attack
+  rotate: false
+  xy: 4204, 670
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 3
+7_enemies_1_attack
+  rotate: false
+  xy: 4586, 1004
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 16
 7_enemies_1_die
   rotate: false
   xy: 2, 1672
@@ -13,413 +174,392 @@ repeat: none
   index: 7
 7_enemies_1_die
   rotate: false
-  xy: 384, 1338
+  xy: 2, 670
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 12
 7_enemies_1_die
   rotate: false
-  xy: 384, 1004
+  xy: 2, 336
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 4
 7_enemies_1_die
   rotate: false
-  xy: 1148, 1672
+  xy: 766, 1004
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 17
 7_enemies_1_die
   rotate: false
-  xy: 1148, 1338
+  xy: 1530, 1338
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 9
-7_enemies_1_die
-  rotate: false
-  xy: 384, 336
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 1
-7_enemies_1_die
-  rotate: false
-  xy: 1148, 1004
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 14
 7_enemies_1_die
   rotate: false
   xy: 766, 336
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
+  index: 1
+7_enemies_1_die
+  rotate: false
+  xy: 1530, 1004
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 14
+7_enemies_1_die
+  rotate: false
+  xy: 1530, 670
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
   index: 6
-7_enemies_1_die
-  rotate: false
-  xy: 1148, 670
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 19
-7_enemies_1_die
-  rotate: false
-  xy: 1148, 336
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 11
 7_enemies_1_die
   rotate: false
   xy: 2294, 1338
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
-  index: 3
+  index: 19
 7_enemies_1_die
   rotate: false
-  xy: 1148, 2
+  xy: 2294, 1004
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
-  index: 16
-7_enemies_1_die
-  rotate: false
-  xy: 2676, 1338
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 8
+  index: 11
 7_enemies_1_die
   rotate: false
   xy: 1912, 336
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
-  index: 13
+  index: 3
 7_enemies_1_die
   rotate: false
-  xy: 3058, 1338
+  xy: 2676, 1004
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
-  index: 5
+  index: 16
 7_enemies_1_die
   rotate: false
-  xy: 3440, 1672
+  xy: 3058, 1004
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
-  index: 18
-7_enemies_1_die
-  rotate: false
-  xy: 3440, 1338
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 10
+  index: 8
 7_enemies_1_die
   rotate: false
   xy: 3058, 670
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
+  index: 13
+7_enemies_1_die
+  rotate: false
+  xy: 3058, 336
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 5
+7_enemies_1_die
+  rotate: false
+  xy: 3822, 1004
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 18
+7_enemies_1_die
+  rotate: false
+  xy: 3822, 670
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 10
+7_enemies_1_die
+  rotate: false
+  xy: 3440, 2
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
   index: 2
 7_enemies_1_die
   rotate: false
-  xy: 2676, 2
+  xy: 4968, 1338
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 15
 7_enemies_1_hurt
   rotate: false
-  xy: 2, 1338
+  xy: 384, 1672
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 7
-7_enemies_1_hurt
-  rotate: false
-  xy: 766, 1672
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 12
 7_enemies_1_hurt
   rotate: false
   xy: 766, 1338
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
-  index: 4
-7_enemies_1_hurt
-  rotate: false
-  xy: 2, 336
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 17
+  index: 12
 7_enemies_1_hurt
   rotate: false
   xy: 1530, 1672
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
+  index: 4
+7_enemies_1_hurt
+  rotate: false
+  xy: 2, 2
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 17
+7_enemies_1_hurt
+  rotate: false
+  xy: 1912, 1672
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
   index: 9
 7_enemies_1_hurt
   rotate: false
-  xy: 766, 670
+  xy: 2294, 1672
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 1
 7_enemies_1_hurt
   rotate: false
-  xy: 1530, 1338
+  xy: 766, 2
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 14
 7_enemies_1_hurt
   rotate: false
-  xy: 1530, 1004
+  xy: 2676, 1672
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 6
 7_enemies_1_hurt
   rotate: false
-  xy: 1912, 1338
+  xy: 1148, 2
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 19
-7_enemies_1_hurt
-  rotate: false
-  xy: 1530, 670
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 11
-7_enemies_1_hurt
-  rotate: false
-  xy: 2676, 1672
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 3
-7_enemies_1_hurt
-  rotate: false
-  xy: 1530, 336
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 16
 7_enemies_1_hurt
   rotate: false
   xy: 3058, 1672
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
-  index: 8
+  index: 11
 7_enemies_1_hurt
   rotate: false
-  xy: 2294, 670
+  xy: 3440, 1672
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
-  index: 13
+  index: 3
 7_enemies_1_hurt
   rotate: false
   xy: 1912, 2
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
+  index: 16
+7_enemies_1_hurt
+  rotate: false
+  xy: 3822, 1672
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 8
+7_enemies_1_hurt
+  rotate: false
+  xy: 3822, 1338
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
+  index: 13
+7_enemies_1_hurt
+  rotate: false
+  xy: 4204, 1338
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
   index: 5
 7_enemies_1_hurt
   rotate: false
-  xy: 2294, 336
+  xy: 4586, 1672
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 18
 7_enemies_1_hurt
   rotate: false
-  xy: 2294, 2
+  xy: 4586, 1338
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 10
 7_enemies_1_hurt
   rotate: false
-  xy: 3440, 1004
+  xy: 3822, 336
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 2
 7_enemies_1_hurt
   rotate: false
-  xy: 3058, 336
+  xy: 5350, 1672
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 15
-7_enemies_1_idle
-  rotate: false
-  xy: 384, 1672
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 6
 7_enemies_1_idle
   rotate: false
   xy: 2, 1004
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
+  index: 6
+7_enemies_1_idle
+  rotate: false
+  xy: 384, 1338
+  size: 380, 332
+  orig: 380, 332
+  offset: 0, 0
   index: 19
 7_enemies_1_idle
   rotate: false
-  xy: 2, 670
+  xy: 1148, 1672
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 11
 7_enemies_1_idle
   rotate: false
-  xy: 384, 670
+  xy: 384, 336
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 3
 7_enemies_1_idle
   rotate: false
-  xy: 766, 1004
+  xy: 766, 670
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 16
 7_enemies_1_idle
   rotate: false
-  xy: 2, 2
+  xy: 384, 2
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 8
 7_enemies_1_idle
   rotate: false
-  xy: 1912, 1672
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 0
-7_enemies_1_die
-  rotate: false
-  xy: 1912, 1672
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 0
-7_enemies_1_hurt
-  rotate: false
-  xy: 1912, 1672
-  size: 380, 332
-  orig: 380, 332
-  offset: 0, 0
-  index: 0
-7_enemies_1_idle
-  rotate: false
-  xy: 384, 2
+  xy: 1148, 336
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 13
 7_enemies_1_idle
   rotate: false
-  xy: 2294, 1672
+  xy: 1530, 336
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 5
 7_enemies_1_idle
   rotate: false
-  xy: 766, 2
+  xy: 1912, 670
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 18
 7_enemies_1_idle
   rotate: false
-  xy: 1912, 1004
+  xy: 1530, 2
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 10
 7_enemies_1_idle
   rotate: false
-  xy: 1912, 670
+  xy: 2294, 336
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 2
 7_enemies_1_idle
   rotate: false
-  xy: 2294, 1004
+  xy: 2676, 670
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 15
 7_enemies_1_idle
   rotate: false
-  xy: 1530, 2
+  xy: 2294, 2
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 7
 7_enemies_1_idle
   rotate: false
-  xy: 2676, 1004
+  xy: 4204, 1672
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 12
 7_enemies_1_idle
   rotate: false
-  xy: 2676, 670
+  xy: 3058, 2
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 4
 7_enemies_1_idle
   rotate: false
-  xy: 3058, 1004
+  xy: 3440, 336
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 17
 7_enemies_1_idle
   rotate: false
-  xy: 2676, 336
+  xy: 4968, 1672
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 9
 7_enemies_1_idle
   rotate: false
-  xy: 3440, 670
+  xy: 3822, 2
   size: 380, 332
   orig: 380, 332
   offset: 0, 0
   index: 1
 7_enemies_1_idle
   rotate: false
-  xy: 3058, 2
+  xy: 4204, 336
   size: 380, 332
   orig: 380, 332
   offset: 0, 0

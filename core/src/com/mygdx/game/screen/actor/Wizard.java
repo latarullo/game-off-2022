@@ -1,6 +1,8 @@
 package com.mygdx.game.screen.actor;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -18,8 +20,10 @@ public abstract class Wizard extends Actor implements Disposable {
     protected float stateTime;
     private WizardState currentState = WizardState.IDLE;
     protected WizardType wizardType;
-    private long life;
-    private long potionCount;
+    private float maxLife = 100;
+    private float currentLife = maxLife;
+    private float damage;
+    protected Sound spellSound;
 
     protected void loadAnimations() {
         this.atlas = new TextureAtlas(Gdx.files.internal(wizardType.getAtlasPath()));
@@ -36,10 +40,35 @@ public abstract class Wizard extends Actor implements Disposable {
         super.draw(batch, parentAlpha);
         stateTime += Gdx.graphics.getDeltaTime();
         String state = currentState.getState();
+        Animation<TextureRegion> valueAnimation = animations.get(state);
         TextureRegion currentAnimation = animations.get(state).getKeyFrame(stateTime, true);
         this.setWidth(currentAnimation.getRegionWidth());
         this.setHeight(currentAnimation.getRegionWidth());
-        batch.draw(currentAnimation, this.getX(), this.getY());
+
+        //////////Draw healthbar - begin
+        int animationRegionWidth = currentAnimation.getRegionWidth();
+        Texture greenBar = HealthBar.getInstance().getGreenBar();
+        Texture redBar = HealthBar.getInstance().getRedBar();
+        batch.draw(greenBar, this.getX(), this.getY()+ currentAnimation.getRegionHeight() + 30, animationRegionWidth, 10);
+        batch.draw(redBar, this.getX(), this.getY()+ currentAnimation.getRegionHeight() + 30, (1 - currentLife/maxLife) * animationRegionWidth, 10);
+        //////////Draw healthbar - end
+
+
+        if (!valueAnimation.isAnimationFinished(stateTime)) {
+            batch.draw(currentAnimation, this.getX(), this.getY());
+        } else {
+            if (currentState == WizardState.ATTACK){
+                Enemy enemy = (Enemy) this.getUserObject();
+                this.attack(enemy);
+            } else if (currentState == WizardState.DIE){
+                currentState = WizardState.IDLE;
+            }
+            stateTime = 0;
+            currentState = WizardState.IDLE;
+            currentAnimation = animations.get(state).getKeyFrame(stateTime, true);
+            batch.draw(currentAnimation, this.getX(), this.getY());
+
+        }
     }
 
     @Override
@@ -55,8 +84,35 @@ public abstract class Wizard extends Actor implements Disposable {
         return currentState;
     }
 
-    public TextureRegion getIdleSprite(){
+    public TextureRegion getIdleSprite() {
         TextureRegion[] keyFrames = animations.get(WizardState.IDLE.getState()).getKeyFrames();
         return keyFrames[0];
     }
+
+    public void attack(Enemy enemy){
+        spellSound.play();
+        enemy.takeDamage(10f);
+    }
+
+//    public void useHealthPotion(HealthPotion healthPotion){
+//
+//    }
+//
+    public void takeDamage(float damageDealt){
+        this.currentLife -= damageDealt;
+        if (currentLife < 0){
+            this.currentState = WizardState.DIE;
+        }
+    }
+//
+//    private void playDead() {
+//        //takes no more damage
+//
+//        //deals no damage
+//
+//        //play animation dead
+//
+//        //then changes currentWizard (if available)
+//    }
+
 }

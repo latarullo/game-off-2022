@@ -6,10 +6,15 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.mygdx.game.domain.HealthPotion;
+import com.mygdx.game.domain.HealthPotionEnum;
 import com.mygdx.game.screen.MainMenuScreen;
-import com.mygdx.game.screen.actor.FireWizard;
-import com.mygdx.game.screen.actor.LightningWizard;
+import com.mygdx.game.screen.actor.Enemy;
 import com.mygdx.game.screen.actor.Wizard;
+
+import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameOff2022 extends Game {
 	private SpriteBatch batch;
@@ -17,6 +22,9 @@ public class GameOff2022 extends Game {
 	private BitmapFont gameFont;
 	private Screen previousScreen;
 	private Wizard currentWizard;
+	private Enemy currentEnemy;
+	private BigInteger money;
+	private Map<HealthPotionEnum, Integer> potions = new HashMap<>();
 
 	@Override
 	public void create () {
@@ -30,28 +38,12 @@ public class GameOff2022 extends Game {
 		gameFontSmall = generator.generateFont(parameterSmall);
 
 		generator.dispose();
+
+		this.resetHealthPotions();
+		this.resetMoney();
+
 		this.setScreen(new MainMenuScreen(this));
 	}
-
-//	@Override
-//	public void render () {
-//		ScreenUtils.clear(1, 0, 0, 1);
-//		batch.begin();
-//
-//
-////		font12.draw(this.batch, BigNumberNotation.getPrintableValue(new BigInteger("21000000000000000000000001")) , 50, GameData.HEIGHT - 50);
-//
-////		if (Math.random() > 0.5 || Gdx.input.isKeyPressed(Input.Keys.X)){
-//		for (int i =0;i< 100; i++)
-//			value = value.add(BigInteger.valueOf (new Random().nextInt(1000000000)));
-////		}
-//
-//		font12.draw(this.batch, value.toString() , 50, GameData.HEIGHT);
-//
-//		font12.draw(this.batch, BigNumberNotation.getPrintableValue(value) , 50, GameData.HEIGHT - 50);
-//
-//		batch.end();
-//	}
 
 	@Override
 	public void dispose () {
@@ -85,11 +77,61 @@ public class GameOff2022 extends Game {
 	}
 
 	public Wizard getCurrentWizard() {
-		//if (currentWizard == null) currentWizard = new LightningWizard();
 		return currentWizard;
 	}
 
 	public void setCurrentWizard(Wizard currentWizard) {
 		this.currentWizard = currentWizard;
+	}
+
+	public Enemy getCurrentEnemy() {
+		return currentEnemy;
+	}
+
+	public void setCurrentEnemy(Enemy currentEnemy) {
+		this.currentEnemy = currentEnemy;
+	}
+
+	public BigInteger getMoney() {
+		return money;
+	}
+
+	public void addMoney(BigInteger money) {
+		this.money = this.money.add(money);
+	}
+
+	public void subtractMoney(BigInteger money) {
+		this.money = this.money.subtract(money);
+	}
+
+	public void resetMoney (){
+		this.money = BigInteger.ZERO;
+	}
+
+	public void addHealthPotion(HealthPotionEnum healthPotionEnum){
+		Integer potion = this.potions.get(healthPotionEnum);
+		if (potion == null){
+			this.potions.put(healthPotionEnum, 1);
+		} else {
+			this.potions.put(healthPotionEnum, potion+1);
+		}
+	}
+
+	public void useHealthPotion(HealthPotionEnum healthPotionEnum){
+		Integer availableQuantity = this.potions.get(healthPotionEnum);
+		//USE POTION
+		this.potions.put(healthPotionEnum, availableQuantity-1);
+	}
+
+	public void resetHealthPotions(){
+		this.potions = new HashMap<>();
+		this.potions.put(HealthPotionEnum.MinorHealthPotion, 0);
+		this.potions.put(HealthPotionEnum.SmallHealthPotion, 0);
+		this.potions.put(HealthPotionEnum.GreatHealthPotion, 0);
+		this.potions.put(HealthPotionEnum.GreaterHealthPotion, 0);
+	}
+
+	public Map<HealthPotionEnum, Integer> getPotions() {
+		return potions;
 	}
 }

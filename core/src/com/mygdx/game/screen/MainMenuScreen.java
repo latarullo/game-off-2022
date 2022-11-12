@@ -3,6 +3,7 @@ package com.mygdx.game.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -77,7 +78,7 @@ public class MainMenuScreen implements Screen {
         upgradeScreen.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.changeScreen(new NewScreen(game));
+                game.changeScreen(new UpgradeScreen(game));
             }
         });
 
@@ -101,10 +102,9 @@ public class MainMenuScreen implements Screen {
         stateTime += Gdx.graphics.getDeltaTime();
 
         game.getBatch().begin();
-//        TextureRegion currentAnimation = wizardAttackAnimation.getKeyFrame(stateTime, false);
-//        game.getBatch().draw(currentAnimation, 50, 50); // Draw current frame at (50, 50)
         game.getBatch().draw(menuTexture,0,0, GameData.WIDTH, GameData.HEIGHT);
         game.getBatch().end();
+
 
         // tell our stage to do actions and draw itself
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

@@ -13,5 +13,6 @@ public class SmallHealthPotion extends HealthPotion{
         this.healthPower = 5;
         this.cooldown = 5;
         this.price = BigInteger.TEN;
+        this.type = HealthPotionEnum.SmallHealthPotion;
     }
 }

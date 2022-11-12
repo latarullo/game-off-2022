@@ -12,6 +12,7 @@ public abstract class HealthPotion extends Potion {
     float healthPower;
     float cooldown;
     BigInteger price;
+    HealthPotionEnum type;
 
     public float getHealthPower() {
         return healthPower;
@@ -29,14 +30,10 @@ public abstract class HealthPotion extends Potion {
     public Image getImage() {
         Image image = super.getImage();
         image.setUserObject(this);
-        image.addListener(new ClickListener(){
-            public void clicked (InputEvent event, float x, float y) {
-                Actor actor = event.getListenerActor();
-                HealthPotion healthPotion = (HealthPotion) actor.getUserObject();
-                System.out.println("BUYING : " + healthPotion.getName());
-            }
-        });
-
         return image;
+    }
+
+    public HealthPotionEnum getType() {
+        return type;
     }
 }

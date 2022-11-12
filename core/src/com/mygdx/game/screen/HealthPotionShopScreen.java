@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -34,12 +36,12 @@ public class HealthPotionShopScreen implements Screen {
     }
 
     private void createGuiObjects() {
-        HealthPotion potion1 = new MinorHealthPotion();
-        HealthPotion potion2 = new SmallHealthPotion();
-        HealthPotion potion3 = new GreatHealthPotion();
-        HealthPotion potion4 = new GreaterHealthPotion();
+        HealthPotion minorHealthPotion = new MinorHealthPotion();
+        HealthPotion smallHealthPotion = new SmallHealthPotion();
+        HealthPotion greatHealthPotion = new GreatHealthPotion();
+        HealthPotion greaterHealthPotion = new GreaterHealthPotion();
 
-        createUiTable(potion1, potion2, potion3, potion4);
+        createUiTable(minorHealthPotion, smallHealthPotion, greatHealthPotion, greaterHealthPotion);
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = game.getGameFont();
@@ -66,6 +68,16 @@ public class HealthPotionShopScreen implements Screen {
         labelStyle.font = game.getGameFont();
         labelStyle.fontColor = Color.RED;
 
+        Label currentMoney = new Label(game.getMoney().toString(), labelStyle);
+
+        currentMoney.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                Label label = (Label) this.getActor();
+                label.setText(game.getMoney().toString());
+                return false;
+            }
+        });
         Label shopLabel = new Label("Health Potion Shop", labelStyle);
 
         Table table = new Table();
@@ -76,19 +88,45 @@ public class HealthPotionShopScreen implements Screen {
         Table healthPotionTable3 = createPotionDetails(potion3);
         Table healthPotionTable4 = createPotionDetails(potion4);
 
+        Image potion1Image = potion1.getImage();
+        Image potion2Image = potion2.getImage();
+        Image potion3Image = potion3.getImage();
+        Image potion4Image = potion4.getImage();
+
+        ClickListener clickListener = new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                Actor actor = event.getListenerActor();
+                HealthPotion healthPotion = (HealthPotion) actor.getUserObject();
+                buyHealthPotion(healthPotion);
+            }
+        };
+
+        potion1Image.addListener(clickListener);
+        potion2Image.addListener(clickListener);
+        potion3Image.addListener(clickListener);
+        potion4Image.addListener(clickListener);
+
+        table.add(currentMoney).colspan(7);
+        table.row();
         table.add(shopLabel).colspan(7);
         table.row().pad(10, 10, 10, 0).size(200);
-        table.add(potion1.getImage());
+        table.add(potion1Image);
         table.add(healthPotionTable1);
-        table.add(potion2.getImage());
+        table.add(potion2Image);
         table.add(healthPotionTable2);
         table.row().pad(10, 10, 10, 0).size(200);
-        table.add(potion3.getImage());
+        table.add(potion3Image);
         table.add(healthPotionTable3).fillX().fillY();
-        table.add(potion4.getImage());
+        table.add(potion4Image);
         table.add(healthPotionTable4).fillX().fillY();
 
         stage.addActor(table);
+    }
+
+    private void buyHealthPotion(HealthPotion healthPotion) {
+        System.out.println("Buying potion " + healthPotion);
+        game.addHealthPotion(healthPotion.getType());
+        game.subtractMoney(healthPotion.getPrice());
     }
 
     private Table createPotionDetails(HealthPotion healthPotion) {
@@ -121,9 +159,11 @@ public class HealthPotionShopScreen implements Screen {
             public void clicked (InputEvent event, float x, float y) {
                 Actor actor = event.getListenerActor();
                 HealthPotion healthPotion = (HealthPotion) actor.getUserObject();
-                System.out.println("BUYING : " + healthPotion.getName());
+                buyHealthPotion(healthPotion);
             }
         });
+
+
 
         table.add(nameLabel).colspan(3);
         table.row();

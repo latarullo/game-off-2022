@@ -76,7 +76,7 @@ public class BigNumberNotation {
         stringBuilder.append("0 ");
         stringBuilder.append(tempValue);
         stringBuilder.append(".");
-        stringBuilder.append(resto);
+        stringBuilder.append(resto.add(new BigInteger("1000")).toString().substring(1, 4));
         stringBuilder.append(" ");
         stringBuilder.append(numberNotation);
 
