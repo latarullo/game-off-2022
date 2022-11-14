@@ -6,7 +6,7 @@ public class FireWizard extends Wizard {
 
     public FireWizard() {
         this.wizardType = WizardType.FIRE;
-        this.spellSound = Gdx.audio.newSound(Gdx.files.internal("wizard-fire-spell.wav"));
+        this.spellSound = Gdx.audio.newSound(Gdx.files.internal("sounds/wizard-fire-spell.wav"));
         loadAnimations();
     }
 }

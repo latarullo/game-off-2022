@@ -4,10 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -15,13 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.BigNumberNotation;
 import com.mygdx.game.GameOff2022;
-import com.mygdx.game.domain.GreatHealthPotion;
-import com.mygdx.game.domain.GreaterHealthPotion;
-import com.mygdx.game.domain.HealthPotion;
-import com.mygdx.game.domain.MinorHealthPotion;
-import com.mygdx.game.domain.SmallHealthPotion;
+import com.mygdx.game.screen.gui.component.LemonMoneyGUI;
 
 public class UpgradeScreen implements Screen {
     private GameOff2022 game;
@@ -36,14 +29,6 @@ public class UpgradeScreen implements Screen {
 
     private void createGuiObjects() {
         createUiTable();
-
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = game.getGameFont();
-        textButtonStyle.fontColor = Color.WHITE;
-
-
-
-        //stage.addActor(returnButton);
     }
 
 
@@ -58,7 +43,7 @@ public class UpgradeScreen implements Screen {
             @Override
             public boolean act(float delta) {
                 Label label = (Label) this.getActor();
-                CharSequence printableValue = BigNumberNotation.getPrintableValue(game.getMoney());
+                CharSequence printableValue = game.getMoney().toString();
                 label.setText(printableValue);
                 return false;
             }
@@ -85,10 +70,13 @@ public class UpgradeScreen implements Screen {
         });
         returnButton.setPosition(50, Gdx.graphics.getHeight() - 65);
 
+        LemonMoneyGUI lemonMoneyGUI = new LemonMoneyGUI(game);
+        Table tableLemonMoney = lemonMoneyGUI.createTable();
+
         table.setDebug(true);
         table.left().top().pad(10,10,0,0);
         table.add(returnButton).align(Align.topLeft);
-        table.add(currentMoney).colspan(7).align(Align.right);
+        table.add(tableLemonMoney);
         table.row();
         table.add(shopLabel).colspan(7);
         table.row().pad(10, 10, 10, 0);

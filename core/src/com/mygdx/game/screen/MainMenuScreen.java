@@ -26,7 +26,7 @@ public class MainMenuScreen implements Screen {
     private float stateTime;
     private TextureAtlas atlas;
     private Animation<TextureRegion> wizardAttackAnimation;
-    Texture menuTexture = new Texture(Gdx.files.internal("menu.png"));
+    Texture menuTexture = new Texture(Gdx.files.internal("GUI/menu.png"));
 
     public MainMenuScreen(final GameOff2022 game){
         this.game = game;
@@ -78,7 +78,7 @@ public class MainMenuScreen implements Screen {
         upgradeScreen.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.changeScreen(new UpgradeScreen(game));
+                game.changeScreen(new RestartScreen(game));
             }
         });
 

@@ -15,9 +15,6 @@ import java.util.Map;
  * https://playtaptales.com/really-big-numbers/
  **/
 public class BigNumberNotation {
-
-    static BigInteger MIL = BigInteger.valueOf(1000);
-
     private static final Map<Integer, String> numberNotationMap;
 
     static {

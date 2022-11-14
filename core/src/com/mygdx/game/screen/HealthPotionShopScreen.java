@@ -20,13 +20,18 @@ import com.mygdx.game.GameOff2022;
 import com.mygdx.game.domain.GreatHealthPotion;
 import com.mygdx.game.domain.GreaterHealthPotion;
 import com.mygdx.game.domain.HealthPotion;
+import com.mygdx.game.domain.HealthPotionEnum;
 import com.mygdx.game.domain.MinorHealthPotion;
 import com.mygdx.game.domain.SmallHealthPotion;
+import com.mygdx.game.screen.gui.component.HealthPotionScreenGUI;
+import com.mygdx.game.screen.gui.component.LemonMoneyGUI;
 
 public class HealthPotionShopScreen implements Screen {
 
     private GameOff2022 game;
     private Stage stage;
+    private HealthPotionScreenGUI healthPotionScreenGUI = new HealthPotionScreenGUI();
+    private LemonMoneyGUI lemonMoneyGUI;
 
     public HealthPotionShopScreen(GameOff2022 game){
         this.game = game;
@@ -68,16 +73,8 @@ public class HealthPotionShopScreen implements Screen {
         labelStyle.font = game.getGameFont();
         labelStyle.fontColor = Color.RED;
 
-        Label currentMoney = new Label(game.getMoney().toString(), labelStyle);
+        lemonMoneyGUI = new LemonMoneyGUI(game);
 
-        currentMoney.addAction(new Action() {
-            @Override
-            public boolean act(float delta) {
-                Label label = (Label) this.getActor();
-                label.setText(game.getMoney().toString());
-                return false;
-            }
-        });
         Label shopLabel = new Label("Health Potion Shop", labelStyle);
 
         Table table = new Table();
@@ -97,7 +94,10 @@ public class HealthPotionShopScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 Actor actor = event.getListenerActor();
                 HealthPotion healthPotion = (HealthPotion) actor.getUserObject();
-                buyHealthPotion(healthPotion);
+                if (game.getMoney().compareTo(healthPotion.getPrice()) >= 0) {
+                    game.subtractMoney(healthPotion.getPrice());
+                    buyHealthPotion(healthPotion);
+                }
             }
         };
 
@@ -106,7 +106,7 @@ public class HealthPotionShopScreen implements Screen {
         potion3Image.addListener(clickListener);
         potion4Image.addListener(clickListener);
 
-        table.add(currentMoney).colspan(7);
+        table.add(lemonMoneyGUI.createTable()).colspan(7);
         table.row();
         table.add(shopLabel).colspan(7);
         table.row().pad(10, 10, 10, 0).size(200);
@@ -124,12 +124,10 @@ public class HealthPotionShopScreen implements Screen {
     }
 
     private void buyHealthPotion(HealthPotion healthPotion) {
-        System.out.println("Buying potion " + healthPotion);
         game.addHealthPotion(healthPotion.getType());
-        game.subtractMoney(healthPotion.getPrice());
     }
 
-    private Table createPotionDetails(HealthPotion healthPotion) {
+    private Table createPotionDetails(final HealthPotion healthPotion) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = game.getGameFontSmall();
         labelStyle.fontColor = Color.RED;
@@ -142,12 +140,24 @@ public class HealthPotionShopScreen implements Screen {
 
         Label nameLabel = new Label(healthPotion.getName(), labelStyle);
         Label healthPowerLabel = new Label("Health Power", labelStyle);
-        Label cooldownLabel = new Label("Cooldown", labelStyle);
+        Label coolDownLabel = new Label("Cooldown", labelStyle);
         Label priceLabel = new Label("Price", labelStyle);
+        Label ownedQuantityLabel = new Label("Owned", labelStyle);
 
         Label healthPowerValueLabel = new Label(String.valueOf(healthPotion.getHealthPower()), labelStyleWhite);
-        Label cooldownValueLabel = new Label(String.valueOf(healthPotion.getCooldown())+"s", labelStyleWhite);
+        Label coolDownValueLabel = new Label(String.valueOf(healthPotion.getCooldown())+"s", labelStyleWhite);
         Label priceValueLabel = new Label(String.valueOf(healthPotion.getPrice())+"$", labelStyleWhite);
+        Label ownedQuantityValueLabel = new Label(String.valueOf(healthPotion.getPrice())+"$", labelStyleWhite);
+
+        ownedQuantityValueLabel.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                Label label = (Label) this.getActor();
+                Integer ownedQuantity = game.getPotions().get(healthPotion.getType());
+                label.setText(ownedQuantity.toString());
+                return false;
+            }
+        });
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = game.getGameFont();
@@ -159,22 +169,26 @@ public class HealthPotionShopScreen implements Screen {
             public void clicked (InputEvent event, float x, float y) {
                 Actor actor = event.getListenerActor();
                 HealthPotion healthPotion = (HealthPotion) actor.getUserObject();
-                buyHealthPotion(healthPotion);
+                if (game.getMoney().compareTo(healthPotion.getPrice()) >= 0) {
+                    game.subtractMoney(healthPotion.getPrice());
+                    buyHealthPotion(healthPotion);
+                }
             }
         });
-
-
 
         table.add(nameLabel).colspan(3);
         table.row();
         table.add(healthPowerLabel).colspan(1).align(Align.left);
         table.add(healthPowerValueLabel).colspan(1).align(Align.right);
         table.row();
-        table.add(cooldownLabel).colspan(1).align(Align.left);
-        table.add(cooldownValueLabel).colspan(1).align(Align.right);
+        table.add(coolDownLabel).colspan(1).align(Align.left);
+        table.add(coolDownValueLabel).colspan(1).align(Align.right);
         table.row();
         table.add(priceLabel).colspan(1).align(Align.left);
         table.add(priceValueLabel).colspan(1).align(Align.right);
+        table.row();
+        table.add(ownedQuantityLabel).colspan(1).align(Align.left);
+        table.add(ownedQuantityValueLabel).colspan(1).align(Align.right);
         table.row();
         table.add(buyButton).colspan(2).align(Align.center);
 

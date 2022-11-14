@@ -2,14 +2,16 @@ package com.mygdx.game.screen.actor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.domain.HealthPotion;
+import com.mygdx.game.screen.gui.component.HealthBarGUI;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,8 +24,11 @@ public abstract class Wizard extends Actor implements Disposable {
     protected WizardType wizardType;
     private float maxLife = 100;
     private float currentLife = maxLife;
-    private float damage;
+    private BigInteger damage = new BigInteger("55");
     protected Sound spellSound;
+    private HealthBarGUI healthBar = new HealthBarGUI();
+    private WizardSpellParticle wizardSpellParticle;
+    private AttackDamageParticle attackDamageParticle;
 
     protected void loadAnimations() {
         this.atlas = new TextureAtlas(Gdx.files.internal(wizardType.getAtlasPath()));
@@ -33,7 +38,7 @@ public abstract class Wizard extends Actor implements Disposable {
             Animation<TextureRegion> animation = new Animation<TextureRegion>(1f/5, atlas.findRegions(regionName), Animation.PlayMode.LOOP);
             animations.put(regionName, animation);
         }
-    }
+   }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -45,21 +50,18 @@ public abstract class Wizard extends Actor implements Disposable {
         this.setWidth(currentAnimation.getRegionWidth());
         this.setHeight(currentAnimation.getRegionWidth());
 
-        //////////Draw healthbar - begin
-        int animationRegionWidth = currentAnimation.getRegionWidth();
-        Texture greenBar = HealthBar.getInstance().getGreenBar();
-        Texture redBar = HealthBar.getInstance().getRedBar();
-        batch.draw(greenBar, this.getX(), this.getY()+ currentAnimation.getRegionHeight() + 30, animationRegionWidth, 10);
-        batch.draw(redBar, this.getX(), this.getY()+ currentAnimation.getRegionHeight() + 30, (1 - currentLife/maxLife) * animationRegionWidth, 10);
-        //////////Draw healthbar - end
+        healthBar.draw(batch, currentAnimation, this.getX(), this.getY(), 10, currentLife, maxLife);
 
+        Enemy enemy = (Enemy) this.getUserObject();
 
         if (!valueAnimation.isAnimationFinished(stateTime)) {
             batch.draw(currentAnimation, this.getX(), this.getY());
         } else {
             if (currentState == WizardState.ATTACK){
-                Enemy enemy = (Enemy) this.getUserObject();
                 this.attack(enemy);
+                wizardSpellParticle = new WizardSpellParticle(this);
+                attackDamageParticle = new AttackDamageParticle(this, this.damage);
+                this.getParent().addActor(wizardSpellParticle);
             } else if (currentState == WizardState.DIE){
                 currentState = WizardState.IDLE;
             }
@@ -67,12 +69,21 @@ public abstract class Wizard extends Actor implements Disposable {
             currentState = WizardState.IDLE;
             currentAnimation = animations.get(state).getKeyFrame(stateTime, true);
             batch.draw(currentAnimation, this.getX(), this.getY());
+        }
+    }
 
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (attackDamageParticle != null) {
+            this.attackDamageParticle.act(delta);
         }
     }
 
     @Override
     public void dispose() {
+        this.spellSound.dispose();
+        this.healthBar.dispose();
         this.atlas.dispose();
     }
 
@@ -91,16 +102,20 @@ public abstract class Wizard extends Actor implements Disposable {
 
     public void attack(Enemy enemy){
         spellSound.play();
-        enemy.takeDamage(10f);
+        enemy.takeDamage(this.damage);
     }
 
-//    public void useHealthPotion(HealthPotion healthPotion){
-//
-//    }
-//
+    public void useHealthPotion(HealthPotion healthPotion){
+        this.currentLife += healthPotion.getHealthPower();
+        if (this.currentLife > this.maxLife){
+            this.currentLife = this.maxLife;
+        }
+    }
+
     public void takeDamage(float damageDealt){
         this.currentLife -= damageDealt;
-        if (currentLife < 0){
+        if (this.currentLife < 0){
+            this.currentLife = 0;
             this.currentState = WizardState.DIE;
         }
     }

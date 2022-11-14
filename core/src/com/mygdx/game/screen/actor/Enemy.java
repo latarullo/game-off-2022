@@ -1,17 +1,18 @@
 package com.mygdx.game.screen.actor;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.GameOff2022;
+import com.mygdx.game.screen.gui.component.HealthBarGUI;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -25,8 +26,10 @@ public class Enemy extends Actor implements Disposable {
     private boolean shouldFaceLeft = true;
     private float maxLife = 100f;
     private float currentLife = 100f;
-    private float damage = 1;
+    private float damage = 0.5f;
     private GameOff2022 game;
+    private HealthBarGUI healthBar = new HealthBarGUI();
+    private BigInteger pointValue = new BigInteger("500");
 
     public Enemy(GameOff2022 game){
         this.game = game;
@@ -73,37 +76,27 @@ public class Enemy extends Actor implements Disposable {
         }
         this.setWidth(currentAnimation.getRegionWidth());
         this.setHeight(currentAnimation.getRegionWidth());
-        Rectangle healthBar = new Rectangle();
-        healthBar.setPosition(this.getX(), this.getY() + currentAnimation.getRegionHeight() + 10);
-        healthBar.setWidth(100);
-
-
-        //////////Draw healthbar - begin
-        int animationRegionWidth = currentAnimation.getRegionWidth();
-        Texture greenBar = HealthBar.getInstance().getGreenBar();
-        Texture redBar = HealthBar.getInstance().getRedBar();
-        batch.draw(greenBar, this.getX(), this.getY()+ currentAnimation.getRegionHeight() + 30, animationRegionWidth, 10);
-        batch.draw(redBar, this.getX(), this.getY()+ currentAnimation.getRegionHeight() + 30, (1 - currentLife/maxLife) * animationRegionWidth, 10);
-        //////////Draw healthbar - end
 
         if (!animation.isAnimationFinished(stateTime)) {
+//            batch.draw(lemonTexture, this.getX(), this.getY(), 256, 256);
+            healthBar.draw(batch, currentAnimation, this.getX(), this.getY(), 10, currentLife, maxLife);
             batch.draw(currentAnimation, this.getX(), this.getY());
         } else {
             if (currentState == EnemyState.DIE){
                 //this.moveBy(0,0);
                 batch.draw(currentAnimation, this.getX(), this.getY());
+                game.addMoney(this.pointValue);
+                currentState = EnemyState.IDLE;
             } else if (currentState == EnemyState.ATTACK){
                 stateTime = 0;
                 this.attack(game.getCurrentWizard());
             }
         }
-
-        //if (currentLife > 0 ) currentLife--;
-        //batch.draw(currentAnimation, this.getX(), this.getY());
     }
 
     @Override
     public void dispose() {
+        this.healthBar.dispose();
         this.atlas.dispose();
     }
 
@@ -111,9 +104,10 @@ public class Enemy extends Actor implements Disposable {
         this.currentState = currentState;
     }
 
-    public void takeDamage(float damage){
-        this.currentLife -= damage;
+    public void takeDamage(BigInteger damage){
+        this.currentLife -= damage.floatValue();
         if (this.currentLife < 0 ){
+            this.currentLife = 0;
             this.currentState=EnemyState.DIE;
             //wont attack animore
             //no more taking damage

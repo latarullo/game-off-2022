@@ -18,8 +18,9 @@ import java.util.Map;
 
 public class GameOff2022 extends Game {
 	private SpriteBatch batch;
-	private BitmapFont gameFontSmall;
 	private BitmapFont gameFont;
+	private BitmapFont gameFontSmall;
+	private BitmapFont gameFontLarge;
 	private Screen previousScreen;
 	private Wizard currentWizard;
 	private Enemy currentEnemy;
@@ -36,6 +37,10 @@ public class GameOff2022 extends Game {
 		FreeTypeFontGenerator.FreeTypeFontParameter parameterSmall = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameterSmall.size = 20;
 		gameFontSmall = generator.generateFont(parameterSmall);
+		gameFont = generator.generateFont(parameter);
+		FreeTypeFontGenerator.FreeTypeFontParameter parameterLarge = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameterLarge.size = 100;
+		gameFontLarge = generator.generateFont(parameterLarge);
 
 		generator.dispose();
 
@@ -70,6 +75,10 @@ public class GameOff2022 extends Game {
 
 	public BitmapFont getGameFontSmall() {
 		return gameFontSmall;
+	}
+
+	public BitmapFont getGameFontLarge() {
+		return gameFontLarge;
 	}
 
 	private Screen getPreviousScreen() {
@@ -119,7 +128,6 @@ public class GameOff2022 extends Game {
 
 	public void useHealthPotion(HealthPotionEnum healthPotionEnum){
 		Integer availableQuantity = this.potions.get(healthPotionEnum);
-		//USE POTION
 		this.potions.put(healthPotionEnum, availableQuantity-1);
 	}
 

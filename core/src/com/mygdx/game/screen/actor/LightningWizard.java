@@ -6,7 +6,7 @@ public class LightningWizard extends Wizard {
 
     public LightningWizard() {
         this.wizardType = WizardType.LIGHTNING;
-        this.spellSound = Gdx.audio.newSound(Gdx.files.internal("wizard-lightning-spell.wav"));
+        this.spellSound = Gdx.audio.newSound(Gdx.files.internal("sounds/wizard-lightning-spell.wav"));
         loadAnimations();
     }
 }
