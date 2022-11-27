@@ -2,12 +2,13 @@ package com.mygdx.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameOff2022;
-import com.mygdx.game.screen.gui.component.RestartScreenGUI;
+import com.mygdx.game.screen.gui.RestartScreenGUI;
 
 public class RestartScreen implements Screen {
     private GameOff2022 game;

@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.CooldownTimer;
+import com.mygdx.game.util.CooldownTimer;
 import com.mygdx.game.GameOff2022;
-import com.mygdx.game.RingCooldownTimer;
+import com.mygdx.game.util.RingCooldownTimer;
 
 public class NewScreenCooldown implements Screen {
     private GameOff2022 game;

@@ -5,7 +5,8 @@ import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.freetype.gwt.FreetypeInjector;
 import com.badlogic.gdx.graphics.g2d.freetype.gwt.inject.OnCompletion;
-import com.mygdx.game.GameData;
+import com.mygdx.game.domain.GameConstants;
+import com.mygdx.game.domain.GameData;
 import com.mygdx.game.GameOff2022;
 
 public class HtmlLauncher extends GwtApplication {
@@ -15,12 +16,15 @@ public class HtmlLauncher extends GwtApplication {
                 // Resizable application, uses available space in browser
 //                return new GwtApplicationConfiguration(true);
                 // Fixed size application:
-                return new GwtApplicationConfiguration(GameData.WIDTH, GameData.HEIGHT, true);
+                GwtApplicationConfiguration gwtApplicationConfiguration = new GwtApplicationConfiguration(GameConstants.WIDTH, GameConstants.HEIGHT, true);
+                gwtApplicationConfiguration.padHorizontal = 0;
+                gwtApplicationConfiguration.padVertical = 0;
+                return gwtApplicationConfiguration;
         }
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new GameOff2022();
+                return GameOff2022.getInstance();
         }
 
         @Override

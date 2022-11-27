@@ -1,9 +1,7 @@
 package com.mygdx.game.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,30 +12,42 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameOff2022;
+import com.mygdx.game.domain.FireWizardItem;
+import com.mygdx.game.domain.GameConstants;
+import com.mygdx.game.controller.GameUpgrades;
+import com.mygdx.game.domain.IceWizardItem;
+import com.mygdx.game.domain.LightningWizardItem;
 import com.mygdx.game.screen.actor.FireWizard;
 import com.mygdx.game.screen.actor.IceWizard;
 import com.mygdx.game.screen.actor.LightningWizard;
 import com.mygdx.game.screen.actor.Wizard;
 import com.mygdx.game.screen.actor.WizardState;
+import com.mygdx.game.screen.actor.WizardType;
+import com.mygdx.game.util.GameFontGenerator;
+import com.mygdx.game.util.GameFontSizeEnum;
 
 public class NewGameScreen implements Screen {
 
     private GameOff2022 game;
     private Stage stage;
+    private GameFontGenerator gameFontGenerator = GameFontGenerator.getInstance();
 
-    public NewGameScreen(GameOff2022 game){
+    public NewGameScreen(GameOff2022 game, boolean isRestart) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
 
-        createGuiObjects();
+        if (isRestart){
+            game.restart();
+        }
+        createGuiObjects(isRestart);
     }
 
-    private void createGuiObjects() {
-        Wizard lightning = new LightningWizard();
-        Wizard fire = new FireWizard();
-        Wizard ice = new IceWizard();
+    private void createGuiObjects(boolean isRestart) {
+        Wizard lightning = LightningWizard.getInstance();
+        Wizard fire = FireWizard.getInstance();
+        Wizard ice = IceWizard.getInstance();
 
-        createUiTable(lightning, fire, ice);
+        createUiTable(lightning, fire, ice, isRestart);
     }
 
     @Override
@@ -45,7 +55,7 @@ public class NewGameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
-    private void createUiTable(Wizard lightningWizard, Wizard fireWizard, Wizard iceWizard){
+    private void createUiTable(Wizard lightningWizard, Wizard fireWizard, Wizard iceWizard, boolean isRestart) {
         TextureRegion lightningIdleSprite = lightningWizard.getIdleSprite();
         TextureRegion fireIdleSprite = fireWizard.getIdleSprite();
         TextureRegion iceIdleSprite = iceWizard.getIdleSprite();
@@ -58,8 +68,21 @@ public class NewGameScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 Wizard wizard = (Wizard) event.getListenerActor().getUserObject();
                 wizard.setCurrentState(WizardState.IDLE);
-                game.setCurrentWizard(wizard);
-                game.changeScreen(new ClickerScreen(game));
+                if (wizard.getWizardType() == WizardType.LIGHTNING) {
+                    GameUpgrades.getInstance().setLightningWizardAvailable(true);
+                    LightningWizardItem.getInstance().setUnlocked(true);
+                } else if (wizard.getWizardType() == WizardType.FIRE) {
+                    GameUpgrades.getInstance().setFireWizardAvailable(true);
+                    FireWizardItem.getInstance().setUnlocked(true);
+                } else if (wizard.getWizardType() == WizardType.ICE) {
+                    GameUpgrades.getInstance().setIceWizardAvailable(true);
+                    IceWizardItem.getInstance().setUnlocked(true);
+                } else {
+                    throw new RuntimeException("Invalid Wizard Type");
+                }
+
+                game.getGameData().setCurrentWizard(wizard);
+                game.changeScreen(new GameScreen(game));
             }
         };
 
@@ -71,21 +94,11 @@ public class NewGameScreen implements Screen {
         fireWizardImage.addListener(wizardClick);
         iceWizardImage.addListener(wizardClick);
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = game.getGameFont();
-        labelStyle.fontColor = Color.WHITE;
+        Label.LabelStyle labelStyle = gameFontGenerator.generateLabelStyle(GameFontSizeEnum.NORMAL,GameConstants.GUI_DISPLAY_COLOR);
 
-        Label.LabelStyle lightningStyle = new Label.LabelStyle();
-        lightningStyle.font = game.getGameFontSmall();
-        lightningStyle.fontColor = Color.PURPLE;
-
-        Label.LabelStyle fireStyle = new Label.LabelStyle();
-        fireStyle.font = game.getGameFontSmall();
-        fireStyle.fontColor = Color.RED;
-
-        Label.LabelStyle iceStyle = new Label.LabelStyle();
-        iceStyle.font = game.getGameFontSmall();
-        iceStyle.fontColor = Color.BLUE;
+        Label.LabelStyle lightningStyle = gameFontGenerator.generateLabelStyle(GameFontSizeEnum.SMALL,GameConstants.GUI_WIZARD_LIGHTNING_COLOR);
+        Label.LabelStyle fireStyle = gameFontGenerator.generateLabelStyle(GameFontSizeEnum.SMALL,GameConstants.GUI_WIZARD_FIRE_COLOR);
+        Label.LabelStyle iceStyle = gameFontGenerator.generateLabelStyle(GameFontSizeEnum.SMALL,GameConstants.GUI_WIZARD_ICE_COLOR);
 
         Label shopLabel = new Label("Choose Your Starting Wizard", labelStyle);
 
@@ -94,21 +107,33 @@ public class NewGameScreen implements Screen {
 
         table.add(shopLabel).colspan(3);
         table.row().pad(10, 10, 10, 0);
-        table.add(lightningWizardImage);
-        table.add(fireWizardImage);
-        table.add(iceWizardImage);
+        if (!isRestart || GameUpgrades.getInstance().isLightningWizardAvailable()) {
+            table.add(lightningWizardImage);
+        }
+        if (!isRestart || GameUpgrades.getInstance().isFireWizardAvailable()) {
+            table.add(fireWizardImage);
+        }
+        if (!isRestart || GameUpgrades.getInstance().isIceWizardAvailable()) {
+            table.add(iceWizardImage);
+        }
         table.row();
 
-        table.add(new Label("Lightning Wizard", lightningStyle));
-        table.add(new Label("Fire Wizard", fireStyle));
-        table.add(new Label("Ice Wizard", iceStyle));
+        if (!isRestart || GameUpgrades.getInstance().isLightningWizardAvailable()) {
+            table.add(new Label("Lightning Wizard", lightningStyle));
+        }
+        if (!isRestart || GameUpgrades.getInstance().isFireWizardAvailable()) {
+            table.add(new Label("Fire Wizard", fireStyle));
+        }
+        if (!isRestart || GameUpgrades.getInstance().isIceWizardAvailable()) {
+            table.add(new Label("Ice Wizard", iceStyle));
+        }
 
         stage.addActor(table);
     }
 
     @Override
     public void render(float delta) {
-		ScreenUtils.clear(0, 0, 0, 1);
+        ScreenUtils.clear(0, 0, 0, 1);
 
         stage.act();
         stage.draw();

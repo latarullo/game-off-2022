@@ -6,140 +6,77 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.mygdx.game.domain.HealthPotion;
-import com.mygdx.game.domain.HealthPotionEnum;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.mygdx.game.domain.GameData;
 import com.mygdx.game.screen.MainMenuScreen;
-import com.mygdx.game.screen.actor.Enemy;
+import com.mygdx.game.screen.actor.EnemyFactory;
 import com.mygdx.game.screen.actor.Wizard;
 
-import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class GameOff2022 extends Game {
-	private SpriteBatch batch;
-	private BitmapFont gameFont;
-	private BitmapFont gameFontSmall;
-	private BitmapFont gameFontLarge;
-	private Screen previousScreen;
-	private Wizard currentWizard;
-	private Enemy currentEnemy;
-	private BigInteger money;
-	private Map<HealthPotionEnum, Integer> potions = new HashMap<>();
+    private static GameOff2022 instance;
 
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/AvQest.ttf"));
-		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.size = 50;
-		gameFont = generator.generateFont(parameter);
-		FreeTypeFontGenerator.FreeTypeFontParameter parameterSmall = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameterSmall.size = 20;
-		gameFontSmall = generator.generateFont(parameterSmall);
-		gameFont = generator.generateFont(parameter);
-		FreeTypeFontGenerator.FreeTypeFontParameter parameterLarge = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameterLarge.size = 100;
-		gameFontLarge = generator.generateFont(parameterLarge);
+    public static GameOff2022 getInstance() {
+        if (instance == null) {
+            instance = new GameOff2022();
+        }
+        return instance;
+    }
 
-		generator.dispose();
+    private GameOff2022() {
 
-		this.resetHealthPotions();
-		this.resetMoney();
+    }
 
-		this.setScreen(new MainMenuScreen(this));
-	}
+    private SpriteBatch batch;
+    private Screen previousScreen;
 
-	@Override
-	public void dispose () {
-		batch.dispose();
-		gameFont.dispose();
-	}
+    private GameData gameData = GameData.getInstance();
 
-	public void changeScreen(Screen screen){
-		this.previousScreen = getScreen();
-		this.setScreen(screen);
-	}
+    @Override
+    public void create() {
+        batch = new SpriteBatch();
 
-	public void changePreviousScreen(){
-		this.changeScreen(getPreviousScreen());
-	}
+        this.getGameData().reset();
 
-	public SpriteBatch getBatch() {
-		return batch;
-	}
+        this.setScreen(new MainMenuScreen(this));
+    }
 
-	public BitmapFont getGameFont() {
-		return gameFont;
-	}
+    @Override
+    public void dispose() {
+        batch.dispose();
+    }
 
-	public BitmapFont getGameFontSmall() {
-		return gameFontSmall;
-	}
+    public void changeScreen(Screen screen) {
+        this.previousScreen = getScreen();
+        this.setScreen(screen);
+    }
 
-	public BitmapFont getGameFontLarge() {
-		return gameFontLarge;
-	}
+    public void changePreviousScreen() {
+        this.changeScreen(getPreviousScreen());
+    }
 
-	private Screen getPreviousScreen() {
-		return previousScreen;
-	}
+    public SpriteBatch getBatch() {
+        return batch;
+    }
 
-	public Wizard getCurrentWizard() {
-		return currentWizard;
-	}
+    private Screen getPreviousScreen() {
+        return previousScreen;
+    }
 
-	public void setCurrentWizard(Wizard currentWizard) {
-		this.currentWizard = currentWizard;
-	}
+    public void createNewEnemy(Group actorHolder) {
+        getGameData().setEnemyKilledCounter(gameData.getEnemyKilledCounter() + 1);
+        actorHolder.addActor(EnemyFactory.create(this));
+    }
 
-	public Enemy getCurrentEnemy() {
-		return currentEnemy;
-	}
+    public GameData getGameData() {
+        return gameData;
+    }
 
-	public void setCurrentEnemy(Enemy currentEnemy) {
-		this.currentEnemy = currentEnemy;
-	}
-
-	public BigInteger getMoney() {
-		return money;
-	}
-
-	public void addMoney(BigInteger money) {
-		this.money = this.money.add(money);
-	}
-
-	public void subtractMoney(BigInteger money) {
-		this.money = this.money.subtract(money);
-	}
-
-	public void resetMoney (){
-		this.money = BigInteger.ZERO;
-	}
-
-	public void addHealthPotion(HealthPotionEnum healthPotionEnum){
-		Integer potion = this.potions.get(healthPotionEnum);
-		if (potion == null){
-			this.potions.put(healthPotionEnum, 1);
-		} else {
-			this.potions.put(healthPotionEnum, potion+1);
-		}
-	}
-
-	public void useHealthPotion(HealthPotionEnum healthPotionEnum){
-		Integer availableQuantity = this.potions.get(healthPotionEnum);
-		this.potions.put(healthPotionEnum, availableQuantity-1);
-	}
-
-	public void resetHealthPotions(){
-		this.potions = new HashMap<>();
-		this.potions.put(HealthPotionEnum.MinorHealthPotion, 0);
-		this.potions.put(HealthPotionEnum.SmallHealthPotion, 0);
-		this.potions.put(HealthPotionEnum.GreatHealthPotion, 0);
-		this.potions.put(HealthPotionEnum.GreaterHealthPotion, 0);
-	}
-
-	public Map<HealthPotionEnum, Integer> getPotions() {
-		return potions;
-	}
+    public void restart(){
+        List<Wizard> availableWizards = gameData.getAvailableWizards();
+        for (Wizard availableWizard : availableWizards) {
+            availableWizard.reset();
+        }
+    }
 }

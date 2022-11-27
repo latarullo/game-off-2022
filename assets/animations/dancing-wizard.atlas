@@ -1,0 +1,216 @@
+
+dancing-wizard.png
+size: 8192, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+dancing-wizard
+  rotate: false
+  xy: 2, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 1
+dancing-wizard
+  rotate: false
+  xy: 2, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 14
+dancing-wizard
+  rotate: false
+  xy: 364, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 27
+dancing-wizard
+  rotate: false
+  xy: 364, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 6
+dancing-wizard
+  rotate: false
+  xy: 726, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 19
+dancing-wizard
+  rotate: false
+  xy: 726, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 11
+dancing-wizard
+  rotate: false
+  xy: 1088, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 24
+dancing-wizard
+  rotate: false
+  xy: 1088, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 3
+dancing-wizard
+  rotate: false
+  xy: 1450, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 16
+dancing-wizard
+  rotate: false
+  xy: 1450, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 29
+dancing-wizard
+  rotate: false
+  xy: 1812, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 8
+dancing-wizard
+  rotate: false
+  xy: 1812, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 21
+dancing-wizard
+  rotate: false
+  xy: 2174, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 0
+dancing-wizard
+  rotate: false
+  xy: 2174, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 13
+dancing-wizard
+  rotate: false
+  xy: 2536, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 26
+dancing-wizard
+  rotate: false
+  xy: 2536, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 5
+dancing-wizard
+  rotate: false
+  xy: 2898, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 18
+dancing-wizard
+  rotate: false
+  xy: 2898, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 10
+dancing-wizard
+  rotate: false
+  xy: 3260, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 23
+dancing-wizard
+  rotate: false
+  xy: 3260, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 2
+dancing-wizard
+  rotate: false
+  xy: 3622, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 15
+dancing-wizard
+  rotate: false
+  xy: 3622, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 28
+dancing-wizard
+  rotate: false
+  xy: 3984, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 20
+dancing-wizard
+  rotate: false
+  xy: 3984, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 7
+dancing-wizard
+  rotate: false
+  xy: 4346, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 12
+dancing-wizard
+  rotate: false
+  xy: 4346, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 25
+dancing-wizard
+  rotate: false
+  xy: 4708, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 4
+dancing-wizard
+  rotate: false
+  xy: 4708, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 17
+dancing-wizard
+  rotate: false
+  xy: 5070, 364
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 22
+dancing-wizard
+  rotate: false
+  xy: 5070, 2
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: 9

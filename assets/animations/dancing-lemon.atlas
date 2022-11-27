@@ -1,0 +1,132 @@
+
+dancing-lemon.png
+size: 8192, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+dancing-lemon
+  rotate: false
+  xy: 2, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 11
+dancing-lemon
+  rotate: false
+  xy: 363, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 3
+dancing-lemon
+  rotate: false
+  xy: 724, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 16
+dancing-lemon
+  rotate: false
+  xy: 1085, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 8
+dancing-lemon
+  rotate: false
+  xy: 1446, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 0
+dancing-lemon
+  rotate: false
+  xy: 1807, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 13
+dancing-lemon
+  rotate: false
+  xy: 2168, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 5
+dancing-lemon
+  rotate: false
+  xy: 2529, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 10
+dancing-lemon
+  rotate: false
+  xy: 2890, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 2
+dancing-lemon
+  rotate: false
+  xy: 3251, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 15
+dancing-lemon
+  rotate: false
+  xy: 3612, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 7
+dancing-lemon
+  rotate: false
+  xy: 3973, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 12
+dancing-lemon
+  rotate: false
+  xy: 4334, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 4
+dancing-lemon
+  rotate: false
+  xy: 4695, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 17
+dancing-lemon
+  rotate: false
+  xy: 5056, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 9
+dancing-lemon
+  rotate: false
+  xy: 5417, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 1
+dancing-lemon
+  rotate: false
+  xy: 5778, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 14
+dancing-lemon
+  rotate: false
+  xy: 6139, 2
+  size: 359, 326
+  orig: 359, 326
+  offset: 0, 0
+  index: 6

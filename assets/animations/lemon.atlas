@@ -7,63 +7,91 @@ repeat: none
 ATTACK
   rotate: false
   xy: 2, 2
-  size: 500, 500
-  orig: 500, 500
+  size: 380, 350
+  orig: 380, 350
   offset: 0, 0
   index: 5
 ATTACK
   rotate: false
-  xy: 504, 2
-  size: 500, 500
-  orig: 500, 500
+  xy: 766, 2
+  size: 380, 350
+  orig: 380, 350
   offset: 0, 0
   index: 2
 ATTACK
   rotate: false
-  xy: 1006, 2
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 7
-ATTACK
-  rotate: false
-  xy: 1508, 2
-  size: 500, 500
-  orig: 500, 500
+  xy: 1530, 2
+  size: 380, 350
+  orig: 380, 350
   offset: 0, 0
   index: 4
 ATTACK
   rotate: false
-  xy: 2010, 2
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 9
-ATTACK
-  rotate: false
-  xy: 2512, 2
-  size: 500, 500
-  orig: 500, 500
+  xy: 2294, 2
+  size: 380, 350
+  orig: 380, 350
   offset: 0, 0
   index: 1
 ATTACK
   rotate: false
-  xy: 3014, 2
-  size: 500, 500
-  orig: 500, 500
+  xy: 2676, 2
+  size: 380, 350
+  orig: 380, 350
   offset: 0, 0
   index: 6
 ATTACK
   rotate: false
-  xy: 3516, 2
-  size: 500, 500
-  orig: 500, 500
+  xy: 3440, 2
+  size: 380, 350
+  orig: 380, 350
   offset: 0, 0
   index: 3
 ATTACK
   rotate: false
-  xy: 4018, 2
-  size: 500, 500
-  orig: 500, 500
+  xy: 4586, 2
+  size: 380, 350
+  orig: 380, 350
   offset: 0, 0
-  index: 8
+  index: 0
+DIE
+  rotate: false
+  xy: 384, 2
+  size: 380, 350
+  orig: 380, 350
+  offset: 0, 0
+  index: 2
+DIE
+  rotate: false
+  xy: 1148, 2
+  size: 380, 350
+  orig: 380, 350
+  offset: 0, 0
+  index: 4
+DIE
+  rotate: false
+  xy: 1912, 2
+  size: 380, 350
+  orig: 380, 350
+  offset: 0, 0
+  index: 1
+DIE
+  rotate: false
+  xy: 3058, 2
+  size: 380, 350
+  orig: 380, 350
+  offset: 0, 0
+  index: 3
+DIE
+  rotate: false
+  xy: 3822, 2
+  size: 380, 350
+  orig: 380, 350
+  offset: 0, 0
+  index: 0
+DIE
+  rotate: false
+  xy: 4204, 2
+  size: 380, 350
+  orig: 380, 350
+  offset: 0, 0
+  index: 5
