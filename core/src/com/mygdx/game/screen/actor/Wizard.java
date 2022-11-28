@@ -12,8 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.GameOff2022;
 import com.mygdx.game.controller.GameUpgrades;
+import com.mygdx.game.domain.FoodHealthPowerItem;
 import com.mygdx.game.domain.GameData;
 import com.mygdx.game.domain.ConsumableItem;
+import com.mygdx.game.domain.WizardSpellPowerItem;
 import com.mygdx.game.screen.RestartScreen;
 import com.mygdx.game.screen.actor.particle.AttackDamage;
 import com.mygdx.game.screen.actor.particle.WizardSpell;
@@ -69,11 +71,9 @@ public abstract class Wizard extends Actor implements Damageable, Disposable {
         } else {
             if (currentState == WizardState.ATTACK) {
                 this.attack(enemy);
-                wizardSpellParticle = new WizardSpell(this);
-                attackDamageParticle = new AttackDamage(this, damage);
                 this.getParent().addActor(wizardSpellParticle);
             } else if (currentState == WizardState.DIE) {
-                die();
+                killWizard();
             }
             this.setCurrentState(WizardState.IDLE);
             currentAnimation = animations.get(state).getKeyFrame(stateTime, true);
@@ -81,7 +81,7 @@ public abstract class Wizard extends Actor implements Damageable, Disposable {
         }
     }
 
-    private void die() {
+    private void killWizard() {
         Group parent = this.getParent();
 
         List<Wizard> availableWizards = GameData.getInstance().getAvailableWizards();
@@ -132,20 +132,26 @@ public abstract class Wizard extends Actor implements Damageable, Disposable {
     }
 
     public void attack(Enemy enemy) {
+        WizardSpellPowerItem wizardSpellPowerItem = WizardSpellPowerItem.getInstance();
+        long bonusDamage = wizardSpellPowerItem.getBonusSpellPowerDamage();
+        BigInteger damage = this.damage.add(BigInteger.valueOf(bonusDamage));
         spellSound.play();
         boolean godMode = GameUpgrades.getInstance().isGodMode();
         if (godMode) {
             Float maxLife = enemy.getMaxLife()+1;
             BigInteger bigInteger = new BigInteger(String.valueOf(maxLife.intValue()));
-            enemy.takeDamage(bigInteger);
-        } else {
-            enemy.takeDamage(this.damage);
+            damage = bigInteger;
         }
+        enemy.takeDamage(damage);
+        wizardSpellParticle = new WizardSpell(this);
+        attackDamageParticle = new AttackDamage(this, damage);
     }
 
-    public void useHealthPotion(ConsumableItem healthPotion) {
+    public void useConsumable(ConsumableItem healthPotion) {
+        FoodHealthPowerItem foodHealthPowerItem = FoodHealthPowerItem.getInstance();
+        long bonusHealth = foodHealthPowerItem.getBonusHealthPower();
         drinkPotionSound.play();
-        this.currentLife += healthPotion.getHealthPower();
+        this.currentLife += healthPotion.getHealthPower() * bonusHealth;
         if (this.currentLife > this.maxLife) {
             this.currentLife = this.maxLife;
         }
@@ -191,5 +197,10 @@ public abstract class Wizard extends Actor implements Damageable, Disposable {
     public void reset(){
         this.currentLife = this.maxLife;
         this.stateTime = 0;
+    }
+
+    public void wizardHealthUp(long bonusHealthPower) {
+        currentLife += bonusHealthPower;
+        maxLife += bonusHealthPower;
     }
 }

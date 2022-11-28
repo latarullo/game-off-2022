@@ -1,13 +1,11 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.mygdx.game.domain.GameData;
+import com.mygdx.game.domain.WizardHealthPowerItem;
 import com.mygdx.game.screen.MainMenuScreen;
 import com.mygdx.game.screen.actor.EnemyFactory;
 import com.mygdx.game.screen.actor.Wizard;
@@ -15,12 +13,9 @@ import com.mygdx.game.screen.actor.Wizard;
 import java.util.List;
 
 public class GameOff2022 extends Game {
-    private static GameOff2022 instance;
+    private final static GameOff2022 instance = new GameOff2022();;
 
     public static GameOff2022 getInstance() {
-        if (instance == null) {
-            instance = new GameOff2022();
-        }
         return instance;
     }
 
@@ -73,10 +68,23 @@ public class GameOff2022 extends Game {
         return gameData;
     }
 
-    public void restart(){
+    public void restart() {
+        gameData.reset();
+
         List<Wizard> availableWizards = gameData.getAvailableWizards();
         for (Wizard availableWizard : availableWizards) {
             availableWizard.reset();
         }
+
+        //achievements and achievement counters reset
+    }
+
+    public void wizardHelthUp(WizardHealthPowerItem wizardHealthPowerItem) {
+        List<Wizard> availableWizards = gameData.getAvailableWizards();
+        for (Wizard availableWizard : availableWizards) {
+            availableWizard.wizardHealthUp(wizardHealthPowerItem.getBonusHealthPower());
+        }
+
+        //achievements and achievement counters reset
     }
 }

@@ -40,7 +40,6 @@ public class GameAchievements {
 
     public void unlockGodMode() {
         AchievementType achievementType = AchievementType.GOD_MODE;
-        GodMode.getInstance().setUnlocked(true);
         currentStage.addActor(new AchievementGUI(achievementType.name(), "Lemonade time"));
     }
 

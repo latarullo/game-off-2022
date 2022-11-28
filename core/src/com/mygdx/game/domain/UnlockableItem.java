@@ -2,16 +2,9 @@ package com.mygdx.game.domain;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-import java.math.BigInteger;
-
 public abstract class UnlockableItem extends Item {
-    BigInteger price;
     UnlockableEnum type;
     boolean unlocked = false;
-
-    public BigInteger getPrice() {
-        return price;
-    }
 
     @Override
     public Image getImage() {
@@ -28,7 +21,7 @@ public abstract class UnlockableItem extends Item {
         return unlocked;
     }
 
-    public void setUnlocked(boolean unlocked) {
-        this.unlocked = unlocked;
+    public void unlock() {
+        this.unlocked = true;
     }
 }

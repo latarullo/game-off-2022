@@ -70,13 +70,13 @@ public class NewGameScreen implements Screen {
                 wizard.setCurrentState(WizardState.IDLE);
                 if (wizard.getWizardType() == WizardType.LIGHTNING) {
                     GameUpgrades.getInstance().setLightningWizardAvailable(true);
-                    LightningWizardItem.getInstance().setUnlocked(true);
+                    LightningWizardItem.getInstance().unlock();
                 } else if (wizard.getWizardType() == WizardType.FIRE) {
                     GameUpgrades.getInstance().setFireWizardAvailable(true);
-                    FireWizardItem.getInstance().setUnlocked(true);
+                    FireWizardItem.getInstance().unlock();
                 } else if (wizard.getWizardType() == WizardType.ICE) {
                     GameUpgrades.getInstance().setIceWizardAvailable(true);
-                    IceWizardItem.getInstance().setUnlocked(true);
+                    IceWizardItem.getInstance().unlock();
                 } else {
                     throw new RuntimeException("Invalid Wizard Type");
                 }

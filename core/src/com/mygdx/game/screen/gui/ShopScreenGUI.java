@@ -13,10 +13,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.GameOff2022;
 import com.mygdx.game.controller.GameAchievements;
 import com.mygdx.game.controller.GameUpgrades;
 import com.mygdx.game.domain.ConsumableItem;
 import com.mygdx.game.domain.FireWizardItem;
+import com.mygdx.game.domain.FoodCooldownItem;
+import com.mygdx.game.domain.FoodHealthPowerItem;
 import com.mygdx.game.domain.GameConstants;
 import com.mygdx.game.domain.GodMode;
 import com.mygdx.game.domain.IceLemonTea;
@@ -25,6 +28,8 @@ import com.mygdx.game.domain.LemonCustardPie;
 import com.mygdx.game.domain.LemonIceCream;
 import com.mygdx.game.domain.LemonSquares;
 import com.mygdx.game.domain.LightningWizardItem;
+import com.mygdx.game.domain.WizardHealthPowerItem;
+import com.mygdx.game.domain.WizardSpellPowerItem;
 import com.mygdx.game.screen.ShopScreen;
 import com.mygdx.game.screen.actor.FireWizard;
 import com.mygdx.game.screen.actor.IceWizard;
@@ -75,8 +80,7 @@ public class ShopScreenGUI implements Disposable {
                 Actor actor = event.getListenerActor();
                 ConsumableItem healthPotion = (ConsumableItem) actor.getUserObject();
                 if (screen.getGame().getGameData().getMoney().compareTo(healthPotion.getPrice()) >= 0) {
-                    screen.getGame().getGameData().subtractMoney(healthPotion.getPrice());
-                    screen.buyHealthPotion(healthPotion);
+                    screen.buyConsumable(healthPotion);
                 } else {
                     if (Math.random() < 0.5f) {
                         notEnoughLemonsSound.play();
@@ -123,39 +127,158 @@ public class ShopScreenGUI implements Disposable {
     }
 
     private void createShopUnlockableItems() {
-        Table learnableItems = new Table();
-        ImageButton spellbook = new ImageButton(new TextureRegionDrawable(new Texture(Gdx.files.internal("resources/spellbook.png"))));
-        learnableItems.add(spellbook).size(128, 128);
-        learnableItems.add().width(10);
-        ImageButton healthup = new ImageButton(new TextureRegionDrawable(new Texture(Gdx.files.internal("resources/health-up.png"))));
-        learnableItems.add(healthup).size(128, 128);
-        learnableItems.add().width(10);
-        ImageButton foodPower = new ImageButton(new TextureRegionDrawable(new Texture(Gdx.files.internal("resources/food-power.png"))));
-        learnableItems.add(foodPower).size(128, 128);
-        learnableItems.add().width(10);
-        ImageButton foodCooldown = new ImageButton(new TextureRegionDrawable(new Texture(Gdx.files.internal("resources/food-cooldown.png"))));
-        learnableItems.add(foodCooldown).size(128, 128);
-        learnableItems.add().width(10);
+        int posX = 100;
+        int posY = 70;
+        int buttonWidth = 128;
+        int buttonHeight = 128;
+
+        ImageButton wizardSpellPowerButton = createWizardSpellPowerButton();
+        wizardSpellPowerButton.setSize(buttonWidth, buttonHeight);
+        wizardSpellPowerButton.setPosition(posX, posY);
+        screen.getStage().addActor(wizardSpellPowerButton);
+
+        posX+=150;
+        ImageButton wizardHealthPowerButton = createWizardHealthPowerButton();
+        wizardHealthPowerButton.setSize(buttonWidth, buttonHeight);
+        wizardHealthPowerButton.setPosition(posX, posY);
+        screen.getStage().addActor(wizardHealthPowerButton);
+
+        posX+=150;
+        ImageButton foodHealthPowerButton = createFoodHealthPowerButton();
+        foodHealthPowerButton.setSize(buttonWidth, buttonHeight);
+        foodHealthPowerButton.setPosition(posX, posY);
+        screen.getStage().addActor(foodHealthPowerButton);
+
+        posX+=150;
+        ImageButton foodCooldownButton = createFoodCooldownButton();
+        foodCooldownButton.setSize(buttonWidth, buttonHeight);
+        foodCooldownButton.setPosition(posX, posY);
+        screen.getStage().addActor(foodCooldownButton);
 
         if (!LightningWizardItem.getInstance().isUnlocked()) {
+            posX+=150;
             ImageButton lightningWizardButton = createLightningWizardButton();
+            lightningWizardButton.setSize(buttonWidth, buttonHeight);
+            lightningWizardButton.setPosition(posX, posY);
             screen.getStage().addActor(lightningWizardButton);
         }
 
         if (!FireWizardItem.getInstance().isUnlocked()) {
+            posX+=150;
             ImageButton fireWizardButton = createFireWizardButton();
+            fireWizardButton.setSize(buttonWidth, buttonHeight);
+            fireWizardButton.setPosition(posX, posY);
             screen.getStage().addActor(fireWizardButton);
         }
 
         if (!IceWizardItem.getInstance().isUnlocked()) {
+            posX+=150;
             ImageButton iceWizardButton = createIceWizardButton();
+            iceWizardButton.setSize(buttonWidth, buttonHeight);
+            iceWizardButton.setPosition(posX, posY);
             screen.getStage().addActor(iceWizardButton);
         }
 
         if (!GodMode.getInstance().isUnlocked()) {
+            posX+=150;
             ImageButton godModeButton = createGodModeButton();
+            godModeButton.setSize(buttonWidth, buttonHeight);
+            godModeButton.setPosition(posX, posY);
             screen.getStage().addActor(godModeButton);
         }
+    }
+
+    private ImageButton createWizardSpellPowerButton() {
+        final WizardSpellPowerItem wizardSpellPowerItem = WizardSpellPowerItem.getInstance();
+        final ImageButton wizardSpellPowerButton = new ImageButton(new TextureRegionDrawable(wizardSpellPowerItem.getTexture()));
+
+        wizardSpellPowerButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                if (screen.getGame().getGameData().getMoney().compareTo(wizardSpellPowerItem.getPrice()) >= 0) {
+                    screen.buyUpgradeable(wizardSpellPowerItem);
+                } else {
+                    if (Math.random() < 0.5f) {
+                        notEnoughLemonsSound.play();
+                    } else {
+                        youRequireMoreLemonsSound.play();
+                    }
+                }
+            }
+        });
+
+        wizardSpellPowerButton.addListener(new HoverClickListener(wizardSpellPowerItem));
+
+        return wizardSpellPowerButton;
+    }
+
+    private ImageButton createWizardHealthPowerButton() {
+        final WizardHealthPowerItem wizardHealthPowerItem = WizardHealthPowerItem.getInstance();
+        final ImageButton wizardHealthPowerButton = new ImageButton(new TextureRegionDrawable(wizardHealthPowerItem.getTexture()));
+
+        wizardHealthPowerButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                if (screen.getGame().getGameData().getMoney().compareTo(wizardHealthPowerItem.getPrice()) >= 0) {
+                    screen.buyUpgradeable(wizardHealthPowerItem);
+                    GameOff2022.getInstance().wizardHelthUp(wizardHealthPowerItem);
+                } else {
+                    if (Math.random() < 0.5f) {
+                        notEnoughLemonsSound.play();
+                    } else {
+                        youRequireMoreLemonsSound.play();
+                    }
+                }
+            }
+        });
+
+        wizardHealthPowerButton.addListener(new HoverClickListener(wizardHealthPowerItem));
+
+        return wizardHealthPowerButton;
+    }
+
+    private ImageButton createFoodHealthPowerButton() {
+        final FoodHealthPowerItem foodHealthPowerItem = FoodHealthPowerItem.getInstance();
+        final ImageButton foodHealthPowerButton = new ImageButton(new TextureRegionDrawable(foodHealthPowerItem.getTexture()));
+
+        foodHealthPowerButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                if (screen.getGame().getGameData().getMoney().compareTo(foodHealthPowerItem.getPrice()) >= 0) {
+                    screen.buyUpgradeable(foodHealthPowerItem);
+                } else {
+                    if (Math.random() < 0.5f) {
+                        notEnoughLemonsSound.play();
+                    } else {
+                        youRequireMoreLemonsSound.play();
+                    }
+                }
+            }
+        });
+
+        foodHealthPowerButton.addListener(new HoverClickListener(foodHealthPowerItem));
+
+        return foodHealthPowerButton;
+    }
+
+    private ImageButton createFoodCooldownButton() {
+        final FoodCooldownItem foodCooldownItem = FoodCooldownItem.getInstance();
+        final ImageButton foodCooldownButton = new ImageButton(new TextureRegionDrawable(foodCooldownItem.getTexture()));
+
+        foodCooldownButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                if (screen.getGame().getGameData().getMoney().compareTo(foodCooldownItem.getPrice()) >= 0) {
+                    screen.buyUpgradeable(foodCooldownItem);
+                } else {
+                    if (Math.random() < 0.5f) {
+                        notEnoughLemonsSound.play();
+                    } else {
+                        youRequireMoreLemonsSound.play();
+                    }
+                }
+            }
+        });
+
+        foodCooldownButton.addListener(new HoverClickListener(foodCooldownItem));
+
+        return foodCooldownButton;
     }
 
     private ImageButton createLightningWizardButton() {
@@ -169,13 +292,12 @@ public class ShopScreenGUI implements Disposable {
                     return;
                 }
 
-                Actor actor = event.getListenerActor();
-                ConsumableItem healthPotion = (ConsumableItem) actor.getUserObject();
                 if (screen.getGame().getGameData().getMoney().compareTo(lightningWizardItem.getPrice()) >= 0) {
+                    screen.buyUnlockable(lightningWizardItem);
                     GameUpgrades.getInstance().setLightningWizardAvailable(true);
                     GameAchievements.getInstance().setCurrentStage(screen.getStage());
                     GameAchievements.getInstance().unlockWizard(WizardType.LIGHTNING);
-                    lightningWizardItem.setUnlocked(true);
+                    lightningWizardButton.setVisible(false);
                 } else {
                     if (Math.random() < 0.5f) {
                         notEnoughLemonsSound.play();
@@ -186,8 +308,6 @@ public class ShopScreenGUI implements Disposable {
             }
         });
 
-        lightningWizardButton.setSize(128, 128);
-        lightningWizardButton.setPosition(600, 50);
         lightningWizardButton.addListener(new HoverClickListener(lightningWizardItem));
 
         return lightningWizardButton;
@@ -204,13 +324,12 @@ public class ShopScreenGUI implements Disposable {
                     return;
                 }
 
-                Actor actor = event.getListenerActor();
-                ConsumableItem healthPotion = (ConsumableItem) actor.getUserObject();
                 if (screen.getGame().getGameData().getMoney().compareTo(fireWizardItem.getPrice()) >= 0) {
+                    screen.buyUnlockable(fireWizardItem);
                     GameUpgrades.getInstance().setFireWizardAvailable(true);
                     GameAchievements.getInstance().setCurrentStage(screen.getStage());
                     GameAchievements.getInstance().unlockWizard(WizardType.FIRE);
-                    fireWizardItem.setUnlocked(true);
+                    fireWizardButton.setVisible(false);
                 } else {
                     if (Math.random() < 0.5f) {
                         notEnoughLemonsSound.play();
@@ -221,8 +340,6 @@ public class ShopScreenGUI implements Disposable {
             }
         });
 
-        fireWizardButton.setSize(128, 128);
-        fireWizardButton.setPosition(700, 50);
         fireWizardButton.addListener(new HoverClickListener(fireWizardItem));
 
         return fireWizardButton;
@@ -239,13 +356,12 @@ public class ShopScreenGUI implements Disposable {
                     return;
                 }
 
-                Actor actor = event.getListenerActor();
-                ConsumableItem healthPotion = (ConsumableItem) actor.getUserObject();
                 if (screen.getGame().getGameData().getMoney().compareTo(iceWizardItem.getPrice()) >= 0) {
+                    screen.buyUnlockable(iceWizardItem);
                     GameUpgrades.getInstance().setIceWizardAvailable(true);
                     GameAchievements.getInstance().setCurrentStage(screen.getStage());
                     GameAchievements.getInstance().unlockWizard(WizardType.ICE);
-                    iceWizardItem.setUnlocked(true);
+                    iceWizardButton.setVisible(false);
                 } else {
                     if (Math.random() < 0.5f) {
                         notEnoughLemonsSound.play();
@@ -256,8 +372,6 @@ public class ShopScreenGUI implements Disposable {
             }
         });
 
-        iceWizardButton.setSize(128, 128);
-        iceWizardButton.setPosition(850, 50);
         iceWizardButton.addListener(new HoverClickListener(iceWizardItem));
 
         return iceWizardButton;
@@ -266,19 +380,19 @@ public class ShopScreenGUI implements Disposable {
     private ImageButton createGodModeButton() {
         final GodMode godMode = GodMode.getInstance();
 
-        ImageButton godModeButton = new ImageButton(new TextureRegionDrawable(godMode.getTexture()));
+        final ImageButton godModeButton = new ImageButton(new TextureRegionDrawable(godMode.getTexture()));
         godModeButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 if (godMode.isUnlocked()) {
                     return;
                 }
 
-                Actor actor = event.getListenerActor();
-                ConsumableItem healthPotion = (ConsumableItem) actor.getUserObject();
                 if (screen.getGame().getGameData().getMoney().compareTo(godMode.getPrice()) >= 0) {
+                    screen.buyUnlockable(godMode);
                     GameUpgrades.getInstance().setGodMode(true);
                     GameAchievements.getInstance().setCurrentStage(screen.getStage());
                     GameAchievements.getInstance().unlockGodMode();
+                    godModeButton.setVisible(false);
                 } else {
                     if (Math.random() < 0.5f) {
                         notEnoughLemonsSound.play();
@@ -289,8 +403,7 @@ public class ShopScreenGUI implements Disposable {
             }
         });
 
-        godModeButton.setSize(128, 128);
-        godModeButton.setPosition(1000, 50);
+
         godModeButton.addListener(new HoverClickListener(godMode));
         return godModeButton;
     }

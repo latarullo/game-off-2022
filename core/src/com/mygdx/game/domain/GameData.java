@@ -66,6 +66,11 @@ public class GameData {
     public void reset() {
         resetMoney();
         resetConsumables();
+        resetEnemyKilledCounter();
+    }
+
+    private void resetEnemyKilledCounter() {
+        enemyKilledCounter = 0;
     }
 
     private void resetMoney() {

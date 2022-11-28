@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameOff2022;
 import com.mygdx.game.domain.ConsumableItem;
+import com.mygdx.game.domain.UnlockableItem;
+import com.mygdx.game.domain.UpgradeableItem;
 import com.mygdx.game.screen.gui.LemonMoneyGUI;
 import com.mygdx.game.screen.gui.ShopScreenGUI;
 import com.mygdx.game.util.GameFontGenerator;
@@ -34,9 +36,22 @@ public class ShopScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
-    public void buyHealthPotion(ConsumableItem healthPotion) {
+    public void buyConsumable(ConsumableItem consumableItem) {
         buySound.play();
-        game.getGameData().addConsumable(healthPotion.getType());
+        this.getGame().getGameData().subtractMoney(consumableItem.getPrice());
+        game.getGameData().addConsumable(consumableItem.getType());
+    }
+
+    public void buyUnlockable(UnlockableItem unlockableItem) {
+        buySound.play();
+        this.getGame().getGameData().subtractMoney(unlockableItem.getPrice());
+        unlockableItem.unlock();
+    }
+
+    public void buyUpgradeable(UpgradeableItem upgradeableItem) {
+        buySound.play();
+        this.getGame().getGameData().subtractMoney(upgradeableItem.getPrice());
+        upgradeableItem.upgrade();
     }
 
     @Override

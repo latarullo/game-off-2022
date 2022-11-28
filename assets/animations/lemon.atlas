@@ -7,91 +7,84 @@ repeat: none
 ATTACK
   rotate: false
   xy: 2, 2
-  size: 380, 350
-  orig: 380, 350
+  size: 577, 433
+  orig: 577, 433
   offset: 0, 0
   index: 5
 ATTACK
   rotate: false
-  xy: 766, 2
-  size: 380, 350
-  orig: 380, 350
+  xy: 2, 2
+  size: 577, 433
+  orig: 577, 433
+  offset: 0, 0
+  index: 0
+ATTACK
+  rotate: false
+  xy: 1160, 2
+  size: 577, 433
+  orig: 577, 433
   offset: 0, 0
   index: 2
 ATTACK
   rotate: false
-  xy: 1530, 2
-  size: 380, 350
-  orig: 380, 350
+  xy: 2318, 2
+  size: 577, 433
+  orig: 577, 433
   offset: 0, 0
   index: 4
 ATTACK
   rotate: false
-  xy: 2294, 2
-  size: 380, 350
-  orig: 380, 350
+  xy: 4055, 2
+  size: 577, 433
+  orig: 577, 433
   offset: 0, 0
   index: 1
 ATTACK
   rotate: false
-  xy: 2676, 2
-  size: 380, 350
-  orig: 380, 350
+  xy: 4634, 2
+  size: 577, 433
+  orig: 577, 433
+  offset: 0, 0
+  index: 3
+DIE
+  rotate: false
+  xy: 581, 2
+  size: 577, 433
+  orig: 577, 433
+  offset: 0, 0
+  index: 2
+DIE
+  rotate: false
+  xy: 1739, 2
+  size: 577, 433
+  orig: 577, 433
+  offset: 0, 0
+  index: 4
+DIE
+  rotate: false
+  xy: 2897, 2
+  size: 577, 433
+  orig: 577, 433
+  offset: 0, 0
+  index: 1
+DIE
+  rotate: false
+  xy: 3476, 2
+  size: 577, 433
+  orig: 577, 433
   offset: 0, 0
   index: 6
-ATTACK
+DIE
   rotate: false
-  xy: 3440, 2
-  size: 380, 350
-  orig: 380, 350
-  offset: 0, 0
-  index: 3
-ATTACK
-  rotate: false
-  xy: 4586, 2
-  size: 380, 350
-  orig: 380, 350
+  xy: 5213, 2
+  size: 577, 433
+  orig: 577, 433
   offset: 0, 0
   index: 0
 DIE
   rotate: false
-  xy: 384, 2
-  size: 380, 350
-  orig: 380, 350
-  offset: 0, 0
-  index: 2
-DIE
-  rotate: false
-  xy: 1148, 2
-  size: 380, 350
-  orig: 380, 350
-  offset: 0, 0
-  index: 4
-DIE
-  rotate: false
-  xy: 1912, 2
-  size: 380, 350
-  orig: 380, 350
-  offset: 0, 0
-  index: 1
-DIE
-  rotate: false
-  xy: 3058, 2
-  size: 380, 350
-  orig: 380, 350
-  offset: 0, 0
-  index: 3
-DIE
-  rotate: false
-  xy: 3822, 2
-  size: 380, 350
-  orig: 380, 350
-  offset: 0, 0
-  index: 0
-DIE
-  rotate: false
-  xy: 4204, 2
-  size: 380, 350
-  orig: 380, 350
+  xy: 5792, 2
+  size: 577, 433
+  orig: 577, 433
   offset: 0, 0
   index: 5

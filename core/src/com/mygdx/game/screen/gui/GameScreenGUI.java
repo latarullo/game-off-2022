@@ -204,7 +204,7 @@ public class GameScreenGUI implements Disposable {
                 Integer integer = game.getGameData().getConsumables().get(healthConsumableEnum);
                 if (integer > 0) {
                     if (game.getGameData().getCurrentWizard().canHeal()) {
-                        game.getGameData().getCurrentWizard().useHealthPotion(LemonSquares.getInstance());
+                        game.getGameData().getCurrentWizard().useConsumable(LemonSquares.getInstance());
                         game.getGameData().useConsumable(healthConsumableEnum);
                     }
                 }
@@ -218,7 +218,7 @@ public class GameScreenGUI implements Disposable {
                 Integer integer = game.getGameData().getConsumables().get(healthConsumableEnum);
                 if (integer > 0) {
                     if (game.getGameData().getCurrentWizard().canHeal()) {
-                        game.getGameData().getCurrentWizard().useHealthPotion(IceLemonTea.getInstance());
+                        game.getGameData().getCurrentWizard().useConsumable(IceLemonTea.getInstance());
                         game.getGameData().useConsumable(healthConsumableEnum);
                     }
                 }
@@ -232,7 +232,7 @@ public class GameScreenGUI implements Disposable {
                 Integer integer = game.getGameData().getConsumables().get(healthConsumableEnum);
                 if (integer > 0) {
                     if (game.getGameData().getCurrentWizard().canHeal()) {
-                        game.getGameData().getCurrentWizard().useHealthPotion(LemonIceCream.getInstance());
+                        game.getGameData().getCurrentWizard().useConsumable(LemonIceCream.getInstance());
                         game.getGameData().useConsumable(healthConsumableEnum);
                     }
                 }
@@ -246,7 +246,7 @@ public class GameScreenGUI implements Disposable {
                 Integer integer = game.getGameData().getConsumables().get(healthConsumableEnum);
                 if (integer > 0) {
                     if (game.getGameData().getCurrentWizard().canHeal()) {
-                        game.getGameData().getCurrentWizard().useHealthPotion(LemonCustardPie.getInstance());
+                        game.getGameData().getCurrentWizard().useConsumable(LemonCustardPie.getInstance());
                         game.getGameData().useConsumable(healthConsumableEnum);
                     }
                 }
@@ -421,7 +421,7 @@ public class GameScreenGUI implements Disposable {
                 Integer integer = game.getGameData().getConsumables().get(healthConsumableEnum);
                 if (integer > 0) {
                     if (game.getGameData().getCurrentWizard().canHeal()) {
-                        game.getGameData().getCurrentWizard().useHealthPotion(LemonSquares.getInstance());
+                        game.getGameData().getCurrentWizard().useConsumable(LemonSquares.getInstance());
                         game.getGameData().useConsumable(healthConsumableEnum);
                     }
                 }
@@ -435,7 +435,7 @@ public class GameScreenGUI implements Disposable {
                 Integer integer = game.getGameData().getConsumables().get(healthConsumableEnum);
                 if (integer > 0) {
                     if (game.getGameData().getCurrentWizard().canHeal()) {
-                        game.getGameData().getCurrentWizard().useHealthPotion(IceLemonTea.getInstance());
+                        game.getGameData().getCurrentWizard().useConsumable(IceLemonTea.getInstance());
                         game.getGameData().useConsumable(healthConsumableEnum);
                     }
                 }
@@ -449,7 +449,7 @@ public class GameScreenGUI implements Disposable {
                 Integer integer = game.getGameData().getConsumables().get(healthConsumableEnum);
                 if (integer > 0) {
                     if (game.getGameData().getCurrentWizard().canHeal()) {
-                        game.getGameData().getCurrentWizard().useHealthPotion(LemonIceCream.getInstance());
+                        game.getGameData().getCurrentWizard().useConsumable(LemonIceCream.getInstance());
                         game.getGameData().useConsumable(healthConsumableEnum);
                     }
                 }
@@ -463,7 +463,7 @@ public class GameScreenGUI implements Disposable {
                 Integer integer = game.getGameData().getConsumables().get(healthConsumableEnum);
                 if (integer > 0) {
                     if (game.getGameData().getCurrentWizard().canHeal()) {
-                        game.getGameData().getCurrentWizard().useHealthPotion(LemonCustardPie.getInstance());
+                        game.getGameData().getCurrentWizard().useConsumable(LemonCustardPie.getInstance());
                         game.getGameData().useConsumable(healthConsumableEnum);
                     }
                 }

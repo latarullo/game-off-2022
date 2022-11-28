@@ -15,7 +15,7 @@ public class GodMode extends UnlockableItem {
     private GodMode(){
         this.name = "Who is your daddy";
         this.texture = new Texture(Gdx.files.internal("resources/god-mode.png"));
-        this.price = new BigInteger("1000000000");
+        this.price = BigInteger.ZERO; //new BigInteger("1000000000");
         this.type = UnlockableEnum.GOD_MODE;
     }
 }
