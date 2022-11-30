@@ -52,7 +52,7 @@ public class UpgradeScreenGUI {
         TextButton whosYourDaddy = new TextButton("Who is your daddy?", textButtonStyle);
         whosYourDaddy.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                GameUpgrades.getInstance().setGodMode(true);
+                GameUpgrades.getInstance().unlockGodMode(true);
                 GameAchievements.getInstance().setCurrentStage(screen.getStage());
                 GameAchievements.getInstance().unlockGodMode();
             }

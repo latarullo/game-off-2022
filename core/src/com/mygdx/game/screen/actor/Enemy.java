@@ -2,6 +2,7 @@ package com.mygdx.game.screen.actor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -11,7 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.GameOff2022;
-import com.mygdx.game.screen.gui.HealthBarGUI;
+import com.mygdx.game.controller.GameSoundPlayer;
+import com.mygdx.game.screen.actor.particle.HealthChange;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -27,15 +29,16 @@ public class Enemy extends Actor implements Damageable, Disposable {
     private boolean shouldFaceLeft = false;
     private float maxLife = 100f;
     private float currentLife = 100f;
-    private float damage = 0.5f;
-    private GameOff2022 game;
+    private BigInteger damage = new BigInteger("1");
+    private GameOff2022 game = GameOff2022.getInstance();
     private BigInteger pointValue = new BigInteger("500");
     private Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("sounds/lemon-hurt.wav"));
     private Sound dieSound = Gdx.audio.newSound(Gdx.files.internal("sounds/lemon-die.wav"));
+    private HealthChange healthChangeParticle;
 
-    public Enemy(GameOff2022 game) {
-        this.game = game;
+    public Enemy() {
         loadAnimations();
+        setName("Lemon");
     }
 
     protected void loadAnimations() {
@@ -87,11 +90,24 @@ public class Enemy extends Actor implements Damageable, Disposable {
                 game.getGameData().addMoney(this.pointValue);
                 Group actorHolder = this.getParent();
                 actorHolder.removeActor(this);
+                Wizard wizard = game.getGameData().getCurrentWizard();
+                wizard.killedLemon();
                 game.createNewEnemy(actorHolder);
             } else if (currentState == EnemyState.ATTACK) {
                 stateTime = 0;
-                this.attack(game.getGameData().getCurrentWizard());
+                batch.draw(currentAnimation, this.getX(), this.getY());
+                Wizard wizard = game.getGameData().getCurrentWizard();
+                this.attack(wizard);
+                healthChangeParticle = new HealthChange(this.damage, wizard);
             }
+        }
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (healthChangeParticle != null) {
+            this.healthChangeParticle.act(delta);
         }
     }
 
@@ -106,24 +122,24 @@ public class Enemy extends Actor implements Damageable, Disposable {
     }
 
     public void takeDamage(BigInteger damage) {
-        hurtSound.play();
+        GameSoundPlayer.playSound(hurtSound);
         this.currentLife -= damage.floatValue();
         if (this.currentLife < 0) {
             this.currentLife = 0;
-            dieSound.play();
+            GameSoundPlayer.playSound(dieSound);
             this.setCurrentState(EnemyState.DIE);
         }
     }
 
     public void attack(Wizard wizard) {
-        wizard.takeDamage(this.getDamage());
+        wizard.takeDamage(this.damage);
     }
 
-    public void setDamage(float damage) {
+    public void setDamage(BigInteger damage) {
         this.damage = damage;
     }
 
-    private float getDamage() {
+    private BigInteger getDamage() {
         return this.damage;
     }
 
@@ -156,7 +172,11 @@ public class Enemy extends Actor implements Damageable, Disposable {
         return keyFrames[0];
     }
 
-    public Image getImage(){
+    public Image getImage() {
         return new Image(getIdleSprite());
+    }
+
+    public Color getEnemyColor() {
+        return Color.GREEN;
     }
 }

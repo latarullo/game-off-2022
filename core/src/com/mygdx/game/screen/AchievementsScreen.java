@@ -18,7 +18,7 @@ public class AchievementsScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         gui = new AchievementsScreenGUI(this);
-        stage.addActor(gui.createGUI());
+        gui.createGUI();
     }
 
     @Override

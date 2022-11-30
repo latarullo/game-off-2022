@@ -1,23 +1,27 @@
 package com.mygdx.game.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameOff2022;
+import com.mygdx.game.screen.gui.SettingsScreenGUI;
 
 public class SettingsScreen implements Screen {
     private GameOff2022 game;
     private Stage stage;
+    private SettingsScreenGUI gui = new SettingsScreenGUI(this);
 
     public SettingsScreen(GameOff2022 game){
         this.game = game;
         stage = new Stage(new ScreenViewport());
+        gui.createGUI();
     }
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -50,5 +54,9 @@ public class SettingsScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

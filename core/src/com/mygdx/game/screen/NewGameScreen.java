@@ -15,6 +15,7 @@ import com.mygdx.game.GameOff2022;
 import com.mygdx.game.domain.FireWizardItem;
 import com.mygdx.game.domain.GameConstants;
 import com.mygdx.game.controller.GameUpgrades;
+import com.mygdx.game.domain.GameData;
 import com.mygdx.game.domain.IceWizardItem;
 import com.mygdx.game.domain.LightningWizardItem;
 import com.mygdx.game.screen.actor.FireWizard;
@@ -37,6 +38,7 @@ public class NewGameScreen implements Screen {
         stage = new Stage(new ScreenViewport());
 
         if (isRestart){
+            GameData.getInstance().gameWasReset();
             game.restart();
         }
         createGuiObjects(isRestart);
@@ -69,20 +71,17 @@ public class NewGameScreen implements Screen {
                 Wizard wizard = (Wizard) event.getListenerActor().getUserObject();
                 wizard.setCurrentState(WizardState.IDLE);
                 if (wizard.getWizardType() == WizardType.LIGHTNING) {
-                    GameUpgrades.getInstance().setLightningWizardAvailable(true);
                     LightningWizardItem.getInstance().unlock();
                 } else if (wizard.getWizardType() == WizardType.FIRE) {
-                    GameUpgrades.getInstance().setFireWizardAvailable(true);
                     FireWizardItem.getInstance().unlock();
                 } else if (wizard.getWizardType() == WizardType.ICE) {
-                    GameUpgrades.getInstance().setIceWizardAvailable(true);
                     IceWizardItem.getInstance().unlock();
                 } else {
                     throw new RuntimeException("Invalid Wizard Type");
                 }
 
                 game.getGameData().setCurrentWizard(wizard);
-                game.changeScreen(new GameScreen(game));
+                game.changeScreen(GameScreen.getInstance());
             }
         };
 

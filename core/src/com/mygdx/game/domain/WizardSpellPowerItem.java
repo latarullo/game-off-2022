@@ -14,7 +14,7 @@ public class WizardSpellPowerItem extends UpgradeableItem {
 
     private WizardSpellPowerItem() {
         this.name = "Wizard Spell Power";
-        this.texture = new Texture(Gdx.files.internal("resources/spellbook.png"));
+        this.texture = new Texture(Gdx.files.internal("resources/Icons/wizard-spell-power.png"));
         this.price = BigInteger.ONE;//new BigInteger("10000");
         this.type = UpgradeableEnum.WIZARD_POWER;
         this.bonusMultiplier = 25;

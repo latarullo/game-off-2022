@@ -1,7 +1,6 @@
 package com.mygdx.game.screen.gui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,14 +18,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.GameOff2022;
+import com.mygdx.game.controller.GameAchievements;
+import com.mygdx.game.controller.GameSettings;
 import com.mygdx.game.controller.GameUpgrades;
 import com.mygdx.game.domain.GameConstants;
+import com.mygdx.game.domain.GameData;
+import com.mygdx.game.domain.GodModeItem;
 import com.mygdx.game.domain.HealthConsumableEnum;
 import com.mygdx.game.domain.IceLemonTea;
 import com.mygdx.game.domain.LemonCustardPie;
 import com.mygdx.game.domain.LemonIceCream;
 import com.mygdx.game.domain.LemonSquares;
 import com.mygdx.game.screen.AchievementsScreen;
+import com.mygdx.game.screen.GameOverScreen;
 import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MainMenuScreen;
 import com.mygdx.game.screen.ShopScreen;
@@ -44,7 +48,6 @@ import com.mygdx.game.util.GameFontSizeEnum;
 
 public class GameScreenGUI implements Disposable {
     private GameScreen gameScreen;
-    private Sound switchWizardSound = Gdx.audio.newSound(Gdx.files.internal("sounds/switch-wizard.wav"));
     private Texture background = new Texture(Gdx.files.internal("resources/GameScreen/background.png"));
     private Texture achievementsBackground = new Texture(Gdx.files.internal("resources/AchievementsScreen/background.png"));
     private WizardHealthBarGUI2 wizardHealthBarGUI = new WizardHealthBarGUI2();
@@ -61,14 +64,41 @@ public class GameScreenGUI implements Disposable {
         final GameOff2022 game = gameScreen.getGame();
         final Stage stage = gameScreen.getStage();
 
-        Enemy enemy = EnemyFactory.create(game);
+        Enemy enemy = EnemyFactory.createEnemy();
         stage.addActor(enemy);
 
         Wizard wizard = game.getGameData().getCurrentWizard();
-        wizard.setPosition(100, 100);
         wizard.setCurrentState(WizardState.IDLE);
-        wizard.setUserObject(enemy);
         stage.addActor(wizard);
+
+        Image juiceJarImage = new Image(new Texture(Gdx.files.internal("resources/Icons/lemonade.png")));
+
+        Label.LabelStyle juiceJarLabelStyle = gameFontGenerator.generateLabelStyle(15, Color.BLUE);
+
+        final Label juiceJarLabel = new Label("Lemons to go", juiceJarLabelStyle);
+        juiceJarLabel.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                juiceJarLabel.setText(GameData.getInstance().getLemonsToFinishLemonade() + " lemons remaining");
+                if (GodModeItem.getInstance().isUnlocked() && GameData.getInstance().isLemonadeDone()) {
+                    GameAchievements.getInstance().lemonadeMade();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        Table juiceJarTable = new Table();
+        juiceJarTable.add(juiceJarImage).size(128, 128);
+        juiceJarTable.row();
+        juiceJarTable.add(juiceJarLabel);
+
+        juiceJarTable.setPosition(100, 400);
+        juiceJarTable.setVisible(false);
+
+        GodModeItem.getInstance().setLemonJarTable(juiceJarTable);
+
+        gameScreen.getStage().addActor(juiceJarTable);
 
         LemonMoneyGUI lemonMoneyGUI = new LemonMoneyGUI(game);
         Table lemonMoneyGUITable = lemonMoneyGUI.createTable();
@@ -92,7 +122,8 @@ public class GameScreenGUI implements Disposable {
         ImageButton backButton = new ImageButton(new TextureRegionDrawable(new Texture(Gdx.files.internal("resources/Icons/back.png"))));
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                game.changeScreen(new MainMenuScreen(game));
+                GameData.getInstance().newGame();
+                game.changeScreen(new MainMenuScreen(GameOff2022.getInstance()));
             }
         });
 
@@ -130,10 +161,10 @@ public class GameScreenGUI implements Disposable {
         Table consumables = new Table();
         consumables.setFillParent(true);
         consumables.center().bottom();
-        consumables.add(lemonSquaresButton).size(80,80);
-        consumables.add(iceLemonTeaButton).size(80,80);
-        consumables.add(lemonIceCreamButton).size(80,80);
-        consumables.add(lemonCustardPieButton).size(80,80);
+        consumables.add(lemonSquaresButton).size(80, 80);
+        consumables.add(iceLemonTeaButton).size(80, 80);
+        consumables.add(lemonIceCreamButton).size(80, 80);
+        consumables.add(lemonCustardPieButton).size(80, 80);
         consumables.row();
 
         Label.LabelStyle labelStyle = gameFontGenerator.generateLabelStyle(15, Color.WHITE);
@@ -330,7 +361,7 @@ public class GameScreenGUI implements Disposable {
                 game.getGameData().setCurrentWizard(wizard);
                 wizard.setCurrentState(WizardState.IDLE);
                 table.addActor(wizard);
-                switchWizardSound.play();
+                currentWizard.wizardSwitched();
 
                 wizard.setCurrentState(WizardState.IDLE);
             }
@@ -528,7 +559,6 @@ public class GameScreenGUI implements Disposable {
 
     @Override
     public void dispose() {
-        switchWizardSound.dispose();
         background.dispose();
     }
 }

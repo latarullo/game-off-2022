@@ -15,13 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.GameOff2022;
 import com.mygdx.game.controller.GameAchievements;
+import com.mygdx.game.controller.GameSoundPlayer;
 import com.mygdx.game.controller.GameUpgrades;
 import com.mygdx.game.domain.ConsumableItem;
 import com.mygdx.game.domain.FireWizardItem;
 import com.mygdx.game.domain.FoodCooldownItem;
 import com.mygdx.game.domain.FoodHealthPowerItem;
 import com.mygdx.game.domain.GameConstants;
-import com.mygdx.game.domain.GodMode;
+import com.mygdx.game.domain.GodModeItem;
 import com.mygdx.game.domain.IceLemonTea;
 import com.mygdx.game.domain.IceWizardItem;
 import com.mygdx.game.domain.LemonCustardPie;
@@ -44,8 +45,8 @@ public class ShopScreenGUI implements Disposable {
     private ShopScreen screen;
     private GameFontGenerator gameFontGenerator = GameFontGenerator.getInstance();
     private Texture background = new Texture(Gdx.files.internal("resources/ShopScreen/background.jpg"));
-    private Sound notEnoughLemonsSound = Gdx.audio.newSound(Gdx.files.internal("sounds/not-enough-lemons.mp3"));
-    private Sound youRequireMoreLemonsSound = Gdx.audio.newSound(Gdx.files.internal("sounds/you-require-more-lemons.mp3"));
+    private Sound notEnoughLemonsSound = Gdx.audio.newSound(Gdx.files.internal("resources/ShopScreen/not-enough-lemons.mp3"));
+    private Sound youRequireMoreLemonsSound = Gdx.audio.newSound(Gdx.files.internal("resources/ShopScreen/you-require-more-lemons.mp3"));
 
     public ShopScreenGUI(ShopScreen screen) {
         this.screen = screen;
@@ -83,9 +84,9 @@ public class ShopScreenGUI implements Disposable {
                     screen.buyConsumable(healthPotion);
                 } else {
                     if (Math.random() < 0.5f) {
-                        notEnoughLemonsSound.play();
+                        GameSoundPlayer.playSound(notEnoughLemonsSound);
                     } else {
-                        youRequireMoreLemonsSound.play();
+                        GameSoundPlayer.playSound(youRequireMoreLemonsSound);
                     }
                 }
             }
@@ -105,7 +106,7 @@ public class ShopScreenGUI implements Disposable {
         int posY = GameConstants.HEIGHT / 2 + 20;
 
         lemonSquaresButton.setSize(256, 256);
-        lemonSquaresButton.setPosition(100, posY );
+        lemonSquaresButton.setPosition(100, posY);
         lemonSquaresButton.addListener(new HoverClickListener(lemonSquares));
 
         iceLemonTeaButton.setSize(256, 256);
@@ -113,11 +114,11 @@ public class ShopScreenGUI implements Disposable {
         iceLemonTeaButton.addListener(new HoverClickListener(iceLemonTea));
 
         lemonIceCreamButton.setSize(256, 256);
-        lemonIceCreamButton.setPosition(600, posY );
+        lemonIceCreamButton.setPosition(600, posY);
         lemonIceCreamButton.addListener(new HoverClickListener(lemonIceCream));
 
         lemonCustardPieButton.setSize(256, 256);
-        lemonCustardPieButton.setPosition(850, posY );
+        lemonCustardPieButton.setPosition(850, posY);
         lemonCustardPieButton.addListener(new HoverClickListener(lemonCustardPie));
 
         screen.getStage().addActor(lemonSquaresButton);
@@ -127,36 +128,37 @@ public class ShopScreenGUI implements Disposable {
     }
 
     private void createShopUnlockableItems() {
-        int posX = 100;
+        int stepX = 190;
+        int posX = 70;
         int posY = 70;
-        int buttonWidth = 128;
-        int buttonHeight = 128;
+        int buttonWidth = 200;
+        int buttonHeight = 200;
 
         ImageButton wizardSpellPowerButton = createWizardSpellPowerButton();
-        wizardSpellPowerButton.setSize(buttonWidth, buttonHeight);
+        wizardSpellPowerButton.setSize(200, 200);
         wizardSpellPowerButton.setPosition(posX, posY);
         screen.getStage().addActor(wizardSpellPowerButton);
 
-        posX+=150;
+        posX += stepX;
         ImageButton wizardHealthPowerButton = createWizardHealthPowerButton();
-        wizardHealthPowerButton.setSize(buttonWidth, buttonHeight);
+        wizardHealthPowerButton.setSize(200, 200);
         wizardHealthPowerButton.setPosition(posX, posY);
         screen.getStage().addActor(wizardHealthPowerButton);
 
-        posX+=150;
+        posX += stepX;
         ImageButton foodHealthPowerButton = createFoodHealthPowerButton();
-        foodHealthPowerButton.setSize(buttonWidth, buttonHeight);
+        foodHealthPowerButton.setSize(200, 200);
         foodHealthPowerButton.setPosition(posX, posY);
         screen.getStage().addActor(foodHealthPowerButton);
 
-        posX+=150;
+        posX += stepX;
         ImageButton foodCooldownButton = createFoodCooldownButton();
-        foodCooldownButton.setSize(buttonWidth, buttonHeight);
+        foodCooldownButton.setSize(200, 200);
         foodCooldownButton.setPosition(posX, posY);
         screen.getStage().addActor(foodCooldownButton);
 
         if (!LightningWizardItem.getInstance().isUnlocked()) {
-            posX+=150;
+            posX += stepX;
             ImageButton lightningWizardButton = createLightningWizardButton();
             lightningWizardButton.setSize(buttonWidth, buttonHeight);
             lightningWizardButton.setPosition(posX, posY);
@@ -164,7 +166,7 @@ public class ShopScreenGUI implements Disposable {
         }
 
         if (!FireWizardItem.getInstance().isUnlocked()) {
-            posX+=150;
+            posX += stepX;
             ImageButton fireWizardButton = createFireWizardButton();
             fireWizardButton.setSize(buttonWidth, buttonHeight);
             fireWizardButton.setPosition(posX, posY);
@@ -172,15 +174,18 @@ public class ShopScreenGUI implements Disposable {
         }
 
         if (!IceWizardItem.getInstance().isUnlocked()) {
-            posX+=150;
+            posX += stepX;
             ImageButton iceWizardButton = createIceWizardButton();
             iceWizardButton.setSize(buttonWidth, buttonHeight);
             iceWizardButton.setPosition(posX, posY);
             screen.getStage().addActor(iceWizardButton);
         }
 
-        if (!GodMode.getInstance().isUnlocked()) {
-            posX+=150;
+        if (!GodModeItem.getInstance().isUnlocked() &&
+                LightningWizardItem.getInstance().isUnlocked() &&
+                FireWizardItem.getInstance().isUnlocked() &&
+                IceWizardItem.getInstance().isUnlocked()) {
+            posX += stepX;
             ImageButton godModeButton = createGodModeButton();
             godModeButton.setSize(buttonWidth, buttonHeight);
             godModeButton.setPosition(posX, posY);
@@ -198,9 +203,9 @@ public class ShopScreenGUI implements Disposable {
                     screen.buyUpgradeable(wizardSpellPowerItem);
                 } else {
                     if (Math.random() < 0.5f) {
-                        notEnoughLemonsSound.play();
+                        GameSoundPlayer.playSound(notEnoughLemonsSound);
                     } else {
-                        youRequireMoreLemonsSound.play();
+                        GameSoundPlayer.playSound(youRequireMoreLemonsSound);
                     }
                 }
             }
@@ -222,9 +227,9 @@ public class ShopScreenGUI implements Disposable {
                     GameOff2022.getInstance().wizardHelthUp(wizardHealthPowerItem);
                 } else {
                     if (Math.random() < 0.5f) {
-                        notEnoughLemonsSound.play();
+                        GameSoundPlayer.playSound(notEnoughLemonsSound);
                     } else {
-                        youRequireMoreLemonsSound.play();
+                        GameSoundPlayer.playSound(youRequireMoreLemonsSound);
                     }
                 }
             }
@@ -245,9 +250,9 @@ public class ShopScreenGUI implements Disposable {
                     screen.buyUpgradeable(foodHealthPowerItem);
                 } else {
                     if (Math.random() < 0.5f) {
-                        notEnoughLemonsSound.play();
+                        GameSoundPlayer.playSound(notEnoughLemonsSound);
                     } else {
-                        youRequireMoreLemonsSound.play();
+                        GameSoundPlayer.playSound(youRequireMoreLemonsSound);
                     }
                 }
             }
@@ -268,9 +273,9 @@ public class ShopScreenGUI implements Disposable {
                     screen.buyUpgradeable(foodCooldownItem);
                 } else {
                     if (Math.random() < 0.5f) {
-                        notEnoughLemonsSound.play();
+                        GameSoundPlayer.playSound(notEnoughLemonsSound);
                     } else {
-                        youRequireMoreLemonsSound.play();
+                        GameSoundPlayer.playSound(youRequireMoreLemonsSound);
                     }
                 }
             }
@@ -294,15 +299,15 @@ public class ShopScreenGUI implements Disposable {
 
                 if (screen.getGame().getGameData().getMoney().compareTo(lightningWizardItem.getPrice()) >= 0) {
                     screen.buyUnlockable(lightningWizardItem);
-                    GameUpgrades.getInstance().setLightningWizardAvailable(true);
+                    GameOff2022.getInstance().getGameData().addAvailableWizard(LightningWizard.getInstance());
                     GameAchievements.getInstance().setCurrentStage(screen.getStage());
                     GameAchievements.getInstance().unlockWizard(WizardType.LIGHTNING);
                     lightningWizardButton.setVisible(false);
                 } else {
                     if (Math.random() < 0.5f) {
-                        notEnoughLemonsSound.play();
+                        GameSoundPlayer.playSound(notEnoughLemonsSound);
                     } else {
-                        youRequireMoreLemonsSound.play();
+                        GameSoundPlayer.playSound(youRequireMoreLemonsSound);
                     }
                 }
             }
@@ -326,15 +331,15 @@ public class ShopScreenGUI implements Disposable {
 
                 if (screen.getGame().getGameData().getMoney().compareTo(fireWizardItem.getPrice()) >= 0) {
                     screen.buyUnlockable(fireWizardItem);
-                    GameUpgrades.getInstance().setFireWizardAvailable(true);
+                    GameOff2022.getInstance().getGameData().addAvailableWizard(FireWizard.getInstance());
                     GameAchievements.getInstance().setCurrentStage(screen.getStage());
                     GameAchievements.getInstance().unlockWizard(WizardType.FIRE);
                     fireWizardButton.setVisible(false);
                 } else {
                     if (Math.random() < 0.5f) {
-                        notEnoughLemonsSound.play();
+                        GameSoundPlayer.playSound(notEnoughLemonsSound);
                     } else {
-                        youRequireMoreLemonsSound.play();
+                        GameSoundPlayer.playSound(youRequireMoreLemonsSound);
                     }
                 }
             }
@@ -358,15 +363,15 @@ public class ShopScreenGUI implements Disposable {
 
                 if (screen.getGame().getGameData().getMoney().compareTo(iceWizardItem.getPrice()) >= 0) {
                     screen.buyUnlockable(iceWizardItem);
-                    GameUpgrades.getInstance().setIceWizardAvailable(true);
+                    GameOff2022.getInstance().getGameData().addAvailableWizard(IceWizard.getInstance());
                     GameAchievements.getInstance().setCurrentStage(screen.getStage());
                     GameAchievements.getInstance().unlockWizard(WizardType.ICE);
                     iceWizardButton.setVisible(false);
                 } else {
                     if (Math.random() < 0.5f) {
-                        notEnoughLemonsSound.play();
+                        GameSoundPlayer.playSound(notEnoughLemonsSound);
                     } else {
-                        youRequireMoreLemonsSound.play();
+                        GameSoundPlayer.playSound(youRequireMoreLemonsSound);
                     }
                 }
             }
@@ -378,33 +383,33 @@ public class ShopScreenGUI implements Disposable {
     }
 
     private ImageButton createGodModeButton() {
-        final GodMode godMode = GodMode.getInstance();
+        final GodModeItem godModeItem = GodModeItem.getInstance();
 
-        final ImageButton godModeButton = new ImageButton(new TextureRegionDrawable(godMode.getTexture()));
+        final ImageButton godModeButton = new ImageButton(new TextureRegionDrawable(godModeItem.getTexture()));
         godModeButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                if (godMode.isUnlocked()) {
+                if (godModeItem.isUnlocked()) {
                     return;
                 }
 
-                if (screen.getGame().getGameData().getMoney().compareTo(godMode.getPrice()) >= 0) {
-                    screen.buyUnlockable(godMode);
-                    GameUpgrades.getInstance().setGodMode(true);
+                if (screen.getGame().getGameData().getMoney().compareTo(godModeItem.getPrice()) >= 0) {
+                    screen.buyUnlockable(godModeItem);
+                    GameUpgrades.getInstance().unlockGodMode(true);
                     GameAchievements.getInstance().setCurrentStage(screen.getStage());
                     GameAchievements.getInstance().unlockGodMode();
                     godModeButton.setVisible(false);
                 } else {
                     if (Math.random() < 0.5f) {
-                        notEnoughLemonsSound.play();
+                        GameSoundPlayer.playSound(notEnoughLemonsSound);
                     } else {
-                        youRequireMoreLemonsSound.play();
+                        GameSoundPlayer.playSound(youRequireMoreLemonsSound);
                     }
                 }
             }
         });
 
 
-        godModeButton.addListener(new HoverClickListener(godMode));
+        godModeButton.addListener(new HoverClickListener(godModeItem));
         return godModeButton;
     }
 

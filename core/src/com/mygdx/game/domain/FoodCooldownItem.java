@@ -14,7 +14,7 @@ public class FoodCooldownItem extends UpgradeableItem {
 
     private FoodCooldownItem() {
         this.name = "Food Cooldown";
-        this.texture = new Texture(Gdx.files.internal("resources/food-cooldown.png"));
+        this.texture = new Texture(Gdx.files.internal("resources/Icons/food-cooldown.png"));
         this.price = BigInteger.ONE;//new BigInteger("10000");
         this.type = UpgradeableEnum.CONSUMABLE_COOLDOWN;
     }

@@ -22,7 +22,7 @@ public class UpgradeableItem extends Item {
         return upgradeCount;
     }
 
-    public void upgrade(){
+    public void upgrade() {
         upgradeCount++;
     }
 
@@ -30,7 +30,11 @@ public class UpgradeableItem extends Item {
         return bonusMultiplier;
     }
 
-    long getBonusValue(){
+    long getBonusValue() {
         return (long) (upgradeCount * bonusMultiplier);
+    }
+
+    public void reset() {
+        this.upgradeCount = 0;
     }
 }

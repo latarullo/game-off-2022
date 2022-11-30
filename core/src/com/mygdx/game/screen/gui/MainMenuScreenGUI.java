@@ -42,7 +42,7 @@ public class MainMenuScreenGUI implements Disposable {
         TextButton settingsButton = new TextButton("Settings", textButtonStyle);
         TextButton creditsButton = new TextButton("Credits", textButtonStyle);
         TextButton exitButton = new TextButton("Exit", textButtonStyle);
-        settingsButton.setDisabled(true);
+        //settingsButton.setDisabled(true);
 
         //add buttons to table
         table.pad(10, 0, 10, 0);

@@ -1,6 +1,8 @@
 package com.mygdx.game.screen.actor;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class IceWizard extends Wizard {
     private static IceWizard instance;
@@ -13,8 +15,11 @@ public class IceWizard extends Wizard {
     }
 
     private IceWizard() {
+        this.setName("Ice Wizard");
         this.wizardType = WizardType.ICE;
-        this.spellSound = Gdx.audio.newSound(Gdx.files.internal("sounds/wizard-ice-spell.wav"));
+        this.portraitTexture = new Texture(Gdx.files.internal("resources/Wizards/Ice/portrait.png"));
+        this.spellSound = Gdx.audio.newSound(Gdx.files.internal("resources/Wizards/Ice/wizard-spell.wav"));
+        this.easyPeasyLemonsSqueezeSound = Gdx.audio.newSound(Gdx.files.internal("resources/Wizards/Ice/easy-peasy.wav"));
         loadAnimations();
     }
 }

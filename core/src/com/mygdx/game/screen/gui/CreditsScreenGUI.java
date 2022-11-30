@@ -25,11 +25,12 @@ public class CreditsScreenGUI {
 
     private final String developedByString = "Developed by: Latarullo";
     private final String artsByString = "Arts by: hamburger & nooders";
-    private final String composedByString = "Composed by: Dolphinflavored & samsamsoup";
+    private final String composedByString = "Composed by: Dolphinflavored";
+    private final String voiceActingByString = "Voice acting by: samsamsoup";
+
 
     private CreditsScreen screen;
     private GameOff2022 game = GameOff2022.getInstance();
-    private Sound typingSound;
     private GameFontGenerator gameFontGenerator = GameFontGenerator.getInstance();
 
     public CreditsScreenGUI(CreditsScreen screen) {
@@ -45,11 +46,10 @@ public class CreditsScreenGUI {
 
         Label.LabelStyle labelStyle = gameFontGenerator.generateLabelStyle(GameFontSizeEnum.NORMAL, GameConstants.GUI_CREDITS_TYPED_COLOR);
 
-        TextButton.TextButtonStyle backButtonFontStyle = gameFontGenerator.generateTextButtonStyle(GameFontSizeEnum.NORMAL, GameConstants.GUI_ACTION_COLOR);
-
         TypingLabel gameDeveloperLabel = new TypingLabel(developedByString, labelStyle);
         TypingLabel gameArtistLabel = new TypingLabel(artsByString, labelStyle);
         TypingLabel gameComposerLabel = new TypingLabel(composedByString, labelStyle);
+        TypingLabel voiceActingLabel = new TypingLabel(voiceActingByString, labelStyle);
 
         table.pad(10, 0, 10, 0);
         table.add(gameDeveloperLabel).fill().uniformX();
@@ -57,6 +57,8 @@ public class CreditsScreenGUI {
         table.add(gameArtistLabel).fill().uniformX();
         table.row();
         table.add(gameComposerLabel).fill();
+        table.row();
+        table.add(voiceActingLabel).fill();
 
         return table;
     }

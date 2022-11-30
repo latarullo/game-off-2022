@@ -3,11 +3,12 @@ package com.mygdx.game.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameOff2022;
+import com.mygdx.game.controller.GameSettings;
+import com.mygdx.game.controller.GameSoundPlayer;
 import com.mygdx.game.screen.gui.MainMenuScreenGUI;
 
 public class MainMenuScreen implements Screen {
@@ -15,7 +16,7 @@ public class MainMenuScreen implements Screen {
     private GameOff2022 game;
     private Stage stage;
     private MainMenuScreenGUI gui;
-    private Sound menuSound = Gdx.audio.newSound(Gdx.files.internal("resources/MainMenu/music.wav"));
+    private Sound music = Gdx.audio.newSound(Gdx.files.internal("resources/MainMenu/music.wav"));
 
     public MainMenuScreen(final GameOff2022 game) {
         this.game = game;
@@ -29,7 +30,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        menuSound.loop();
+        GameSoundPlayer.playMusic(music);
     }
 
     @Override
@@ -56,14 +57,14 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void hide() {
-        menuSound.stop();
+        GameSoundPlayer.stop(music);
     }
 
     @Override
     public void dispose() {
         stage.dispose();
         gui.dispose();
-        menuSound.dispose();
+        music.dispose();
     }
 
     public Stage getStage() {

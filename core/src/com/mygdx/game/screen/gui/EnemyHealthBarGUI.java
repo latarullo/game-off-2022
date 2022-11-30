@@ -20,10 +20,9 @@ public class EnemyHealthBarGUI {
     public Table createGUI() {
         Enemy enemy = GameData.getInstance().getCurrentEnemy();
 
-        Label.LabelStyle labelStyle = gameFontGenerator.generateLabelStyle(40, Color.WHITE);
+        Label.LabelStyle labelStyle = gameFontGenerator.generateLabelStyle(40, enemy.getEnemyColor());
 
         String name = enemy.getName();
-        name="Lemon";
 
         Label nameLabel = new Label(name, labelStyle);
         WizardHealthBarGUI healthBarGUI = new WizardHealthBarGUI(enemy);
@@ -43,7 +42,7 @@ public class EnemyHealthBarGUI {
 
         Table table = new Table();
         table.add(nameHealthBarTable);
-        table.add(enemy.getImage()).size(128,128);
+        table.add(enemy.getImage()).size(200,150);
 
         return table;
     }

@@ -6,14 +6,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.GameOff2022;
 import com.mygdx.game.controller.GameAchievements;
+import com.mygdx.game.controller.GameSoundPlayer;
 import com.mygdx.game.domain.GameConstants;
+import com.mygdx.game.domain.GameData;
+import com.mygdx.game.screen.GameOverScreen;
 import com.mygdx.game.util.GameFontGenerator;
 import com.mygdx.game.util.GameFontSizeEnum;
 
@@ -27,7 +30,7 @@ public class AchievementGUI extends Table implements Disposable {
 
     public AchievementGUI(String title, String description) {
         Label.LabelStyle labelStyle = gameFontGenerator.generateLabelStyle(GameFontSizeEnum.NORMAL, GameConstants.GUI_ACHIEVEMENT_HEADER_COLOR);
-        Label.LabelStyle labelSmallStyle =gameFontGenerator.generateLabelStyle(GameFontSizeEnum.SMALL, GameConstants.GUI_ACHIEVEMENT_DESCRIPTION_COLOR);
+        Label.LabelStyle labelSmallStyle = gameFontGenerator.generateLabelStyle(GameFontSizeEnum.SMALL, GameConstants.GUI_ACHIEVEMENT_DESCRIPTION_COLOR);
 
         achievementLabel = new Label("Achievement", labelStyle);
         achievementTitleLabel = new Label(title, labelSmallStyle);
@@ -52,8 +55,7 @@ public class AchievementGUI extends Table implements Disposable {
 
         this.setSize(400, 300);
         this.setPosition(Gdx.graphics.getWidth() - 400, -300);
-        achievementSound.play();
-        GameAchievements.getInstance().notificationAdded();
+        GameSoundPlayer.playSound(achievementSound);
     }
 
     @Override
@@ -65,7 +67,9 @@ public class AchievementGUI extends Table implements Disposable {
             stateTime += delta;
             if (stateTime > 3) {
                 this.getParent().removeActor(this);
-                GameAchievements.getInstance().notificationRemoved();
+                if (GameData.getInstance().isLemonadeDone()){
+                    GameOff2022.getInstance().changeScreen(new GameOverScreen());
+                }
             }
         }
     }

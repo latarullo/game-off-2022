@@ -31,7 +31,7 @@ public class GameConstants {
     public static final Color GUI_ACHIEVEMENT_DESCRIPTION_COLOR = Color.WHITE;
 
     //UPGRADE SCREEN
-    public static final Color GUI_UPGRADE_HEADER_2_COLOR = Color.ORANGE;
+    public static final Color GUI_UPGRADE_HEADER_2_COLOR = Color.WHITE;
 
     //RESTART SCREEN
     public static final Color GUI_DISPLAY_RESTART_COLOR = Color.GREEN;

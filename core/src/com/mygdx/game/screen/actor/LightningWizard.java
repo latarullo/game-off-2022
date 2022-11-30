@@ -1,6 +1,7 @@
 package com.mygdx.game.screen.actor;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 
 public class LightningWizard extends Wizard {
     private static LightningWizard instance;
@@ -13,8 +14,11 @@ public class LightningWizard extends Wizard {
     }
 
     private LightningWizard() {
+        this.setName("Lightning Wizard");
         this.wizardType = WizardType.LIGHTNING;
-        this.spellSound = Gdx.audio.newSound(Gdx.files.internal("sounds/wizard-lightning-spell.wav"));
+        this.portraitTexture = new Texture(Gdx.files.internal("resources/Wizards/Lightning/portrait.png"));
+        this.spellSound = Gdx.audio.newSound(Gdx.files.internal("resources/Wizards/Lightning/wizard-spell.wav"));
+        this.easyPeasyLemonsSqueezeSound = Gdx.audio.newSound(Gdx.files.internal("resources/Wizards/Lightning/easy-peasy.wav"));
         loadAnimations();
     }
 }

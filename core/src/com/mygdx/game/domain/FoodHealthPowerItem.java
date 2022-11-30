@@ -15,7 +15,7 @@ public class FoodHealthPowerItem extends UpgradeableItem {
 
     private FoodHealthPowerItem() {
         this.name = "Food Health Power";
-        this.texture = new Texture(Gdx.files.internal("resources/food-power.png"));
+        this.texture = new Texture(Gdx.files.internal("resources/Icons/food-health-power.png"));
         this.price = BigInteger.ONE;//new BigInteger("10000");
         this.type = UpgradeableEnum.CONSUMABLE_POWER;
         this.bonusMultiplier = 25;

@@ -60,8 +60,7 @@ public class GameOff2022 extends Game {
     }
 
     public void createNewEnemy(Group actorHolder) {
-        getGameData().setEnemyKilledCounter(gameData.getEnemyKilledCounter() + 1);
-        actorHolder.addActor(EnemyFactory.create(this));
+        actorHolder.addActor(EnemyFactory.createEnemy());
     }
 
     public GameData getGameData() {
@@ -86,5 +85,9 @@ public class GameOff2022 extends Game {
         }
 
         //achievements and achievement counters reset
+    }
+
+    public void gameOver(){
+        this.restart();
     }
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.GameOff2022;
+import com.mygdx.game.controller.GameSoundPlayer;
 import com.mygdx.game.domain.GameConstants;
 import com.mygdx.game.screen.NewGameScreen;
 import com.mygdx.game.util.GameFontGenerator;
@@ -41,7 +42,7 @@ public class RestartScreenGUI {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                restartSound.play();
+                GameSoundPlayer.playSound(restartSound);
                 game.changeScreen(new NewGameScreen(game, true));
             }
         });

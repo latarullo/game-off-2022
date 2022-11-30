@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameOff2022;
+import com.mygdx.game.controller.GameSoundPlayer;
 import com.mygdx.game.domain.ConsumableItem;
 import com.mygdx.game.domain.UnlockableItem;
 import com.mygdx.game.domain.UpgradeableItem;
@@ -37,19 +38,19 @@ public class ShopScreen implements Screen {
     }
 
     public void buyConsumable(ConsumableItem consumableItem) {
-        buySound.play();
+        GameSoundPlayer.playSound(buySound);
         this.getGame().getGameData().subtractMoney(consumableItem.getPrice());
         game.getGameData().addConsumable(consumableItem.getType());
     }
 
     public void buyUnlockable(UnlockableItem unlockableItem) {
-        buySound.play();
+        GameSoundPlayer.playSound(buySound);
         this.getGame().getGameData().subtractMoney(unlockableItem.getPrice());
         unlockableItem.unlock();
     }
 
     public void buyUpgradeable(UpgradeableItem upgradeableItem) {
-        buySound.play();
+        GameSoundPlayer.playSound(buySound);
         this.getGame().getGameData().subtractMoney(upgradeableItem.getPrice());
         upgradeableItem.upgrade();
     }

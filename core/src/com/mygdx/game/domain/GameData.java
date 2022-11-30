@@ -20,19 +20,25 @@ public class GameData {
         return instance;
     }
 
+    private static final int LEMONS_TO_MAKE_LEMONADE = 30;
+
     private List<Wizard> availableWizards = new ArrayList<>();
     private Wizard currentWizard;
     private Enemy currentEnemy;
     private BigInteger money;
     private Map<HealthConsumableEnum, Integer> consumables = new HashMap<>();
     private long enemyKilledCounter = 0;
-    private GameUpgrades gameUpgrade = GameUpgrades.getInstance();
+    private long resetCount = 0;
+    private GameUpgrades gameUpgrade;
 
     private GameData() {
-
+        gameUpgrade = GameUpgrades.getInstance();
     }
 
     public Wizard getCurrentWizard() {
+        //TODO: Wizard creating should use those position settings OR NOT
+        currentWizard.setPosition(200, 100);
+
         return currentWizard;
     }
 
@@ -67,6 +73,28 @@ public class GameData {
         resetMoney();
         resetConsumables();
         resetEnemyKilledCounter();
+    }
+
+    public void newGame() {
+        resetMoney();
+        resetConsumables();
+        resetEnemyKilledCounter();
+        resetUnlockables();
+        resetUpgradeables();
+    }
+
+    private void resetUpgradeables() {
+        WizardSpellPowerItem.getInstance().reset();
+        WizardHealthPowerItem.getInstance().reset();
+        FoodCooldownItem.getInstance().reset();
+        FoodHealthPowerItem.getInstance().reset();
+    }
+
+    private void resetUnlockables() {
+        LightningWizardItem.getInstance().reset();
+        FireWizardItem.getInstance().reset();
+        IceWizardItem.getInstance().reset();
+        GodModeItem.getInstance().reset();
     }
 
     private void resetEnemyKilledCounter() {
@@ -108,8 +136,8 @@ public class GameData {
         return enemyKilledCounter;
     }
 
-    public void setEnemyKilledCounter(long enemyKilledCounter) {
-        this.enemyKilledCounter = enemyKilledCounter;
+    public void enemyKilled(){
+        this.enemyKilledCounter++;
     }
 
     public void addAvailableWizard(Wizard wizard) {
@@ -120,4 +148,19 @@ public class GameData {
         return availableWizards;
     }
 
+    public long getResetCount() {
+        return resetCount;
+    }
+
+    public void gameWasReset() {
+        resetCount++;
+    }
+
+    public long getLemonsToFinishLemonade() {
+        return LEMONS_TO_MAKE_LEMONADE - enemyKilledCounter;
+    }
+
+    public boolean isLemonadeDone() {
+        return GodModeItem.getInstance().isUnlocked() && enemyKilledCounter >= LEMONS_TO_MAKE_LEMONADE;
+    }
 }

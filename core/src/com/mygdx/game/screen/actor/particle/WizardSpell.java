@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.domain.GameData;
 import com.mygdx.game.screen.actor.Enemy;
 import com.mygdx.game.screen.actor.Wizard;
 import com.mygdx.game.screen.actor.WizardType;
@@ -46,7 +47,7 @@ public class WizardSpell extends Actor implements Disposable {
         stateTime += Gdx.graphics.getDeltaTime();
         Animation<TextureRegion> valueAnimation = animations.get(wizard.getWizardType());
         TextureRegion currentAnimation = valueAnimation.getKeyFrame(stateTime,false);
-        Enemy enemy = (Enemy) wizard.getUserObject();
+        Enemy enemy = GameData.getInstance().getCurrentEnemy();
         float enemyCenterX = enemy.getX() + enemy.getWidth() / 2;
         float enemyCenterY = enemy.getY() + enemy.getHeight() / 2;
         float width = 256;

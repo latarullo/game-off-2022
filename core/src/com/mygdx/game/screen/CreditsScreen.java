@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameOff2022;
+import com.mygdx.game.controller.GameSettings;
+import com.mygdx.game.controller.GameSoundPlayer;
 import com.mygdx.game.screen.gui.CreditsScreenGUI;
 import com.mygdx.game.screen.gui.TypingLabel;
 
@@ -20,7 +22,7 @@ public class CreditsScreen implements Screen {
     private GameOff2022 game;
     private Stage stage;
     private Sound typingSound = Gdx.audio.newSound(Gdx.files.internal("sounds/keyboard-typing.wav"));
-    private Sound creditsSound = Gdx.audio.newSound(Gdx.files.internal("resources/CreditsScreen/music.mp3"));
+    private Sound music = Gdx.audio.newSound(Gdx.files.internal("resources/CreditsScreen/music.mp3"));
 
     private TextureAtlas atlasDancingLemons = new TextureAtlas(Gdx.files.internal("animations/dancing-lemon.atlas"));
     private TextureAtlas atlasDancingWizards = new TextureAtlas(Gdx.files.internal("animations/dancing-wizard.atlas"));
@@ -43,8 +45,7 @@ public class CreditsScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        creditsSound.loop();
-       // typingSound.loop();
+        GameSoundPlayer.playMusic(music);
     }
 
     @Override
@@ -84,7 +85,7 @@ public class CreditsScreen implements Screen {
             }
         }
         if (shouldStopTypingSound) {
-            typingSound.stop();
+            GameSoundPlayer.stop(typingSound);
         }
     }
 
@@ -105,15 +106,15 @@ public class CreditsScreen implements Screen {
 
     @Override
     public void hide() {
-        typingSound.stop();
-        creditsSound.stop();
+        GameSoundPlayer.stop(typingSound);
+        GameSoundPlayer.stop(music);
     }
 
     @Override
     public void dispose() {
         typingSound.dispose();
         stage.dispose();
-        creditsSound.dispose();
+        music.dispose();
     }
 
     public Stage getStage() {

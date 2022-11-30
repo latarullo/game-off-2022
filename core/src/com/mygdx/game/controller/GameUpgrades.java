@@ -1,123 +1,83 @@
 package com.mygdx.game.controller;
 
-import com.mygdx.game.domain.GameData;
-import com.mygdx.game.screen.actor.FireWizard;
-import com.mygdx.game.screen.actor.IceWizard;
-import com.mygdx.game.screen.actor.LightningWizard;
+import com.mygdx.game.domain.FireWizardItem;
+import com.mygdx.game.domain.FoodHealthPowerItem;
+import com.mygdx.game.domain.GodModeItem;
+import com.mygdx.game.domain.IceWizardItem;
+import com.mygdx.game.domain.LightningWizardItem;
+import com.mygdx.game.domain.WizardHealthPowerItem;
+import com.mygdx.game.domain.WizardSpellPowerItem;
 import com.mygdx.game.screen.actor.WizardType;
 
 public class GameUpgrades {
-    private static GameUpgrades instance;
-
-    private int wizardDamageCounter = 1;
-    private int wizardMaxLifeCounter = 1;
-    private int potionHealthPowerCounter = 1;
-    private int potionCoolDownCounter = 1;
-    private boolean lightningWizardAvailable = false;
-    private boolean fireWizardAvailable = false;
-    private boolean iceWizardAvailable = false;
-    private boolean godMode = false;
+    private static GameUpgrades instance = new GameUpgrades();
 
     private GameUpgrades() {
-
     }
 
     public static GameUpgrades getInstance() {
-        if (instance == null) {
-            instance = new GameUpgrades();
-        }
         return instance;
     }
 
     public int getWizardDamageCounter() {
-        return wizardDamageCounter;
+        return WizardSpellPowerItem.getInstance().getUpgradeCount();
     }
 
     public int getWizardMaxLifeCounter() {
-        return wizardMaxLifeCounter;
+        return WizardHealthPowerItem.getInstance().getUpgradeCount();
     }
 
     public int getPotionHealthPowerCounter() {
-        return potionHealthPowerCounter;
+        return FoodHealthPowerItem.getInstance().getUpgradeCount();
     }
 
     public int getPotionCoolDownCounter() {
-        return potionCoolDownCounter;
+        return FoodHealthPowerItem.getInstance().getUpgradeCount();
     }
 
     public boolean isGodMode() {
-        return godMode;
-    }
-
-    public void setWizardDamageCounter(int wizardDamageCounter) {
-        this.wizardDamageCounter = wizardDamageCounter;
-    }
-
-    public void setWizardMaxLifeCounter(int wizardMaxLifeCounter) {
-        this.wizardMaxLifeCounter = wizardMaxLifeCounter;
-    }
-
-    public void setPotionHealthPowerCounter(int potionHealthPowerCounter) {
-        this.potionHealthPowerCounter = potionHealthPowerCounter;
-    }
-
-    public void setPotionCoolDownCounter(int potionCoolDownCounter) {
-        this.potionCoolDownCounter = potionCoolDownCounter;
-    }
-
-    public void setGodMode(boolean godMode) {
-        this.godMode = godMode;
+        return GodModeItem.getInstance().isUnlocked();
     }
 
     public boolean isFireWizardAvailable() {
-        return fireWizardAvailable;
-    }
-
-    public void setFireWizardAvailable(boolean fireWizardAvailable) {
-        this.fireWizardAvailable = fireWizardAvailable;
+        return FireWizardItem.getInstance().isUnlocked();
     }
 
     public boolean isIceWizardAvailable() {
-        return iceWizardAvailable;
-    }
-
-    public void setIceWizardAvailable(boolean iceWizardAvailable) {
-        this.iceWizardAvailable = iceWizardAvailable;
+        return IceWizardItem.getInstance().isUnlocked();
     }
 
     public boolean isLightningWizardAvailable() {
-        return lightningWizardAvailable;
+        return LightningWizardItem.getInstance().isUnlocked();
     }
 
-    public void setLightningWizardAvailable(boolean lightningWizardAvailable) {
-        this.lightningWizardAvailable = lightningWizardAvailable;
-    }
-
-    public void unlockWizard(WizardType wizardType) {
-        if (wizardType == WizardType.LIGHTNING) {
-            lightningWizardAvailable = true;
-            GameData.getInstance().addAvailableWizard(LightningWizard.getInstance());
-        } else if (wizardType == WizardType.FIRE) {
-            fireWizardAvailable = true;
-            GameData.getInstance().addAvailableWizard(FireWizard.getInstance());
-        } else if (wizardType == WizardType.ICE) {
-            iceWizardAvailable = true;
-            GameData.getInstance().addAvailableWizard(IceWizard.getInstance());
-        }
+    public boolean isAllWizardsAvailable() {
+        return LightningWizardItem.getInstance().isUnlocked() && FireWizardItem.getInstance().isUnlocked() && FireWizardItem.getInstance().isUnlocked();
     }
 
     public boolean isWizardUnlock(WizardType wizardType) {
         if (wizardType == WizardType.LIGHTNING) {
-            return lightningWizardAvailable;
+            return LightningWizardItem.getInstance().isUnlocked();
         } else if (wizardType == WizardType.FIRE) {
-            return fireWizardAvailable;
+            return FireWizardItem.getInstance().isUnlocked();
         } else if (wizardType == WizardType.ICE) {
-            return iceWizardAvailable;
+            return FireWizardItem.getInstance().isUnlocked();
         }
         return false;
     }
 
-    public boolean isAllWizardsAvailable() {
-        return isLightningWizardAvailable() && isFireWizardAvailable() && isIceWizardAvailable();
+    public void unlockWizard(WizardType wizardType) {
+        if (wizardType == WizardType.LIGHTNING) {
+            LightningWizardItem.getInstance().unlock();
+        } else if (wizardType == WizardType.FIRE) {
+            FireWizardItem.getInstance().unlock();
+        } else if (wizardType == WizardType.ICE) {
+            IceWizardItem.getInstance().unlock();
+        }
     }
+
+    public void unlockGodMode(boolean godMode) {
+        GodModeItem.getInstance().unlock();
+    }
+
 }

@@ -24,4 +24,8 @@ public abstract class UnlockableItem extends Item {
     public void unlock() {
         this.unlocked = true;
     }
+
+    public void reset() {
+        unlocked = false;
+    }
 }
