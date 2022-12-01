@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.GameOff2022;
 import com.mygdx.game.domain.GameConstants;
 import com.mygdx.game.screen.CreditsScreen;
+import com.mygdx.game.screen.MainMenuScreen;
 import com.mygdx.game.util.GameFontGenerator;
 import com.mygdx.game.util.GameFontSizeEnum;
 
@@ -26,7 +27,7 @@ public class CreditsScreenGUI {
     private final String developedByString = "Developed by: Latarullo";
     private final String artsByString = "Arts by: hamburger & nooders";
     private final String composedByString = "Composed by: Dolphinflavored";
-    private final String voiceActingByString = "Voice acting by: samsamsoup";
+    private final String voiceActingByString = "Voice acting by: samsamsoup & Invader";
 
 
     private CreditsScreen screen;
@@ -74,7 +75,7 @@ public class CreditsScreenGUI {
         ImageButton backButton = new ImageButton(new TextureRegionDrawable(new Texture(Gdx.files.internal("resources/Icons/back.png"))));
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                game.changePreviousScreen();
+                game.setScreen(MainMenuScreen.getInstance());
             }
         });
         backButton.setPosition(10, GameConstants.HEIGHT - backButton.getHeight());

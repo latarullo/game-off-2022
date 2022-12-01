@@ -1,6 +1,7 @@
 package com.mygdx.game.domain;
 
 import com.mygdx.game.controller.GameUpgrades;
+import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.actor.Enemy;
 import com.mygdx.game.screen.actor.Wizard;
 
@@ -20,7 +21,7 @@ public class GameData {
         return instance;
     }
 
-    private static final int LEMONS_TO_MAKE_LEMONADE = 30;
+    private static final int LEMONS_TO_MAKE_LEMONADE = 100;
 
     private List<Wizard> availableWizards = new ArrayList<>();
     private Wizard currentWizard;
@@ -36,8 +37,9 @@ public class GameData {
     }
 
     public Wizard getCurrentWizard() {
-        //TODO: Wizard creating should use those position settings OR NOT
-        currentWizard.setPosition(200, 100);
+        if (currentWizard != null) {
+            currentWizard.setPosition(200, 100);
+        }
 
         return currentWizard;
     }
@@ -73,6 +75,7 @@ public class GameData {
         resetMoney();
         resetConsumables();
         resetEnemyKilledCounter();
+        resetUnits();
     }
 
     public void newGame() {
@@ -81,6 +84,29 @@ public class GameData {
         resetEnemyKilledCounter();
         resetUnlockables();
         resetUpgradeables();
+        resetNewGameWizards();
+    }
+
+    private void resetNewGameWizards() {
+        List<Wizard> availableWizards = getAvailableWizards();
+        for (Wizard availableWizard : availableWizards) {
+            availableWizard.resetNewGame();
+        }
+    }
+
+    private void resetUnits() {
+        resetWizards();
+
+        Enemy currentEnemy = getCurrentEnemy();
+        currentEnemy.reset();
+        GodModeItem.getInstance().makeLemonJarInvisible();
+    }
+
+    private void resetWizards() {
+        List<Wizard> availableWizards = getAvailableWizards();
+        for (Wizard availableWizard : availableWizards) {
+            availableWizard.reset();
+        }
     }
 
     private void resetUpgradeables() {
@@ -136,7 +162,7 @@ public class GameData {
         return enemyKilledCounter;
     }
 
-    public void enemyKilled(){
+    public void enemyKilled() {
         this.enemyKilledCounter++;
     }
 
@@ -154,6 +180,10 @@ public class GameData {
 
     public void gameWasReset() {
         resetCount++;
+    }
+
+    public long getNeedLemonsForLemonade() {
+        return LEMONS_TO_MAKE_LEMONADE;
     }
 
     public long getLemonsToFinishLemonade() {

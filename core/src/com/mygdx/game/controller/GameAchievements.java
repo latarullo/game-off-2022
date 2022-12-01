@@ -20,6 +20,13 @@ public class GameAchievements {
         return instance;
     }
 
+    public void unlockAutoClick() {
+        AchievementType achievementType = AchievementType.AUTO_CLICK;
+        if (GameSettings.getInstance().isAchievementsNotificationEnabled()){
+            currentStage.addActor(new AchievementGUI(achievementType.name(), "Auto click enabled"));
+        }
+    }
+
     public void unlockWizard(WizardType wizardType) {
         AchievementType achievementType = null;
         if (wizardType == WizardType.LIGHTNING) {
@@ -83,7 +90,8 @@ public class GameAchievements {
         UNLOCKED_ICE_WIZARD, //unlock wizard
         UNLOCKED_ALL_WIZARDS, //unlock wizard
         GOD_MODE, //who's your daddy upgrade -> LETS KILL THEM ALL AND MAKE THE LEMONADE!
-        LEMONADE_MADE //game over, killed enough lemons!
+        LEMONADE_MADE, //game over, killed enough lemons!
+        AUTO_CLICK
     }
 
     public void setCurrentStage(Stage currentStage) {

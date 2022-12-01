@@ -23,6 +23,7 @@ public class MainMenuScreenGUI implements Disposable {
     private GameOff2022 game = GameOff2022.getInstance();
     private MainMenuScreen screen;
     private Texture menuBackgroundTexture = new Texture(Gdx.files.internal("resources/MainMenu/background.png"));
+    private Texture gameTitleTexture = new Texture(Gdx.files.internal("resources/MainMenu/game-title.png"));
     private GameFontGenerator gameFontGenerator = GameFontGenerator.getInstance();
 
     public MainMenuScreenGUI(MainMenuScreen screen) {
@@ -31,6 +32,7 @@ public class MainMenuScreenGUI implements Disposable {
 
     public Table createGUI() {
         createBackground();
+        Image gameTitleImage = createGameTitle();
 
         Table table = new Table();
         table.setFillParent(true);
@@ -46,13 +48,15 @@ public class MainMenuScreenGUI implements Disposable {
 
         //add buttons to table
         table.pad(10, 0, 10, 0);
-        table.add(newGameButton).fill().uniformX();
+        table.add(gameTitleImage);
         table.row();
-        table.add(settingsButton).fill();
+        table.add(newGameButton);
         table.row();
-        table.add(creditsButton).fill();
+        table.add(settingsButton);
         table.row();
-        table.add(exitButton).fillX().uniformX();
+        table.add(creditsButton);
+        table.row();
+        table.add(exitButton);
 
         // create button listeners
         exitButton.addListener(new ChangeListener() {
@@ -72,7 +76,7 @@ public class MainMenuScreenGUI implements Disposable {
         creditsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                game.changeScreen(new CreditsScreen(game));
+                game.changeScreen(new CreditsScreen(false));
             }
         });
 
@@ -84,6 +88,15 @@ public class MainMenuScreenGUI implements Disposable {
         });
 
         return table;
+    }
+
+    private Image createGameTitle() {
+        Image gameTitleImage = new Image(gameTitleTexture);
+        //gameTitleImage.setSize(666,375);
+        gameTitleImage.setPosition(Gdx.graphics.getWidth()/2-gameTitleImage.getWidth(), Gdx.graphics.getHeight()/2-gameTitleImage.getImageHeight());
+        //gameTitleImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        return gameTitleImage;
+        //screen.getStage().addActor(gameTitleImage);
     }
 
     private void createBackground() {

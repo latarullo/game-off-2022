@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.domain.GameData;
+import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.actor.Enemy;
 import com.mygdx.game.screen.actor.Wizard;
 import com.mygdx.game.screen.actor.WizardType;
@@ -56,8 +58,18 @@ public class WizardSpell extends Actor implements Disposable {
         if (isExploding && !valueAnimation.isAnimationFinished(stateTime)) {
             batch.draw(currentAnimation, enemyCenterX-width/2, enemyCenterY-height/2, width, height);
         } else {
-            stateTime = 0;
-            isExploding = false;
+            Array<Actor> actors = GameScreen.getInstance().getStage().getActors();
+            int removeIndex = -1;
+            for (int i = 0; i < actors.size; i++){
+                Actor actor = actors.get(0);
+                if (actor == this) {
+                    removeIndex = i;
+                    break;
+                }
+            }
+            if (removeIndex != -1) {
+                actors.removeIndex(removeIndex);
+            }
         }
     }
 

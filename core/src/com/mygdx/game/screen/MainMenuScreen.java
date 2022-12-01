@@ -7,25 +7,30 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameOff2022;
-import com.mygdx.game.controller.GameSettings;
 import com.mygdx.game.controller.GameSoundPlayer;
 import com.mygdx.game.screen.gui.MainMenuScreenGUI;
 
 public class MainMenuScreen implements Screen {
 
-    private GameOff2022 game;
-    private Stage stage;
-    private MainMenuScreenGUI gui;
-    private Sound music = Gdx.audio.newSound(Gdx.files.internal("resources/MainMenu/music.wav"));
+    private final static MainMenuScreen instance = new MainMenuScreen();
 
-    public MainMenuScreen(final GameOff2022 game) {
-        this.game = game;
+    public static MainMenuScreen getInstance() {
+        return instance;
+    }
+
+    private MainMenuScreen() {
         stage = new Stage(new ScreenViewport());
 
         gui = new MainMenuScreenGUI(this);
 
         stage.addActor(gui.createGUI());
     }
+
+    private GameOff2022 game = GameOff2022.getInstance();
+    private Stage stage;
+    private MainMenuScreenGUI gui;
+    private Sound music = Gdx.audio.newSound(Gdx.files.internal("resources/MainMenu/music.wav"));
+
 
     @Override
     public void show() {

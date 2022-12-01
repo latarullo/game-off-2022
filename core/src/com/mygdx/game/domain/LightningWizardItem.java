@@ -2,8 +2,6 @@ package com.mygdx.game.domain;
 
 import com.mygdx.game.screen.actor.LightningWizard;
 
-import java.math.BigInteger;
-
 public class LightningWizardItem extends UnlockableItem {
     private final static LightningWizardItem instance = new LightningWizardItem();
 
@@ -14,7 +12,7 @@ public class LightningWizardItem extends UnlockableItem {
     private LightningWizardItem() {
         this.name = LightningWizard.getInstance().getName();
         this.texture = LightningWizard.getInstance().getIdleSprite().getTexture();
-        this.price = BigInteger.ONE;//new BigInteger("10000");
+        this.price = GameConstants.WIZARD_COST;
         this.type = UnlockableEnum.LIGHTNING_WIZARD;
     }
 }

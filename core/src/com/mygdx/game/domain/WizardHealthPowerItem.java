@@ -15,7 +15,7 @@ public class WizardHealthPowerItem extends UpgradeableItem {
     private WizardHealthPowerItem() {
         this.name = "Wizard Health Max";
         this.texture = new Texture(Gdx.files.internal("resources/Icons/wizard-health-power.png"));
-        this.price = BigInteger.ONE;//new BigInteger("10000");
+        this.price =  GameConstants.WIZARD_MAX_LIFE_COST;
         this.type = UpgradeableEnum.WIZARD_HEALTH;
     }
 

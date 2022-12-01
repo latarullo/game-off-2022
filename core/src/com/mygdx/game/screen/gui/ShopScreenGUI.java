@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.GameOff2022;
 import com.mygdx.game.controller.GameAchievements;
+import com.mygdx.game.domain.GameAutoClickerItem;
 import com.mygdx.game.controller.GameSoundPlayer;
 import com.mygdx.game.controller.GameUpgrades;
 import com.mygdx.game.domain.ConsumableItem;
@@ -157,7 +158,16 @@ public class ShopScreenGUI implements Disposable {
         foodCooldownButton.setPosition(posX, posY);
         screen.getStage().addActor(foodCooldownButton);
 
-        if (!LightningWizardItem.getInstance().isUnlocked()) {
+        if (!GameAutoClickerItem.getInstance().isUnlocked()) {
+            posX += stepX;
+            ImageButton autoClickButton = createAutoClickButton();
+            autoClickButton.setSize(200, 200);
+            autoClickButton.setPosition(posX, posY);
+            screen.getStage().addActor(autoClickButton);
+        }
+
+        if (GameAutoClickerItem.getInstance().isUnlocked() &&
+                !LightningWizardItem.getInstance().isUnlocked()) {
             posX += stepX;
             ImageButton lightningWizardButton = createLightningWizardButton();
             lightningWizardButton.setSize(buttonWidth, buttonHeight);
@@ -165,7 +175,8 @@ public class ShopScreenGUI implements Disposable {
             screen.getStage().addActor(lightningWizardButton);
         }
 
-        if (!FireWizardItem.getInstance().isUnlocked()) {
+        if (GameAutoClickerItem.getInstance().isUnlocked() &&
+                !FireWizardItem.getInstance().isUnlocked()) {
             posX += stepX;
             ImageButton fireWizardButton = createFireWizardButton();
             fireWizardButton.setSize(buttonWidth, buttonHeight);
@@ -173,7 +184,8 @@ public class ShopScreenGUI implements Disposable {
             screen.getStage().addActor(fireWizardButton);
         }
 
-        if (!IceWizardItem.getInstance().isUnlocked()) {
+        if (GameAutoClickerItem.getInstance().isUnlocked() &&
+                !IceWizardItem.getInstance().isUnlocked()) {
             posX += stepX;
             ImageButton iceWizardButton = createIceWizardButton();
             iceWizardButton.setSize(buttonWidth, buttonHeight);
@@ -191,6 +203,32 @@ public class ShopScreenGUI implements Disposable {
             godModeButton.setPosition(posX, posY);
             screen.getStage().addActor(godModeButton);
         }
+    }
+
+    private ImageButton createAutoClickButton() {
+        final GameAutoClickerItem autoClickerItem = GameAutoClickerItem.getInstance();
+        final ImageButton autoClickerButton = new ImageButton(new TextureRegionDrawable(autoClickerItem.getTexture()));
+
+        autoClickerButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                if (screen.getGame().getGameData().getMoney().compareTo(autoClickerItem.getPrice()) >= 0) {
+                    screen.buyUnlockable(autoClickerItem);
+                    GameAchievements.getInstance().setCurrentStage(screen.getStage());
+                    GameAchievements.getInstance().unlockAutoClick();
+                    autoClickerButton.setVisible(false);
+                } else {
+                    if (Math.random() < 0.5f) {
+                        GameSoundPlayer.playSound(notEnoughLemonsSound);
+                    } else {
+                        GameSoundPlayer.playSound(youRequireMoreLemonsSound);
+                    }
+                }
+            }
+        });
+
+        autoClickerButton.addListener(new HoverClickListener(autoClickerItem));
+
+        return autoClickerButton;
     }
 
     private ImageButton createWizardSpellPowerButton() {
@@ -224,7 +262,7 @@ public class ShopScreenGUI implements Disposable {
             public void clicked(InputEvent event, float x, float y) {
                 if (screen.getGame().getGameData().getMoney().compareTo(wizardHealthPowerItem.getPrice()) >= 0) {
                     screen.buyUpgradeable(wizardHealthPowerItem);
-                    GameOff2022.getInstance().wizardHelthUp(wizardHealthPowerItem);
+                    GameOff2022.getInstance().allWizardsHealthUp(wizardHealthPowerItem);
                 } else {
                     if (Math.random() < 0.5f) {
                         GameSoundPlayer.playSound(notEnoughLemonsSound);

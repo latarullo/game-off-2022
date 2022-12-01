@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.GameOff2022;
 import com.mygdx.game.controller.GameSoundPlayer;
+import com.mygdx.game.domain.GameConstants;
+import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.actor.particle.HealthChange;
 
 import java.math.BigInteger;
@@ -29,9 +31,9 @@ public class Enemy extends Actor implements Damageable, Disposable {
     private boolean shouldFaceLeft = false;
     private float maxLife = 100f;
     private float currentLife = 100f;
-    private BigInteger damage = new BigInteger("1");
+    private BigInteger damage = GameConstants.LEMON_BASE_DAMAGE;
     private GameOff2022 game = GameOff2022.getInstance();
-    private BigInteger pointValue = new BigInteger("500");
+    private BigInteger pointValue = GameConstants.LEMON_KILLING_POINTS;
     private Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("sounds/lemon-hurt.wav"));
     private Sound dieSound = Gdx.audio.newSound(Gdx.files.internal("sounds/lemon-die.wav"));
     private HealthChange healthChangeParticle;
@@ -88,7 +90,7 @@ public class Enemy extends Actor implements Damageable, Disposable {
             if (currentState == EnemyState.DIE) {
                 batch.draw(currentAnimation, this.getX(), this.getY());
                 game.getGameData().addMoney(this.pointValue);
-                Group actorHolder = this.getParent();
+                Group actorHolder = GameScreen.getInstance().getStage().getRoot();
                 actorHolder.removeActor(this);
                 Wizard wizard = game.getGameData().getCurrentWizard();
                 wizard.killedLemon();
@@ -178,5 +180,18 @@ public class Enemy extends Actor implements Damageable, Disposable {
 
     public Color getEnemyColor() {
         return Color.GREEN;
+    }
+
+    public void reset() {
+        this.currentLife = this.maxLife;
+        this.setCurrentState(EnemyState.ATTACK);
+    }
+
+    public void wasClicked(){
+        Wizard currentWizard = game.getGameData().getCurrentWizard();
+        if (currentWizard.getCurrentState() == WizardState.IDLE &&
+                currentWizard.isAnimating()) {
+            currentWizard.setCurrentState(WizardState.ATTACK);
+        }
     }
 }

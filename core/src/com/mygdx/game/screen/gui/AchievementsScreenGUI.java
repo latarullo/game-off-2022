@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.controller.GameUpgrades;
+import com.mygdx.game.domain.GameAutoClickerItem;
 import com.mygdx.game.domain.GameConstants;
 import com.mygdx.game.domain.GameData;
 import com.mygdx.game.domain.GodModeItem;
@@ -47,18 +48,19 @@ public class AchievementsScreenGUI implements Disposable {
     private void createAchievementsTable() {
         Table table = new Table();
 
-        Texture lemonSlayerTexture1 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer-001.png"));
-        Texture lemonSlayerTexture2 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer-002.png"));
-        Texture lemonSlayerTexture3 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer-003.png"));
-        Texture lemonSlayerTexture4 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer-004.png"));
-        Texture lemonSlayerTexture5 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer-005.png"));
-        Texture lemonSlayerTexture6 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer-006.png"));
-        Texture lemonSlayerTexture7 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer-007.png"));
-        Texture lemonSlayerTexture8 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer-008.png"));
+        Texture lemonSlayerTexture1 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer.png"));
+        Texture lemonSlayerTexture2 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer.png"));
+        Texture lemonSlayerTexture3 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer.png"));
+        Texture lemonSlayerTexture4 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer.png"));
+        Texture lemonSlayerTexture5 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer.png"));
+        Texture lemonSlayerTexture6 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer.png"));
+        Texture lemonSlayerTexture7 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer.png"));
+        Texture lemonSlayerTexture8 = new Texture(Gdx.files.internal("resources/AchievementsScreen/lemon-slayer.png"));
 
-        Texture wizardLongLifeLearnerTexture = new Texture(Gdx.files.internal("resources/AchievementsScreen/wizard-long-life-learner.png"));
-        Texture wizardHardAsARockTexture = new Texture(Gdx.files.internal("resources/AchievementsScreen/hard-as-a-rock.png"));
-        Texture wizardsNeverGiveUpTexture = new Texture(Gdx.files.internal("resources/AchievementsScreen/wizards-never-give-up.png"));
+        Texture wizardLongLifeLearnerTexture = new Texture(Gdx.files.internal("resources/AchievementsScreen/long-life-learner.png"));
+        Texture wizardHardAsARockTexture = new Texture(Gdx.files.internal("resources/AchievementsScreen/rock.png"));
+        Texture wizardsNeverGiveUpTexture = new Texture(Gdx.files.internal("resources/AchievementsScreen/never-give-up.png"));
+        Texture autoClickerTexture = GameAutoClickerItem.getInstance().getTexture();
 
         Texture allWizardsUnlockedTexture = new Texture(Gdx.files.internal("resources/AchievementsScreen/unlocked-all-wizards.png"));
         Texture wizardMakingLemonadeTexture = new Texture(Gdx.files.internal("resources/AchievementsScreen/wizard-making-lemonade.png"));
@@ -75,7 +77,7 @@ public class AchievementsScreenGUI implements Disposable {
         Image image22 = composeImage(wizardLongLifeLearnerTexture, WizardSpellPowerItem.getInstance().getUpgradeCount() > 0);
         Image image23 = composeImage(wizardHardAsARockTexture, WizardHealthPowerItem.getInstance().getUpgradeCount() > 0);
         Image image24 = composeImage(wizardsNeverGiveUpTexture, GameData.getInstance().getResetCount() > 0);
-        Image image25 = composeImage(new Texture(Gdx.files.internal("resources/ShopScreen/hover.png")), false);
+        Image image25 = composeImage(autoClickerTexture, GameAutoClickerItem.getInstance().isUnlocked());
         Image image26 = composeImage(new Texture(Gdx.files.internal("resources/ShopScreen/hover.png")), false);
 
         Image image31 = composeImage(LightningWizard.getInstance().getPortraitTexture(), IceWizardItem.getInstance().isUnlocked());
@@ -122,6 +124,8 @@ public class AchievementsScreenGUI implements Disposable {
             }
         });
 
+        Label autoClickLabel = new Label("Auto click unlocked", labelStyle);
+
         Label unlockedLightningWizardLabel = new Label("Wizard unlocked", labelStyle);
         Label unlockedFireWizardLabel = new Label("Wizard unlocked", labelStyle);
         Label unlockedIceWizardLabel = new Label("Wizard unlocked", labelStyle);
@@ -154,7 +158,7 @@ public class AchievementsScreenGUI implements Disposable {
         table.add(learnerLabelValue).align(Align.right);
         table.add(lifeLabelValue).align(Align.right);
         table.add(neverGiveUpLabel).align(Align.right);
-        table.add().align(Align.right);
+        table.add(autoClickLabel).align(Align.right);
         table.add().align(Align.right);
         table.row();
         table.add(image31).size(180, 180);

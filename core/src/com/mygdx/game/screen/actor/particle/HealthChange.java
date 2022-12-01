@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.GameOff2022;
 import com.mygdx.game.domain.GameConstants;
+import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.actor.Enemy;
 import com.mygdx.game.screen.actor.Wizard;
 import com.mygdx.game.util.BigNumberNotation;
@@ -40,7 +41,7 @@ public class HealthChange extends Actor {
         Label.LabelStyle labelStyle = gameFontGenerator.generateLabelStyle(40, color);
 
         MyLabel label = new MyLabel(labelValue, labelStyle, takingDamageUnit, isHealing);
-        wizard.getParent().addActor(label);
+        GameScreen.getInstance().getStage().addActor(label);
     }
 }
 
@@ -58,7 +59,7 @@ class MyLabel extends Label {
         }
 
         this.setY(actor.getY() + actor.getHeight() / 2);
-        this.actorHolder = actor.getParent();
+        this.actorHolder = GameScreen.getInstance().getStage().getRoot();
     }
 
     @Override

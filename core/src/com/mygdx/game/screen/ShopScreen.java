@@ -17,7 +17,7 @@ import com.mygdx.game.util.GameFontGenerator;
 
 public class ShopScreen implements Screen {
 
-    private GameOff2022 game;
+    private GameOff2022 game = GameOff2022.getInstance();
     private Stage stage;
     private ShopScreenGUI shopScreenGUI = new ShopScreenGUI(this);
     private Sound buySound = Gdx.audio.newSound(Gdx.files.internal("sounds/buy.wav"));
@@ -25,8 +25,7 @@ public class ShopScreen implements Screen {
     private GameFontGenerator gameFontGenerator = GameFontGenerator.getInstance();
     private LemonMoneyGUI lemonMoneyGUI;
 
-    public ShopScreen(final GameOff2022 game) {
-        this.game = game;
+    public ShopScreen() {
         stage = new Stage(new ScreenViewport());
         shopScreenGUI.createGUI();
     }

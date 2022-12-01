@@ -17,6 +17,7 @@ import com.mygdx.game.domain.FireWizardItem;
 import com.mygdx.game.domain.GameData;
 import com.mygdx.game.domain.IceWizardItem;
 import com.mygdx.game.domain.LightningWizardItem;
+import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.actor.FireWizard;
 import com.mygdx.game.screen.actor.IceWizard;
 import com.mygdx.game.screen.actor.LightningWizard;
@@ -28,6 +29,7 @@ import com.mygdx.game.util.GameFontGenerator;
 public class WizardHealthBarGUI2 {
     private Sound wizardNotAvailableSound = Gdx.audio.newSound(Gdx.files.internal("resources/GameScreen/wizard-not-available.mp3"));
     private GameFontGenerator gameFontGenerator = GameFontGenerator.getInstance();
+    private Table wizardSwitcherGUI;
 
     public Table createGUI() {
         Wizard wizard = GameData.getInstance().getCurrentWizard();
@@ -77,7 +79,7 @@ public class WizardHealthBarGUI2 {
         nameHealthBarTable.row();
         nameHealthBarTable.add(healthBarGUI).width(300).height(10).align(Align.left);
 
-        final Table wizardSwitcherGUI = createWizardSwitcherGUI();
+        wizardSwitcherGUI = createWizardSwitcherGUI();
         Image wizardImage = wizard.getImage();
         wizardImage.addAction(new Action() {
             @Override
@@ -197,14 +199,12 @@ public class WizardHealthBarGUI2 {
                 if (wizard.getWizardType() == WizardType.LIGHTNING && !LightningWizardItem.getInstance().isUnlocked() ||
                         wizard.getWizardType() == WizardType.FIRE && !FireWizardItem.getInstance().isUnlocked() ||
                         wizard.getWizardType() == WizardType.ICE && !IceWizardItem.getInstance().isUnlocked()) {
+                    System.out.println("Wizard " + wizard.getWizardType() + " not available");
                     GameSoundPlayer.playSound(wizardNotAvailableSound);
                     return;
                 }
 
-                Group actorHolder = game.getGameData().getCurrentWizard().getParent();
-
-                wizard.setX(currentWizard.getX());
-                wizard.setY(currentWizard.getY());
+                Group actorHolder = GameScreen.getInstance().getStage().getRoot();
 
                 actorHolder.removeActor(currentWizard);
                 game.getGameData().setCurrentWizard(wizard);
@@ -226,5 +226,9 @@ public class WizardHealthBarGUI2 {
         table.add(iceWizardImage).size(width, height);
         table.setVisible(false);
         return table;
+    }
+
+    public void makeWizarwizardSwitcherGUIInvisible() {
+        wizardSwitcherGUI.setVisible(false);
     }
 }

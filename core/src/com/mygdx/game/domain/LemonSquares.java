@@ -3,8 +3,6 @@ package com.mygdx.game.domain;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-import java.math.BigInteger;
-
 public class LemonSquares extends ConsumableItem {
     private static LemonSquares instance;
 
@@ -13,7 +11,7 @@ public class LemonSquares extends ConsumableItem {
         this.texture = new Texture(Gdx.files.internal("resources/Consumables/lemon-squares.png"));
         this.healthPower = 1;
         this.cooldown = 1;
-        this.price = BigInteger.ONE;
+        this.price = GameConstants.LEMON_SQUARES_COST;
         this.type = HealthConsumableEnum.LEMON_SQUARES;
     }
 

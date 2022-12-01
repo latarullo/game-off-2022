@@ -17,6 +17,7 @@ import com.mygdx.game.controller.GameSoundPlayer;
 import com.mygdx.game.domain.GameConstants;
 import com.mygdx.game.domain.GameData;
 import com.mygdx.game.screen.GameOverScreen;
+import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.util.GameFontGenerator;
 import com.mygdx.game.util.GameFontSizeEnum;
 
@@ -68,7 +69,8 @@ public class AchievementGUI extends Table implements Disposable {
             if (stateTime > 3) {
                 this.getParent().removeActor(this);
                 if (GameData.getInstance().isLemonadeDone()){
-                    GameOff2022.getInstance().changeScreen(new GameOverScreen());
+                    GameSoundPlayer.stop(GameScreen.getInstance().getMusic());
+                    GameOff2022.getInstance().changeScreen(GameOverScreen.getInstance());
                 }
             }
         }

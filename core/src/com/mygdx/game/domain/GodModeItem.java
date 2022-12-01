@@ -2,9 +2,12 @@ package com.mygdx.game.domain;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.mygdx.game.screen.GameScreen;
 
 import java.math.BigInteger;
+import java.util.List;
 
 public class GodModeItem extends UnlockableItem {
     private static GodModeItem instance = new GodModeItem();
@@ -13,22 +16,24 @@ public class GodModeItem extends UnlockableItem {
         return instance;
     }
 
-    private Table lemonJarTable;
-
-    private GodModeItem(){
-        this.name = "Who is your daddy";
-        this.texture = new Texture(Gdx.files.internal("resources/god-mode.png"));
-        this.price = BigInteger.ZERO; //new BigInteger("1000000000");
+    private GodModeItem() {
+        this.name = "Last but not least";
+        this.texture = new Texture(Gdx.files.internal("resources/AchievementsScreen/boss.png"));
+        this.price =  GameConstants.GOD_MODE_COST;
         this.type = UnlockableEnum.GOD_MODE;
-    }
-
-    public void setLemonJarTable(Table lemonJarTable) {
-        this.lemonJarTable = lemonJarTable;
     }
 
     @Override
     public void unlock() {
         super.unlock();
-        lemonJarTable.setVisible(true);
+        GameScreen.getInstance().makeLemonJarTableVisible();
+    }
+
+    public void makeLemonJarInvisible() {
+        GameScreen.getInstance().makeLemonJarTableInvisible();
+        List<Image> juiceJarImages = GameScreen.getInstance().getJuiceJarImages();
+        for (Image juiceJarImage : juiceJarImages) {
+            juiceJarImage.setVisible(false);
+        }
     }
 }

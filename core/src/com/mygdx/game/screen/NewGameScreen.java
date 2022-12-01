@@ -40,7 +40,10 @@ public class NewGameScreen implements Screen {
         if (isRestart){
             GameData.getInstance().gameWasReset();
             game.restart();
+        } else {
+            game.newGame();
         }
+
         createGuiObjects(isRestart);
     }
 
@@ -81,6 +84,7 @@ public class NewGameScreen implements Screen {
                 }
 
                 game.getGameData().setCurrentWizard(wizard);
+                GameScreen.getInstance().recreateUnits();
                 game.changeScreen(GameScreen.getInstance());
             }
         };
@@ -101,33 +105,34 @@ public class NewGameScreen implements Screen {
 
         Label shopLabel = new Label("Choose Your Starting Wizard", labelStyle);
 
-        Table table = new Table();
-        table.setFillParent(true);
+        Table choosingWizardTable = new Table();
+        choosingWizardTable.setFillParent(true);
 
-        table.add(shopLabel).colspan(3);
-        table.row().pad(10, 10, 10, 0);
+        choosingWizardTable.add(shopLabel).colspan(3);
+        choosingWizardTable.row().pad(10, 10, 10, 0);
         if (!isRestart || GameUpgrades.getInstance().isLightningWizardAvailable()) {
-            table.add(lightningWizardImage);
+            choosingWizardTable.add(lightningWizardImage);
         }
         if (!isRestart || GameUpgrades.getInstance().isFireWizardAvailable()) {
-            table.add(fireWizardImage);
+            choosingWizardTable.add(fireWizardImage);
         }
         if (!isRestart || GameUpgrades.getInstance().isIceWizardAvailable()) {
-            table.add(iceWizardImage);
+            choosingWizardTable.add(iceWizardImage);
         }
-        table.row();
+
+        choosingWizardTable.row();
 
         if (!isRestart || GameUpgrades.getInstance().isLightningWizardAvailable()) {
-            table.add(new Label("Lightning Wizard", lightningStyle));
+            choosingWizardTable.add(new Label("Lightning Wizard", lightningStyle));
         }
         if (!isRestart || GameUpgrades.getInstance().isFireWizardAvailable()) {
-            table.add(new Label("Fire Wizard", fireStyle));
+            choosingWizardTable.add(new Label("Fire Wizard", fireStyle));
         }
         if (!isRestart || GameUpgrades.getInstance().isIceWizardAvailable()) {
-            table.add(new Label("Ice Wizard", iceStyle));
+            choosingWizardTable.add(new Label("Ice Wizard", iceStyle));
         }
 
-        stage.addActor(table);
+        stage.addActor(choosingWizardTable);
     }
 
     @Override

@@ -13,7 +13,7 @@ public class IceLemonTea extends ConsumableItem {
         this.texture = new Texture(Gdx.files.internal("resources/Consumables/ice-lemon-tea.png"));
         this.healthPower = 5;
         this.cooldown = 5;
-        this.price = BigInteger.TEN;
+        this.price =  GameConstants.ICE_LEMON_TEA_COST;
         this.type = HealthConsumableEnum.ICE_LEMON_TEA;
     }
 

@@ -14,7 +14,7 @@ public class IceWizardItem extends UnlockableItem {
     private IceWizardItem() {
         this.name = IceWizard.getInstance().getName();
         this.texture = IceWizard.getInstance().getIdleSprite().getTexture();
-        this.price = BigInteger.ONE;//new BigInteger("10000");
+        this.price = GameConstants.WIZARD_COST;
         this.type = UnlockableEnum.ICE_WIZARD;
     }
 }

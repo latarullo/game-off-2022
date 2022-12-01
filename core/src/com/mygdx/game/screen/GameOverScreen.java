@@ -2,17 +2,27 @@ package com.mygdx.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.controller.GameSoundPlayer;
 import com.mygdx.game.screen.gui.GameOverScreenGUI;
 
 public class GameOverScreen implements Screen {
+    private static final GameOverScreen instance = new GameOverScreen();
+
+    public static GameOverScreen getInstance() {
+        return instance;
+    }
+
     private Stage stage;
     private GameOverScreenGUI gui;
+    private Sound music = Gdx.audio.newSound(Gdx.files.internal("resources/CreditsScreen/music.wav"));
 
-    public GameOverScreen() {
+
+    private GameOverScreen() {
         stage = new Stage(new ScreenViewport());
         gui = new GameOverScreenGUI(this);
         gui.createGUI();
@@ -21,6 +31,7 @@ public class GameOverScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        GameSoundPlayer.playMusic(music);
     }
 
     @Override
@@ -54,9 +65,14 @@ public class GameOverScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        music.dispose();
     }
 
     public Stage getStage() {
         return stage;
+    }
+
+    public Sound getMusic() {
+        return music;
     }
 }

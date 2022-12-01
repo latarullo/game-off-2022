@@ -66,15 +66,15 @@ public class GameUpgrades {
         return false;
     }
 
-    public void unlockWizard(WizardType wizardType) {
-        if (wizardType == WizardType.LIGHTNING) {
-            LightningWizardItem.getInstance().unlock();
-        } else if (wizardType == WizardType.FIRE) {
-            FireWizardItem.getInstance().unlock();
-        } else if (wizardType == WizardType.ICE) {
-            IceWizardItem.getInstance().unlock();
-        }
-    }
+//    public void unlockWizard(WizardType wizardType) {
+//        if (wizardType == WizardType.LIGHTNING) {
+//            LightningWizardItem.getInstance().unlock();
+//        } else if (wizardType == WizardType.FIRE) {
+//            FireWizardItem.getInstance().unlock();
+//        } else if (wizardType == WizardType.ICE) {
+//            IceWizardItem.getInstance().unlock();
+//        }
+//    }
 
     public void unlockGodMode(boolean godMode) {
         GodModeItem.getInstance().unlock();

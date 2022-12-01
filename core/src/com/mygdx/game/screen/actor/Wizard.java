@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.GameOff2022;
@@ -19,8 +18,10 @@ import com.mygdx.game.controller.GameSoundPlayer;
 import com.mygdx.game.controller.GameUpgrades;
 import com.mygdx.game.domain.ConsumableItem;
 import com.mygdx.game.domain.FoodHealthPowerItem;
+import com.mygdx.game.domain.GameConstants;
 import com.mygdx.game.domain.GameData;
 import com.mygdx.game.domain.WizardSpellPowerItem;
+import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.RestartScreen;
 import com.mygdx.game.screen.actor.particle.HealthChange;
 import com.mygdx.game.screen.actor.particle.WizardSpell;
@@ -31,6 +32,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public abstract class Wizard extends Actor implements Damageable, Disposable {
 
@@ -40,7 +42,7 @@ public abstract class Wizard extends Actor implements Damageable, Disposable {
     protected float stateTime;
     private WizardState currentState = WizardState.IDLE;
     protected WizardType wizardType;
-    private float maxLife = 100;
+    private float maxLife = GameConstants.WIZARD_INITIAL_MAX_LIFE;
     private float currentLife = maxLife;
     private BigInteger damage = new BigInteger("33");
     protected Sound spellSound;
@@ -49,9 +51,12 @@ public abstract class Wizard extends Actor implements Damageable, Disposable {
     protected Sound dieSound = Gdx.audio.newSound(Gdx.files.internal("sounds/wizard-die.wav"));
     private Sound switchWizardSound = Gdx.audio.newSound(Gdx.files.internal("sounds/switch-wizard.wav"));
     protected Sound easyPeasyLemonsSqueezeSound;
+    private Sound takingCookieFromBabySound = Gdx.audio.newSound(Gdx.files.internal("resources/Wizards/taking-cookie-from-baby.wav"));
+    private Sound thatsHowCookieCrumblesSound = Gdx.audio.newSound(Gdx.files.internal("resources/Wizards/thats-how-the-cookie-crumbles.wav"));
     private WizardSpell wizardSpellParticle;
     private HealthChange damageParticle;
     private HealthChange healingParticle;
+    private Random random = new Random();
 
     BigInteger accumulator = BigInteger.TEN;
 
@@ -82,7 +87,7 @@ public abstract class Wizard extends Actor implements Damageable, Disposable {
         } else {
             if (currentState == WizardState.ATTACK) {
                 this.attack(enemy);
-                this.getParent().addActor(wizardSpellParticle);
+                GameScreen.getInstance().getStage().addActor(wizardSpellParticle);
             } else if (currentState == WizardState.DIE) {
                 killWizard();
             }
@@ -93,7 +98,7 @@ public abstract class Wizard extends Actor implements Damageable, Disposable {
     }
 
     private void killWizard() {
-        Group parent = this.getParent();
+        Group parent = GameScreen.getInstance().getStage().getRoot();
 
         List<Wizard> availableWizards = GameData.getInstance().getAvailableWizards();
         boolean allWizardsDead = true;
@@ -107,10 +112,9 @@ public abstract class Wizard extends Actor implements Damageable, Disposable {
         }
         if (allWizardsDead) {
             GameOff2022.getInstance().changeScreen(new RestartScreen(GameOff2022.getInstance()));
+        } else {
+            parent.removeActor(this);
         }
-
-        parent.removeActor(this);
-
     }
 
     @Override
@@ -204,6 +208,8 @@ public abstract class Wizard extends Actor implements Damageable, Disposable {
         this.wizardHurtSound.dispose();
         this.dieSound.dispose();
         this.easyPeasyLemonsSqueezeSound.dispose();
+        this.takingCookieFromBabySound.dispose();
+        this.thatsHowCookieCrumblesSound.dispose();
         this.switchWizardSound.dispose();
     }
 
@@ -217,7 +223,13 @@ public abstract class Wizard extends Actor implements Damageable, Disposable {
 
     public void reset() {
         this.currentLife = this.maxLife;
-        this.stateTime = 0;
+        this.setCurrentState(WizardState.IDLE);
+    }
+
+    public void resetNewGame() {
+        maxLife = GameConstants.WIZARD_INITIAL_MAX_LIFE;
+        this.currentLife = this.maxLife;
+        this.setCurrentState(WizardState.IDLE);
     }
 
     public void wizardSwitched() {
@@ -239,8 +251,13 @@ public abstract class Wizard extends Actor implements Damageable, Disposable {
             GameAchievements.getInstance().lemonSlayer("You have squeezed " + enemyKilledCounter + " lemons");
         }
 
-        if (easyPeasyLemonsSqueezeSound != null && Math.random() < 0.25f) {
+        int randomValue = random.nextInt(10);
+        if (randomValue == 0) {
             GameSoundPlayer.playSound(easyPeasyLemonsSqueezeSound);
+        } else if (randomValue == 1) {
+            GameSoundPlayer.playSound(takingCookieFromBabySound);
+        } else if (randomValue == 2) {
+            GameSoundPlayer.playSound(thatsHowCookieCrumblesSound);
         }
     }
 
@@ -254,5 +271,9 @@ public abstract class Wizard extends Actor implements Damageable, Disposable {
 
     public Texture getPortraitTexture() {
         return portraitTexture;
+    }
+
+    public boolean isAnimating(){
+        return stateTime > 0;
     }
 }

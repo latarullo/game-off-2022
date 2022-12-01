@@ -14,7 +14,7 @@ public class FireWizardItem extends UnlockableItem {
     private FireWizardItem() {
         this.name = FireWizard.getInstance().getName();
         this.texture = FireWizard.getInstance().getPortraitTexture();
-        this.price = BigInteger.ONE;//new BigInteger("10000");
+        this.price = GameConstants.WIZARD_COST;
         this.type = UnlockableEnum.FIRE_WIZARD;
     }
 }
